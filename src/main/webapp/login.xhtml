@@ -6,15 +6,20 @@
     <title>login</title>
 </h:head>
 <h:body>
+
     <h:form id="loginForm">
 
 
         <p:growl id="msg" showDetail="true" life="3000" />
-        <p:panel header="Login" style="width: 360px;">
+
+        <p:panel header="Iniciar Sesion" style="width: 360px;margin: 0 auto;margin-top: 20%;">
+            <div style="text-align: center;">
+                <h:graphicImage value="resources/images/tm.jpg" width="140px" height="100px"/>
+            </div>
 
             <h:panelGrid id="loginPanel" columns="2">
 
-                <h:outputText value="Username" />
+                <h:outputText value="Usuario" />
 
                 <p:inputText id="username" value="#{loginBean.uname}" ></p:inputText>
 
@@ -22,7 +27,7 @@
 
                 <p:message for="username" ></p:message>
 
-                <h:outputText value="Password" />
+                <h:outputText value="Contraseña" />
 
                 <p:password id="password" value="#{loginBean.password}"  feedback="false"></p:password>
 
@@ -32,13 +37,14 @@
 
                 <p:spacer></p:spacer>
 
-                <p:commandButton action="#{loginBean.loginUser}" value="Login" update="loginForm" ajax="true"></p:commandButton>
+                <p:commandButton action="#{loginBean.loginUser}" value="Iniciar Sesion" update="loginForm" ajax="true"></p:commandButton>
 
             </h:panelGrid>
 
         </p:panel>
 
     </h:form>
+
 
 </h:body>
 

@@ -59,6 +59,7 @@ public class LoginBean implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
                             "Invalid Login!",
                             "Please Try Again!"));
+
             return  navigationBean.toLogin();
         }
     }
