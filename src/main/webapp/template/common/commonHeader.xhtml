@@ -29,41 +29,19 @@
 
 
                 <p:megaMenu orientation="horizontal" style="margin-top:30px;">
-                    <p:submenu label="Tabla Maestra" icon="ui-icon-script">
+                    <p:submenu label="Indicadore GOALBUS" icon="ui-icon-script">
                         <p:column>
-                            <p:submenu label="Parametrizacion">
-                                <p:menuitem value="Servicios" action="#{menu.refreshServicios}" />
-                                <p:menuitem value="Servicios por Dia" action="#{menu.refreshServiciosporDia}" />
-                                <p:menuitem value="Estaciones" action="#{menu.refreshNodo}"/>
+                            <p:submenu label="Kilometraje">
+                                <p:menuitem value="KM comerciales" action="#{menu.refreshServicios}" />
+                                <p:menuitem value="KM vacío final" action="#{menu.refreshServiciosporDia}" />
+                                <p:menuitem value="KM vacío inicial" action="#{menu.refreshNodo}"/>
                             </p:submenu>
-                            <p:submenu label="Tabla Maestra">
+                            <p:submenu label="KM Vacios">
                                 <p:menuitem value="Nueva Tabla Maestra" action="#{menu.refreshNuevaTablaMaestra}" />
                                 <p:menuitem value="Buscar Tabla Maestra" action="#{menu.refreshBuscarTablaMaestra}" />
                             </p:submenu>
                         </p:column>
                     </p:submenu>
-
-                    <p:submenu label="GIS Carga" icon="ui-icon-document">
-                        <p:column>
-                            <p:submenu label="GIS Carga">
-                                <p:menuitem value="Nuevo GIS Carga" action="#{menu.refreshNuevoGISCarga}" />
-                                <p:menuitem value="Buscar GIS Carga" action="#{menu.refreshBuscarGISCarga}" />
-                            </p:submenu>
-                        </p:column>
-                    </p:submenu>
-
-                    <p:submenu label="Matriz Distancias" icon="ui-icon-carat-2-e-w">
-                        <p:column>
-                            <p:submenu label="Matriz Distancias">
-                                <p:menuitem value="Nueva Matriz Distancias" action="#{menu.refreshNuevaMatrizDistancia}" />
-
-                                <p:menuitem value="Buscar Matriz Distancias" action="#{menu.refreshBuscarMatrizDistancia}" />
-                            </p:submenu>
-                        </p:column>
-
-                    </p:submenu>
-
-
 
                 </p:megaMenu>
                 </p:panel>

@@ -34,7 +34,7 @@
 
         <property name="annotatedClasses">
             <list>
-                <!--<value>com.tmModulos.modelo.entity.tmData.GisCarga</value>-->
+                <value>com.tmIndicadores.model.entity.Usuario</value>
                 <!--<value>com.tmModulos.modelo.entity.tmData.TablaMaestra</value>-->
                 <!--<value>com.tmModulos.modelo.entity.tmData.ServicioDistancia</value>-->
                 <!--<value>com.tmModulos.modelo.entity.tmData.TipoDia</value>-->
@@ -78,11 +78,11 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <bean id="taskExecutor"
-          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-        <property name="corePoolSize" value="5" />
-        <property name="maxPoolSize" value="120" />
-        <property name="WaitForTasksToCompleteOnShutdown" value="true" />
-    </bean>
+    <!--<bean id="taskExecutor"-->
+          <!--class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">-->
+        <!--<property name="corePoolSize" value="5" />-->
+        <!--<property name="maxPoolSize" value="120" />-->
+        <!--<property name="WaitForTasksToCompleteOnShutdown" value="true" />-->
+    <!--</bean>-->
 
 </beans>

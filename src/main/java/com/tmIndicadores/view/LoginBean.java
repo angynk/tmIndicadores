@@ -1,6 +1,8 @@
 package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.Util;
+import com.tmIndicadores.controller.servicios.UsuarioServicios;
+import com.tmIndicadores.model.entity.Usuario;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -22,6 +24,9 @@ public class LoginBean implements Serializable {
 
     @ManagedProperty(value="#{navigationBean}")
     private NavigationBean navigationBean;
+
+    @ManagedProperty(value="#{UsuariosService}")
+    private UsuarioServicios usuarioServicios;
 
     @PostConstruct
     public void init(){
@@ -46,22 +51,29 @@ public class LoginBean implements Serializable {
 
     public String loginUser() {
         boolean result = false;
-        if(uname.equals("admin")){
-            result = true;
-        }
-        if (result) {
-            HttpSession session = Util.getSession();
-            session.setAttribute("user",uname);
-            return navigationBean.redirectToWelcome();
-        } else {
+        Usuario usuario = usuarioServicios.encontrarUsuarioByNombreUsuario(uname);
+        if (usuario != null) {
+            if (usuario.getContrasena().equals(password)) {
+                HttpSession session = Util.getSession();
+                session.setAttribute("user", uname);
+                return navigationBean.redirectToWelcome();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(
+                        null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                "Inicio de sesion invalido",
+                                "Verifique el usuario y la contraseña"));
+
+            }
+        }else {
             FacesContext.getCurrentInstance().addMessage(
                     null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "Invalid Login!",
-                            "Please Try Again!"));
+                            "El usuario no existe",
+                            "Verifique el usuario y la contraseña"));
 
-            return  navigationBean.toLogin();
         }
+        return navigationBean.toLogin();
     }
 
     public String logout() {
@@ -76,5 +88,13 @@ public class LoginBean implements Serializable {
 
     public void setNavigationBean(NavigationBean navigationBean) {
         this.navigationBean = navigationBean;
+    }
+
+    public UsuarioServicios getUsuarioServicios() {
+        return usuarioServicios;
+    }
+
+    public void setUsuarioServicios(UsuarioServicios usuarioServicios) {
+        this.usuarioServicios = usuarioServicios;
     }
 }
