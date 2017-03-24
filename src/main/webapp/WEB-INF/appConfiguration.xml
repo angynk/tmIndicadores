@@ -35,6 +35,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.tmIndicadores.model.entity.Usuario</value>
+                <value>com.tmIndicadores.model.entity.Programacion</value>
                 <!--<value>com.tmModulos.modelo.entity.tmData.TablaMaestra</value>-->
                 <!--<value>com.tmModulos.modelo.entity.tmData.ServicioDistancia</value>-->
                 <!--<value>com.tmModulos.modelo.entity.tmData.TipoDia</value>-->

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form enctype="multipart/form-data">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:panel id="basic" header="Kilometros comerciales"  style="margin-bottom:20px">
+                    <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                        <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
+                        <p:calendar id="button" value="#{bPBean.fechaInicio}" showOn="button" />
+                        <p:outputLabel for="buttonV" value="Fecha Fin (DD-MM-AAAA):" />
+                        <p:calendar id="buttonV" value="#{bPBean.fechaFin}" showOn="button" />
+                        <p:outputLabel for="periocidad" value="Tipo Día:" />
+                        <p:selectOneMenu id="periocidad" value="#{bPBean.periocidad}" style="width:125px">
+                            <f:selectItem itemLabel="Habil" itemValue="HABIL" />
+                            <f:selectItem itemLabel="Sabado" itemValue="SABADO" />
+                            <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
+                        </p:selectOneMenu>
+                        <p:outputLabel for="tipologia" value="Tipologia:" />
+                        <p:selectOneMenu id="tipologia" value="#{bPBean.tipologia}" style="width:125px">
+                        <f:selectItem itemLabel="Articulado" itemValue="ART" />
+                        <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
+                        <f:selectItem itemLabel="Todos" itemValue="DEF" />
+                    </p:selectOneMenu>
+                        <p:outputLabel for="tipoGrafica" value="Tipo de Gráfica:" />
+                        <p:selectOneMenu id="tipoGrafica" value="#{bPBean.tipoGrafica}" style="width:125px">
+                            <f:selectItem itemLabel="Con Saltos" itemValue="S" />
+                            <f:selectItem itemLabel="Con Repeticiones" itemValue="R" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:commandButton value="Generar" action="#{bPBean.generar}" ajax="false"
+                                     icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
+                                     async="true"/>
+                    <p:panel visible="#{bPBean.visibleBarBuses}">
+                        <p:chart type="bar" model="#{bPBean.barBuses}" style="height:300px"/>
+                    </p:panel>
+
+
+                </p:panel>
+                <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                    <p:panelGrid id="display" columns="2" columnClasses="label,value">
+                        <h:outputText value="Button:" />
+                        <h:outputText value="#{bPBean.fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                </p:dialog>
+
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>
