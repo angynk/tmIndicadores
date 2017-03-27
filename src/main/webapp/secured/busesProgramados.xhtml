@@ -42,8 +42,26 @@
                     <p:commandButton value="Generar" action="#{bPBean.generar}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
                                      async="true"/>
-                    <p:panel visible="#{bPBean.visibleBarBuses}">
-                        <p:chart type="bar" model="#{bPBean.barBuses}" style="height:300px"/>
+                    <p:panel visible="#{bPBean.visibleGrafica}" id="panel">
+                        <p:panel visible="#{bPBean.visibleBarBuses}">
+                            <p:chart type="bar" model="#{bPBean.barBuses}" style="height:300px"/>
+                        </p:panel>
+                        <p:panel visible="#{bPBean.visibleLineBuses}">
+                            <p:chart type="line" model="#{bPBean.lineBuses}" style="height:300px"/>
+                        </p:panel>
+                        <p:panel>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel for="grafica" value="Gráfica:" />
+                                <p:selectOneMenu id="grafica" value="#{bPBean.grafica}" style="width:125px"
+                                                 valueChangeListener="#{bPBean.cambioDeGrafica}"  >
+                                    <f:selectItem itemLabel="Barras" itemValue="Barras" />
+                                    <f:selectItem itemLabel="Líneas" itemValue="Líneas" />
+                                    <f:selectItem itemLabel="Tendencia" itemValue="Tendencia" />
+                                    <f:ajax execute="@this" listener="#{bPBean.changeEvent}" render="panel" />
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:panel>
+
                     </p:panel>
 
 

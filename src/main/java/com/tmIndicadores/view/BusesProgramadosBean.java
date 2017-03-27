@@ -1,15 +1,14 @@
 package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.Util;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ValueChangeEvent;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +22,23 @@ public class BusesProgramadosBean {
     private String periocidad;
     private String tipologia;
     private String tipoGrafica;
+    private String grafica;
+
+    private String cambioDeGrafica;
 
     private List<String> listaPeriocidad;
     private List<String> listaTipologia;
     private List<String> listaTipoGrafica;
 
     private BarChartModel barBuses;
+    private LineChartModel lineBuses;
+
     private boolean visibleBarBuses;
+    private boolean visibleGrafica;
+    private boolean visibleLineBuses;
+
+    @ManagedProperty(value="#{ChartGenerator}")
+    private ChartGenerator chartGenerator;
 
     public BusesProgramadosBean() {
     }
@@ -41,46 +50,47 @@ public class BusesProgramadosBean {
         listaTipoGrafica = Util.listaDeTipoGrafica();
         barBuses = new BarChartModel();
         visibleBarBuses = false;
+        visibleGrafica = false;
+        lineBuses = new LineChartModel();
     }
 
 
     public void generar(){
-        crearGraficaBuses();
+        barBuses = chartGenerator.crearGraficaBarraBuses();
+        lineBuses = chartGenerator.crearGraficaLineBuses();
+        visibleGrafica = true;
+        visibleLineBuses = false;
         visibleBarBuses = true;
     }
 
-    private void crearGraficaBuses() {
-        barBuses = initBarModel();
+    public void cambioDeGrafica(ValueChangeEvent event){
+        if(grafica!=null){
+            grafica = (String) event.getNewValue();
+            if(grafica.equals("Barras")){
+                visibleBarBuses = true;
+                visibleLineBuses = false;
 
-        barBuses.setTitle("Buses Programados");
-        barBuses.setLegendPosition("ne");
+            }else if(grafica.equals("Líneas")){
+                visibleBarBuses = false;
+                visibleLineBuses = true;
 
-        Axis xAxis = barBuses.getAxis(AxisType.X);
-        xAxis.setLabel("Fecha");
+            }else if(grafica.equals("Tendencia")){
+                visibleBarBuses = false;
+                visibleLineBuses = false;
 
-        Axis yAxis = barBuses.getAxis(AxisType.Y);
-        yAxis.setLabel("Buses");
-        yAxis.setMin(0);
-        yAxis.setMax(200);
+            }
+        }
+
 
     }
 
-    private BarChartModel initBarModel() {
-        BarChartModel model = new BarChartModel();
-
-        ChartSeries busesDEF = new ChartSeries();
-        busesDEF.setLabel("Buses");
-        busesDEF.set("2004", 120);
-        busesDEF.set("2005", 100);
-        busesDEF.set("2006", 44);
-        busesDEF.set("2007", 150);
-        busesDEF.set("2008", 25);
-
-
-        model.addSeries(busesDEF);
-
-        return model;
+    public void changeEvent() {
+        System.out.println("entre");
     }
+
+
+
+
 
     public Date getFechaInicio() {
         return fechaInicio;
@@ -160,5 +170,71 @@ public class BusesProgramadosBean {
 
     public void setVisibleBarBuses(boolean visibleBarBuses) {
         this.visibleBarBuses = visibleBarBuses;
+    }
+
+    public String getGrafica() {
+        return grafica;
+    }
+
+    public void setGrafica(String grafica) {
+        this.grafica = grafica;
+    }
+
+    public boolean isVisibleGrafica() {
+        return visibleGrafica;
+    }
+
+    public void setVisibleGrafica(boolean visibleGrafica) {
+        this.visibleGrafica = visibleGrafica;
+    }
+
+
+
+    public boolean isVisibleLineBuses() {
+        return visibleLineBuses;
+    }
+
+    public void setVisibleLineBuses(boolean visibleLineBuses) {
+        this.visibleLineBuses = visibleLineBuses;
+    }
+
+    public ChartGenerator getChartGenerator() {
+        return chartGenerator;
+    }
+
+    public void setChartGenerator(ChartGenerator chartGenerator) {
+        this.chartGenerator = chartGenerator;
+    }
+
+//    public String getCambioDeGrafica() {
+//        if(grafica!=null){
+//            if(grafica.equals("Barras")){
+//                visibleBarBuses = true;
+//                visibleLineBuses = false;
+//
+//            }else if(grafica.equals("Líneas")){
+//                visibleBarBuses = false;
+//                visibleLineBuses = true;
+//
+//            }else if(grafica.equals("Tendencia")){
+//                visibleBarBuses = false;
+//                visibleLineBuses = false;
+//
+//            }
+//        }
+//
+//        return cambioDeGrafica;
+//    }
+
+    public void setCambioDeGrafica(String cambioDeGrafica) {
+        this.cambioDeGrafica = cambioDeGrafica;
+    }
+
+    public LineChartModel getLineBuses() {
+        return lineBuses;
+    }
+
+    public void setLineBuses(LineChartModel lineBuses) {
+        this.lineBuses = lineBuses;
     }
 }
