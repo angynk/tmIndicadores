@@ -20,4 +20,16 @@ public class MenuBean {
         }
     }
 
+    public void refreshChart(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/extendedChart.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

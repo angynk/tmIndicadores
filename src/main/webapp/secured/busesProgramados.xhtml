@@ -7,12 +7,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
+
 <h:body>
 
     <ui:composition template="/template/common/commonLayout.xhtml">
-
         <ui:define name="content">
-            <h:form enctype="multipart/form-data">
+            <h:form enctype="multipart/form-data" prependid="false">
+                <!--<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
+
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
                 <p:panel id="basic" header="Kilometros comerciales"  style="margin-bottom:20px">
@@ -42,13 +44,19 @@
                     <p:commandButton value="Generar" action="#{bPBean.generar}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
                                      async="true"/>
+
+
                     <p:panel visible="#{bPBean.visibleGrafica}" id="panel">
                         <p:panel visible="#{bPBean.visibleBarBuses}">
-                            <p:chart type="bar" model="#{bPBean.barBuses}" style="height:300px"/>
+                            <p:chart type="bar" model="#{bPBean.barBuses}" style="height:500px"/>
                         </p:panel>
                         <p:panel visible="#{bPBean.visibleLineBuses}">
-                            <p:chart type="line" model="#{bPBean.lineBuses}" style="height:300px"/>
+                            <p:chart type="line" model="#{bPBean.lineBuses}" style="height:500px"/>
                         </p:panel>
+                        <p:panel visible="#{bPBean.visiblePuntosBuses}">
+                            <p:chart type="bubble" model="#{bPBean.puntosBuses}" style="height:500px"/>
+                        </p:panel>
+
                         <p:panel>
                             <p:panelGrid columns="2">
                                 <p:outputLabel for="grafica" value="Gráfica:" />

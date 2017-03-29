@@ -1,8 +1,11 @@
 package com.tmIndicadores.view;
 
+import com.tmIndicadores.model.entity.Programacion;
 import org.primefaces.model.chart.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service("ChartGenerator")
@@ -11,9 +14,9 @@ public class ChartGenerator {
     public ChartGenerator() {
     }
 
-    public BarChartModel crearGraficaBarraBuses() {
+    public BarChartModel crearGraficaBarraBuses(List<Programacion> programacion) {
         BarChartModel barBuses = new BarChartModel();
-        barBuses = initBarModel();
+        barBuses = initBarModel(programacion);
 
         barBuses.setTitle("Buses Programados");
         barBuses.setLegendPosition("ne");
@@ -24,85 +27,77 @@ public class ChartGenerator {
         Axis yAxis = barBuses.getAxis(AxisType.Y);
         yAxis.setLabel("Buses");
         yAxis.setMin(0);
-        yAxis.setMax(200);
+        yAxis.setMax(programacion.get(0).getBuses()+20);
 
         return barBuses;
 
     }
 
-    public BarChartModel initBarModel() {
+    public BarChartModel initBarModel(List<Programacion> programacion) {
         BarChartModel model = new BarChartModel();
-
         ChartSeries busesDEF = new ChartSeries();
         busesDEF.setLabel("Buses");
-        busesDEF.set("2004", 120);
-        busesDEF.set("2005", 100);
-        busesDEF.set("2006", 44);
-        busesDEF.set("2007", 150);
-        busesDEF.set("2008", 25);
+        for(Programacion prog:programacion){
+            busesDEF.set(prog.getFecha(), prog.getBuses());
+        }
+
         model.addSeries(busesDEF);
 
         return model;
     }
 
-    public LineChartModel crearGraficaLineBuses() {
-        LineChartModel lineModel1 =initLinearModel();
-        lineModel1.setTitle("Linear Chart");
-        lineModel1.setLegendPosition("e");
-        Axis yAxis = lineModel1.getAxis(AxisType.Y);
+    public BubbleChartModel crearGraficaPuntosBuses(List<Programacion> programacion){
+        BubbleChartModel bubbleModel1 = initBubbleModel(programacion);
+        bubbleModel1.setTitle("Bubble Chart");
+        bubbleModel1.getAxis(AxisType.X).setLabel("Price");
+        Axis yAxis = bubbleModel1.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(10);
+        yAxis.setMax(250);
+        yAxis.setLabel("Labels");
 
-        LineChartModel lineModel2 = initCategoryModel();
-        lineModel2.setTitle("Category Chart");
-        lineModel2.setLegendPosition("e");
-        lineModel2.setShowPointLabels(true);
-        lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-        yAxis = lineModel2.getAxis(AxisType.Y);
-        yAxis.setLabel("Births");
-        yAxis.setMin(0);
-        yAxis.setMax(200);
+        return bubbleModel1;
 
-        return lineModel2;
     }
 
-    private LineChartModel initLinearModel() {
-        LineChartModel model = new LineChartModel();
+    private BubbleChartModel initBubbleModel(List<Programacion> programacion){
+        BubbleChartModel model = new BubbleChartModel();
 
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
-
-        series1.set(1, 2);
-        series1.set(2, 1);
-        series1.set(3, 3);
-        series1.set(4, 6);
-        series1.set(5, 8);
-
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
-
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
-
-        model.addSeries(series1);
-        model.addSeries(series2);
+        model.add(new BubbleChartSeries("Acura", 70, 183,2));
+        model.add(new BubbleChartSeries("Alfa Romeo", 45, 92, 2));
+        model.add(new BubbleChartSeries("AM General", 24, 104, 2));
+        model.add(new BubbleChartSeries("Bugatti", 50, 123, 2));
+        model.add(new BubbleChartSeries("BMW", 15, 89, 2));
+        model.add(new BubbleChartSeries("Audi", 40, 180, 2));
+        model.add(new BubbleChartSeries("Aston Martin", 70, 70, 2));
 
         return model;
     }
 
-    private LineChartModel initCategoryModel() {
+    public LineChartModel crearGraficaLineBuses(List<Programacion> programacion) {
+
+        LineChartModel lineModel2 = initCategoryModel(programacion);
+        lineModel2.setTitle("Category Chart");
+        lineModel2.setLegendPosition("e");
+        lineModel2.setShowPointLabels(true);
+        lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Years"));
+        Axis  yAxis = lineModel2.getAxis(AxisType.Y);
+        yAxis.setLabel("Births");
+        yAxis.setMin(0);
+        yAxis.setMax(programacion.get(0).getBuses()+20);
+
+        return lineModel2;
+    }
+
+
+    private LineChartModel initCategoryModel(List<Programacion> programacion) {
         LineChartModel model = new LineChartModel();
 
-        ChartSeries boys = new ChartSeries();
-        boys.setLabel("Boys");
-        boys.set("2004", 120);
-        boys.set("2005", 100);
-        boys.set("2006", 44);
-        boys.set("2007", 150);
-        boys.set("2008", 25);
+        ChartSeries buses = new ChartSeries();
+        buses.setLabel("Buses");
+
+        for(Programacion prog:programacion){
+            buses.set(prog.getFecha().toString(), prog.getBuses());
+        }
 
         ChartSeries girls = new ChartSeries();
         girls.setLabel("Girls");
@@ -112,8 +107,8 @@ public class ChartGenerator {
         girls.set("2007", 90);
         girls.set("2008", 120);
 
-        model.addSeries(boys);
-        model.addSeries(girls);
+        model.addSeries(buses);
+       // model.addSeries(girls);
 
         return model;
     }

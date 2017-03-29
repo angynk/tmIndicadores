@@ -1,16 +1,20 @@
 package com.tmIndicadores.model.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name="usuario")
+@Table(name="programacion_goal")
 public class Programacion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="UsuarioGenerator")
-    @SequenceGenerator(name="UsuarioGenerator", sequenceName = "usuario_id_seq",allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="PGenerator")
+    @SequenceGenerator(name="PGenerator", sequenceName = "programacion_goal_id_seq",allocationSize=1)
     @Column(name = "id")
     private long id;
+
+    @Column(name = "fecha")
+    private Date fecha;
 
     @Column(name = "cuadro")
     private String cuadro;
@@ -18,14 +22,14 @@ public class Programacion {
     @Column(name = "buses")
     private Integer buses;
 
-    @Column(name = "km_comercial")
-    private Integer kmComercial;
+    @Column(name = "km_comerciales")
+    private Double kmComercial;
 
     @Column(name = "km_vacio")
-    private Integer kmVacio;
+    private Double kmVacio;
 
     @Column(name = "tiempo_exp")
-    private Integer tiempoExpedicion;
+    private String tiempoExpedicion;
 
     @Column(name = "exp_comercial")
     private Integer expedicionComercial;
@@ -77,27 +81,27 @@ public class Programacion {
         this.buses = buses;
     }
 
-    public Integer getKmComercial() {
+    public Double getKmComercial() {
         return kmComercial;
     }
 
-    public void setKmComercial(Integer kmComercial) {
+    public void setKmComercial(Double kmComercial) {
         this.kmComercial = kmComercial;
     }
 
-    public Integer getKmVacio() {
+    public Double getKmVacio() {
         return kmVacio;
     }
 
-    public void setKmVacio(Integer kmVacio) {
+    public void setKmVacio(Double kmVacio) {
         this.kmVacio = kmVacio;
     }
 
-    public Integer getTiempoExpedicion() {
+    public String getTiempoExpedicion() {
         return tiempoExpedicion;
     }
 
-    public void setTiempoExpedicion(Integer tiempoExpedicion) {
+    public void setTiempoExpedicion(String tiempoExpedicion) {
         this.tiempoExpedicion = tiempoExpedicion;
     }
 
@@ -155,5 +159,13 @@ public class Programacion {
 
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

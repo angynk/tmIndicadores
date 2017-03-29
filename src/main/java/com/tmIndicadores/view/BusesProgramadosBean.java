@@ -1,6 +1,8 @@
 package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.Util;
+import com.tmIndicadores.controller.servicios.ProgramacionServicios;
+import com.tmIndicadores.model.entity.Programacion;
 import org.primefaces.model.chart.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,13 +35,18 @@ public class BusesProgramadosBean {
 
     private BarChartModel barBuses;
     private LineChartModel lineBuses;
+    private BubbleChartModel puntosBuses;
 
     private boolean visibleBarBuses;
     private boolean visibleGrafica;
     private boolean visibleLineBuses;
+    private boolean visiblePuntosBuses;
 
     @ManagedProperty(value="#{ChartGenerator}")
     private ChartGenerator chartGenerator;
+
+    @ManagedProperty(value="#{ProgramacionServicios}")
+    private ProgramacionServicios programacionServicios;
 
     public BusesProgramadosBean() {
     }
@@ -51,16 +59,32 @@ public class BusesProgramadosBean {
         barBuses = new BarChartModel();
         visibleBarBuses = false;
         visibleGrafica = false;
+        visiblePuntosBuses =false;
         lineBuses = new LineChartModel();
+        puntosBuses = new BubbleChartModel();
+
     }
 
 
     public void generar(){
-        barBuses = chartGenerator.crearGraficaBarraBuses();
-        lineBuses = chartGenerator.crearGraficaLineBuses();
-        visibleGrafica = true;
-        visibleLineBuses = false;
-        visibleBarBuses = true;
+        if(genracionValida()){
+            List<Programacion> programacion=programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+            barBuses = chartGenerator.crearGraficaBarraBuses(programacion);
+            lineBuses = chartGenerator.crearGraficaLineBuses(programacion);
+            puntosBuses =chartGenerator.crearGraficaPuntosBuses(programacion);
+            visibleGrafica = true;
+            visibleLineBuses = false;
+            visibleBarBuses = true;
+            visiblePuntosBuses =false;
+        }
+
+    }
+
+    private boolean genracionValida() {
+        if(fechaInicio!= null && fechaFin!=null && tipologia!=null && periocidad!=null ){
+            return true;
+        }
+        return false;
     }
 
     public void cambioDeGrafica(ValueChangeEvent event){
@@ -69,14 +93,17 @@ public class BusesProgramadosBean {
             if(grafica.equals("Barras")){
                 visibleBarBuses = true;
                 visibleLineBuses = false;
+                visiblePuntosBuses =false;
 
             }else if(grafica.equals("Líneas")){
                 visibleBarBuses = false;
                 visibleLineBuses = true;
+                visiblePuntosBuses =false;
 
             }else if(grafica.equals("Tendencia")){
                 visibleBarBuses = false;
                 visibleLineBuses = false;
+                visiblePuntosBuses =true;
 
             }
         }
@@ -206,25 +233,6 @@ public class BusesProgramadosBean {
         this.chartGenerator = chartGenerator;
     }
 
-//    public String getCambioDeGrafica() {
-//        if(grafica!=null){
-//            if(grafica.equals("Barras")){
-//                visibleBarBuses = true;
-//                visibleLineBuses = false;
-//
-//            }else if(grafica.equals("Líneas")){
-//                visibleBarBuses = false;
-//                visibleLineBuses = true;
-//
-//            }else if(grafica.equals("Tendencia")){
-//                visibleBarBuses = false;
-//                visibleLineBuses = false;
-//
-//            }
-//        }
-//
-//        return cambioDeGrafica;
-//    }
 
     public void setCambioDeGrafica(String cambioDeGrafica) {
         this.cambioDeGrafica = cambioDeGrafica;
@@ -236,5 +244,29 @@ public class BusesProgramadosBean {
 
     public void setLineBuses(LineChartModel lineBuses) {
         this.lineBuses = lineBuses;
+    }
+
+    public BubbleChartModel getPuntosBuses() {
+        return puntosBuses;
+    }
+
+    public void setPuntosBuses(BubbleChartModel puntosBuses) {
+        this.puntosBuses = puntosBuses;
+    }
+
+    public boolean isVisiblePuntosBuses() {
+        return visiblePuntosBuses;
+    }
+
+    public void setVisiblePuntosBuses(boolean visiblePuntosBuses) {
+        this.visiblePuntosBuses = visiblePuntosBuses;
+    }
+
+    public ProgramacionServicios getProgramacionServicios() {
+        return programacionServicios;
+    }
+
+    public void setProgramacionServicios(ProgramacionServicios programacionServicios) {
+        this.programacionServicios = programacionServicios;
     }
 }

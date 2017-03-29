@@ -4,6 +4,7 @@ import com.tmIndicadores.model.entity.Programacion;
 import com.tmIndicadores.model.entity.Usuario;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,8 +48,9 @@ public class ProgramacionDao {
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipologia){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
-        criteria.add(Restrictions.eq("periocidad", periocidad));
+        criteria.add(Restrictions.eq("periodicidad", periocidad));
         criteria.add(Restrictions.eq("tipologia", tipologia));
+        criteria.addOrder(Order.desc("buses"));
         return criteria.list();
     }
 }
