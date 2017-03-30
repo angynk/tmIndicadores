@@ -41,8 +41,8 @@ public class ChartController {
         heapSizeList.add(heapSize/MB);
         usedHeapSizeList.add((heapSize - Runtime.getRuntime().freeMemory())/MB);
 
-        series.add(new Series("Heap Size", heapSizeList));
-        series.add(new Series("Used Heap", usedHeapSizeList));
+//        series.add(new Series("Heap Size", heapSizeList));
+//        series.add(new Series("Used Heap", usedHeapSizeList));
 
         setChartData(new Gson().toJson(series));
 

@@ -43,8 +43,10 @@
                     </h:panelGrid>
                     <p:commandButton value="Generar" action="#{bPBean.generar}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
-                                     async="true"/>
-
+                                     async="true"
+                                     oncomplete="renderRegressionChart('container','area','Sample Chart', '#{chartController.chartData}', '#{chartController.categories}');"
+                                     update="@this" />
+                    <div id="container" style="width: 100%; height: 500px"></div>
 
                     <p:panel visible="#{bPBean.visibleGrafica}" id="panel">
                         <p:panel visible="#{bPBean.visibleBarBuses}">
@@ -82,7 +84,6 @@
                         </h:outputText>
                     </p:panelGrid>
                 </p:dialog>
-
             </h:form>
 
         </ui:define>

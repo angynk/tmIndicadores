@@ -1,25 +1,24 @@
 package com.tmIndicadores.view;
 
-
 import java.util.List;
 
-public class Series {
+
+public class SeriesExtended extends Series{
     private String name;
     private String type;
     private List<List<Double>> data;
 
-    public Series() {
+    public SeriesExtended() {
     }
 
-    public Series(String name, List<List<Double>> data,String type) {
+    public SeriesExtended(String name, List<List<Double>> data,String type) {
         this.name = name;
         this.data = data;
         this.type = type;
     }
 
-    public Series(String name, List<List<Double>>data) {
+    public SeriesExtended(String name, List<List<Double>>data) {
         this.name = name;
         this.data = data;
     }
-
 }

@@ -14,7 +14,7 @@ public class MenuBean {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
             ec.redirect(ec.getRequestContextPath()
-                    + "/secured/busesProgramados.xhtml");
+                    + "/secured/busesChart.xhtml");
         } catch (IOException e) {
             e.printStackTrace();
         }
