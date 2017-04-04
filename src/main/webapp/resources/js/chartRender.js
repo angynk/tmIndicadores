@@ -39,8 +39,9 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         var options = createOptionLine(titulo,tituloX);
         var series = document.getElementById("form:hiddenForLine").value;
         options.series = $.parseJSON(series);
-        var categorias = document.getElementById("form:hiddenCForLine").value;
-        options.xAxis.categories = $.parseJSON(categorias);
+        console.log(series);
+     //   var categorias = document.getElementById("form:hiddenCForLine").value;
+        //options.xAxis.categories = $.parseJSON(categorias);
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
         var options = createOption(divId, chartType, chartTitle, categories);
@@ -110,7 +111,7 @@ function createOptionLine(titulo,tituloX){
         ,
         xAxis: {
         type: 'datetime',
-            categories: [],
+            //categories: [],
             "labels": {
                 formatter: function () {
                     var date = new Date(this.value);

@@ -302,27 +302,56 @@ public class BusesProgramadosBean {
     }
 
     public void generarChartSeries(){
-        List<Programacion> programacion = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
-        generarRegressionChart(programacion);
-        generarLineasChart(programacion);
-        generarBarrasChart(programacion);
+        if(!periocidad.equals("TODOS")){
+            List<Programacion> programacion = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+            generarRegressionChart(programacion);
+            generarLineasChart(programacion);
+            generarBarrasChart(programacion);
+        }else{
+            List<Programacion> programacionHabil = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"HABIL",tipologia);
+            List<Programacion> programacionSabado = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"SABADO",tipologia);
+            List<Programacion> programacionFestivo = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"FESTIVO",tipologia);
+            generarLineasChartPara(programacionHabil,programacionSabado,programacionFestivo);
+        }
+
     }
 
-    public void generarLineasChart(List<Programacion> programacion){
-        List<Series> series = new ArrayList<Series>();
-        List<List<Object>> dataPoints = new ArrayList<>();
-        List<List<String>> categorias = new ArrayList<>();
-        for(Programacion prog: programacion){
-            dataPoints.add(new ArrayList<Object>(Arrays.asList((double)prog.getBuses())));
-            categorias.add(new ArrayList<String>(Arrays.asList(formatoFecha(prog.getFecha()))));
-        }
+    public void generarLineasChartPara(List<Programacion> programacionHabil, List<Programacion> programacionSabado, List<Programacion> programacionFestivo){
         titulo = "Gráfica Buses Programados";
         tituloEjeX = "Número de Buses";
-        series.add(new Series("Buses", dataPoints));
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineas(programacionHabil,"Habil"));
+        series.add(transformarASerieParaLineas(programacionSabado,"Sabado"));
+        series.add(transformarASerieParaLineas(programacionFestivo,"Festivo"));
         setChartSeriesForLine(new Gson().toJson(series));
-        setChartCategoriesForLine(new Gson().toJson(categorias));
     }
 
+
+    public void generarLineasChart(List<Programacion> programacion){
+        titulo = "Gráfica Buses Programados";
+        tituloEjeX = "Número de Buses";
+        List<Series> series = new ArrayList<Series>();
+//        List<List<Object>> dataPoints = new ArrayList<>();
+//        List<List<String>> categorias = new ArrayList<>();
+//        for(Programacion prog: programacion){
+//            dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),(double)prog.getBuses())));
+////            categorias.add(new ArrayList<String>(Arrays.asList(formatoFecha(prog.getFecha()))));
+//        }
+        Series serie = transformarASerieParaLineas(programacion,periocidad);
+        series.add(serie);
+        setChartSeriesForLine(new Gson().toJson(series));
+       // setChartCategoriesForLine(new Gson().toJson(categorias));
+    }
+
+   public Series transformarASerieParaLineas(List<Programacion> programacion,String nombre){
+       List<List<Object>> dataPoints = new ArrayList<>();
+       Series serie = null;
+       for(Programacion prog: programacion){
+           dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),(double)prog.getBuses())));
+       }
+       serie = new Series(nombre, dataPoints);
+       return serie;
+   }
     private String formatoFecha(Date fecha) {
         SimpleDateFormat   format = new SimpleDateFormat("yyyy-MM-dd");
        return format.format(fecha);

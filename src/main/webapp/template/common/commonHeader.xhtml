@@ -15,7 +15,7 @@
 
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a href="#">Indicadore Programación BRT</a>
+                            <a href="#">Indicadores Programación BRT</a>
                         </div>
                         <div>
                             <ul class="nav navbar-nav navbar-right">
@@ -31,14 +31,13 @@
                 <p:megaMenu orientation="horizontal" style="margin-top:30px;">
                     <p:submenu label="Indicadore GOALBUS" icon="ui-icon-script">
                         <p:column>
-                            <p:submenu label="Kilometraje">
-                                <p:menuitem value="KM comerciales" action="#{menu.refreshBusesProgramados}" />
-                                <p:menuitem value="KM vacío final" action="#{menu.refreshChart}" />
-                                <p:menuitem value="KM vacío inicial" action="#{menu.refreshBusesProgramados}"/>
+                            <p:submenu label="Indicadores">
+                                <p:menuitem value="Visualizar Indicadores" action="#{menu.refreshBusesProgramados}" />
+                                <p:menuitem value="Resumen Indicadores" action="#{menu.refreshChart}" />
                             </p:submenu>
-                            <p:submenu label="KM Vacios">
-                                <p:menuitem value="Nueva Tabla Maestra" action="#{menu.refreshBusesProgramados}" />
-                                <p:menuitem value="Buscar Tabla Maestra" action="#{menu.refreshBusesProgramados}" />
+                            <p:submenu label="Cargar Indicadores">
+                                <p:menuitem value="Actualizar datos" action="#{menu.refreshBusesProgramados}" />
+
                             </p:submenu>
                         </p:column>
                     </p:submenu>
