@@ -394,10 +394,7 @@ public class BusesProgramadosBean {
        serie = new Series(nombre, dataPoints);
        return serie;
    }
-    private String formatoFecha(Date fecha) {
-        SimpleDateFormat   format = new SimpleDateFormat("yyyy-MM-dd");
-       return format.format(fecha);
-    }
+
 
     public void generarBarrasChart(List<Programacion> programacion){
             List<String> categorias = new ArrayList<String>();

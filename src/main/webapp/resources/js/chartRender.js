@@ -37,9 +37,18 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         var titulo = document.getElementById("form:hiddenTittle").value;
         var tituloX = document.getElementById("form:hiddenTittleX").value;
         var options = createOptionLine(titulo,tituloX);
-        var series = document.getElementById("form:hiddenForLine").value;
-        options.series = $.parseJSON(series);
+        var series = $.parseJSON(document.getElementById("form:hiddenForLine").value);
         console.log(series);
+        for(i = 0; i < series.length; i++){
+            var data = series[i].data;
+            for (j = 0; j < data.length; j++){
+                var date = new Date(data[j][0]);
+                data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
+            }
+        }
+        console.log(series);
+        options.series = series;
+        //console.log(series);
      //   var categorias = document.getElementById("form:hiddenCForLine").value;
         //options.xAxis.categories = $.parseJSON(categorias);
         var chart = new Highcharts.Chart(divId,options);
@@ -112,12 +121,12 @@ function createOptionLine(titulo,tituloX){
         xAxis: {
         type: 'datetime',
             //categories: [],
-            "labels": {
-                formatter: function () {
-                    var date = new Date(this.value);
-                    return Highcharts.dateFormat('%d %b %Y', date);
-                }
-            },
+            //"labels": {
+            //    formatter: function () {
+            //        var date = new Date(this.value);
+            //        return Highcharts.dateFormat('%d %b %Y', date);
+            //    }
+            //},
             title: {
             text: 'Fecha'
         }
