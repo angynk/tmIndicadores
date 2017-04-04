@@ -41,6 +41,15 @@
                         <f:selectItem itemLabel="Con Saltos" itemValue="S" />
                         <f:selectItem itemLabel="Con Repeticiones" itemValue="R" />
                     </p:selectOneMenu>
+                    <p:outputLabel for="indicador" value="Indicador:" />
+                    <p:selectOneMenu id="indicador" value="#{bPBean.indicador}" style="width:125px">
+                        <f:selectItem itemLabel="Numero de Buses" itemValue="NB" />
+                        <f:selectItem itemLabel="KM Comerciales" itemValue="KC" />
+                        <f:selectItem itemLabel="KM Vacios" itemValue="KV" />
+                        <f:selectItem itemLabel="EXP Comercial" itemValue="EC" />
+                        <f:selectItem itemLabel="% Vacios" itemValue="PV" />
+                        <f:selectItem itemLabel="Lineas Cargadas" itemValue="LC" />
+                    </p:selectOneMenu>
                 </h:panelGrid>
                 <p:commandButton value="Generar" action="#{bPBean.generar}"
                                  icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"

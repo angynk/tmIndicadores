@@ -5,24 +5,14 @@ import com.tmIndicadores.controller.Util;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
 import org.primefaces.model.chart.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +29,7 @@ public class BusesProgramadosBean {
     private String periocidad;
     private String tipologia;
     private String tipoGrafica;
+    private String indicador;
     private String grafica;
     private String representacion;
     private String titulo;
@@ -93,6 +84,7 @@ public class BusesProgramadosBean {
         if(genracionValida()){
             generarChartSeries();
             visibleGrafica = true;
+            grafica = "Seleccione la grafica";
         }else{
             addMessage(FacesMessage.SEVERITY_INFO,"Complete los datos para generar la grafica", "");
         }
@@ -317,19 +309,19 @@ public class BusesProgramadosBean {
     }
 
     public void generarLineasChartPara(List<Programacion> programacionHabil, List<Programacion> programacionSabado, List<Programacion> programacionFestivo){
-        titulo = "Gráfica Buses Programados";
+        titulo = definirTituloGrafica(indicador);
         tituloEjeX = "Número de Buses";
         List<Series> series = new ArrayList<Series>();
-        series.add(transformarASerieParaLineas(programacionHabil,"Habil"));
-        series.add(transformarASerieParaLineas(programacionSabado,"Sabado"));
-        series.add(transformarASerieParaLineas(programacionFestivo,"Festivo"));
+        series.add(transformarASerieParaLineas(programacionHabil,"Habil",indicador));
+        series.add(transformarASerieParaLineas(programacionSabado,"Sabado",indicador));
+        series.add(transformarASerieParaLineas(programacionFestivo,"Festivo",indicador));
         setChartSeriesForLine(new Gson().toJson(series));
     }
 
 
     public void generarLineasChart(List<Programacion> programacion){
-        titulo = "Gráfica Buses Programados";
-        tituloEjeX = "Número de Buses";
+        titulo = definirTituloGrafica(indicador);
+        tituloEjeX = definirTituloX(indicador);
         List<Series> series = new ArrayList<Series>();
 //        List<List<Object>> dataPoints = new ArrayList<>();
 //        List<List<String>> categorias = new ArrayList<>();
@@ -337,17 +329,67 @@ public class BusesProgramadosBean {
 //            dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),(double)prog.getBuses())));
 ////            categorias.add(new ArrayList<String>(Arrays.asList(formatoFecha(prog.getFecha()))));
 //        }
-        Series serie = transformarASerieParaLineas(programacion,periocidad);
+        Series serie = transformarASerieParaLineas(programacion,periocidad,indicador);
         series.add(serie);
         setChartSeriesForLine(new Gson().toJson(series));
        // setChartCategoriesForLine(new Gson().toJson(categorias));
     }
 
-   public Series transformarASerieParaLineas(List<Programacion> programacion,String nombre){
+    private String definirTituloGrafica(String tipoIndicador) {
+        String titulo = "Gráfica ";
+        if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
+            titulo = titulo +IndicadorEnum.NUMERO_BUSES.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
+            titulo = titulo +IndicadorEnum.KM_COMERCIALES.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
+            titulo = titulo +IndicadorEnum.KM_VACIO.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
+            titulo = titulo +IndicadorEnum.EXP_COMERCIAL.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
+            titulo = titulo +IndicadorEnum.POR_VACIOS.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
+            titulo = titulo +IndicadorEnum.LINEA_CARGADA.getNombre();
+        }
+        return titulo;
+    }
+
+    private String definirTituloX(String tipoIndicador) {
+        String titulo = "Número de ";
+        if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
+            titulo = titulo +IndicadorEnum.NUMERO_BUSES.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
+            titulo = titulo +IndicadorEnum.KM_COMERCIALES.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
+            titulo = titulo +IndicadorEnum.KM_VACIO.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
+            titulo = titulo +IndicadorEnum.EXP_COMERCIAL.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
+            titulo = titulo +IndicadorEnum.POR_VACIOS.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
+            titulo = titulo +IndicadorEnum.LINEA_CARGADA.getNombre();
+        }
+        return titulo;
+    }
+
+    public Series transformarASerieParaLineas(List<Programacion> programacion,String nombre,String tipoIndicador){
        List<List<Object>> dataPoints = new ArrayList<>();
        Series serie = null;
        for(Programacion prog: programacion){
-           dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),(double)prog.getBuses())));
+           Object valor = null;
+           if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
+               valor = (double)prog.getBuses();
+           }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
+               valor = prog.getKmComercial();
+           }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
+               valor =  prog.getKmVacio();
+           }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
+               valor = (double) prog.getExpedicionComercial();
+           }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
+               valor = prog.getPorcentajeVacioFinal();
+           }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
+               valor = prog.getLineasCargadas();
+           }
+           dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
        }
        serie = new Series(nombre, dataPoints);
        return serie;
@@ -485,5 +527,13 @@ public class BusesProgramadosBean {
 
     public void setChartCategoriesForLine(String chartCategoriesForLine) {
         this.chartCategoriesForLine = chartCategoriesForLine;
+    }
+
+    public String getIndicador() {
+        return indicador;
+    }
+
+    public void setIndicador(String indicador) {
+        this.indicador = indicador;
     }
 }
