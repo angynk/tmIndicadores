@@ -8,10 +8,21 @@ import org.primefaces.model.chart.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,13 +33,14 @@ import java.util.List;
 @ViewScoped
 public class BusesProgramadosBean {
 
-    private String fechaInicio;
-    private String fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
 
     private String periocidad;
     private String tipologia;
     private String tipoGrafica;
     private String grafica;
+    private String representacion;
 
     private String cambioDeGrafica;
 
@@ -75,20 +87,19 @@ public class BusesProgramadosBean {
 
 
     public void generar(){
-        visibleGrafica = true;
-//        if(genracionValida()){
-//            List<Programacion> programacion=programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
-//            barBuses = chartGenerator.crearGraficaBarraBuses(programacion);
-//            lineBuses = chartGenerator.crearGraficaLineBuses(programacion);
-//            puntosBuses =chartGenerator.crearGraficaPuntosBuses(programacion);
-//            visibleGrafica = true;
-//            visibleLineBuses = false;
-//            visibleBarBuses = true;
-//            visiblePuntosBuses =false;
-//        }
+        if(genracionValida()){
+            generarChartSeries();
+            visibleGrafica = true;
+        }else{
+            addMessage(FacesMessage.SEVERITY_INFO,"Complete los datos para generar la grafica", "");
+        }
+
 
     }
-
+    public void addMessage(FacesMessage.Severity severity , String summary, String detail) {
+        FacesMessage message = new FacesMessage(severity, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
     private boolean genracionValida() {
         if(fechaInicio!= null && fechaFin!=null && tipologia!=null && periocidad!=null ){
             return true;
@@ -262,36 +273,44 @@ public class BusesProgramadosBean {
         this.programacionServicios = programacionServicios;
     }
 
-    public String getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(String fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 
     public String getChartSeries() {
-        generarChartSeries();
-        return chartSeries;
+//        if(genracionValida()){
+            //generarChartSeries();
+            if (chartSeries != null )
+            return chartSeries;
+//       }
+        return "[]";
     }
 
     public void generarChartSeries(){
-        generarRegressionChart();
-        generarLineasChart();
-        generarBarrasChart();
+        List<Programacion> programacion = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+        generarRegressionChart(programacion);
+        generarLineasChart(programacion);
+        generarBarrasChart(programacion);
     }
 
-    public void generarLineasChart(){
+    public void generarLineasChart(List<Programacion> programacion){
         List<Series> series = new ArrayList<Series>();
         List<List<Double>> dataPoints = new ArrayList<>();
+//        for(Programacion prog: programacion){
+//            dataPoints.add(new ArrayList<Double>(Arrays.asList((double)prog.getBuses())));
+//        }
         dataPoints.add(new ArrayList<Double>(Arrays.asList(43934.0)));
         dataPoints.add(new ArrayList<Double>(Arrays.asList(52503.0)));
         dataPoints.add(new ArrayList<Double>(Arrays.asList(57177.0)));
@@ -303,7 +322,7 @@ public class BusesProgramadosBean {
         setChartSeriesForLine(new Gson().toJson(series));
     }
 
-    public void generarBarrasChart(){
+    public void generarBarrasChart(List<Programacion> programacion){
             List<String> categorias = new ArrayList<String>();
             categorias.add("Jan");
             categorias.add("Feb");
@@ -323,7 +342,7 @@ public class BusesProgramadosBean {
     }
 
 
-    public void generarRegressionChart(){
+    public void generarRegressionChart(List<Programacion> programacion){
         List<Series> series = new ArrayList<Series>();
 
         List<List<Double>> dataPoints = new ArrayList<>();
@@ -366,8 +385,32 @@ public class BusesProgramadosBean {
         this.chartSeries = chartSeries;
     }
 
+
+    public void invocarMetodo (){
+        System.out.println("");
+//        ScriptEngineManager manager = new ScriptEngineManager();
+//        ScriptEngine engine = manager.getEngineByName("JavaScript");
+//// read script file
+//        try {
+//            engine.eval(Files.newBufferedReader(Paths.get("C:/Scripts/Jsfunctions.js"), StandardCharsets.UTF_8));
+//            Invocable inv = (Invocable) engine;
+//// call function from script file
+//            inv.invokeFunction("renderChart", "container","area","Sample Chart", chartSeries, "");
+//        } catch (ScriptException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
+
+
+    }
     public String getChartSeriesForLine() {
-        return chartSeriesForLine;
+//        if(genracionValida()){
+            return chartSeriesForLine;
+//        }
+//        return "[]";
     }
 
     public void setChartSeriesForLine(String chartSeriesForLine) {
@@ -375,7 +418,10 @@ public class BusesProgramadosBean {
     }
 
     public String getChartSeriesForBar() {
-        return chartSeriesForBar;
+//        if(genracionValida()){
+            return chartSeriesForBar;
+//        }
+//        return "[]";
     }
 
     public void setChartSeriesForBar(String chartSeriesForBar) {
@@ -383,10 +429,22 @@ public class BusesProgramadosBean {
     }
 
     public String getChartCategoriesForBar() {
-        return chartCategoriesForBar;
+
+//        if(genracionValida()){
+            return chartCategoriesForBar;
+//        }
+//        return "[]";
     }
 
     public void setChartCategoriesForBar(String chartCategoriesForBar) {
         this.chartCategoriesForBar = chartCategoriesForBar;
+    }
+
+    public String getRepresentacion() {
+        return representacion;
+    }
+
+    public void setRepresentacion(String representacion) {
+        this.representacion = representacion;
     }
 }

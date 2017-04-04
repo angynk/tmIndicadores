@@ -16,12 +16,13 @@
 
 
             <h:form  id="form">
+                <p:growl id="message" showDetail="true" />
                <p:panel id="basic" header="Kilometros comerciales"  style="margin-bottom:20px">
                 <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                     <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
-                    <p:inputText id="button" value="#{bPBean.fechaInicio}" showOn="button" />
+                    <p:calendar id="button" value="#{bPBean.fechaInicio}" showOn="button" />
                     <p:outputLabel for="buttonV" value="Fecha Fin (DD-MM-AAAA):" />
-                    <p:inputText id="buttonV" value="#{bPBean.fechaFin}" showOn="button" />
+                    <p:calendar id="buttonV" value="#{bPBean.fechaFin}" showOn="button" />
                     <p:outputLabel for="periocidad" value="Tipo Día:" />
                     <p:selectOneMenu id="periocidad" value="#{bPBean.periocidad}" style="width:125px">
                         <f:selectItem itemLabel="Habil" itemValue="HABIL" />
@@ -42,29 +43,35 @@
                 </h:panelGrid>
                 <p:commandButton value="Generar" action="#{bPBean.generar}"
                                  icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
-                                 oncomplete="renderChart('container','area','Sample Chart', '#{bPBean.chartSeries}', '#{chartController.categories}');"
-                                 update="@this"
-                />
-                <p:panel  id="panel">
+                >
+                    <!--<f:ajax execute="@form" render="form" />-->
+                </p:commandButton>
+
+                <p:outputPanel  id="panel" autoUpdate="true" >
                     <h:inputHidden id="hidden" value="#{bPBean.chartSeries}"/>
                     <h:inputHidden id="hiddenForLine" value="#{bPBean.chartSeriesForLine}"/>
                     <h:inputHidden id="hiddenCForBar" value="#{bPBean.chartCategoriesForBar}"/>
                     <h:inputHidden id="hiddenSForBar" value="#{bPBean.chartSeriesForBar}"/>
-                    <div id="container" style="width: 100%; height: 500px"></div>
-                    <p:panel>
+                    <p:remoteCommand name="myCommand" actionListener="#{bPBean.generarChartSeries}" style="display: none;" />
+
+                    <p:panel visible="#{bPBean.visibleGrafica}">
                         <p:panelGrid columns="2">
                             <p:outputLabel for="grafica" value="Gráfica:" />
                             <p:selectOneMenu id="grafica" value="#{bPBean.grafica}" style="width:125px"
-                                             onchange="renderChartLine('container','area','Sample Chart', '#{bPBean.chartSeriesForLine}', '#{chartController.categories}',this.value);" >
+                                             onchange="renderChartLine('container','area','Sample Chart', '#{bPBean.chartSeriesForLine}', '#{chartController.categories}',this.value)" >
+                                <f:selectItem itemLabel="Seleccione" itemValue="Seleccione la grafica" />
                                 <f:selectItem itemLabel="Tendencia" itemValue="Tendencia" />
                                 <f:selectItem itemLabel="Barras" itemValue="Barras" />
                                 <f:selectItem itemLabel="Líneas" itemValue="Lineas" />
 
 
                             </p:selectOneMenu>
+
                         </p:panelGrid>
                     </p:panel>
-                </p:panel>
+                    <div id="container" style="width: 100%; height: 500px"></div>
+                </p:outputPanel>
+
 
 
 
@@ -73,8 +80,8 @@
 
 
             <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>-->
-            <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-            <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
+            <script src="../resources/js/highcharts.js" type="text/javascript"></script>
+            <script src="../resources/js/exporting.js" type="text/javascript"></script>
             <script type="text/javascript" src="../resources/js/chartRender.js">
             </script>
 

@@ -1,7 +1,17 @@
 function renderChart(divId, chartType, chartTitle, chartData, categories){
-    var options = createOption(divId, chartType, chartTitle, categories);
-    options.series = $.parseJSON(chartData);
-    var chart = new Highcharts.Chart(divId,options);
+    console.log("entre");
+    console.log(chartData);
+    if(chartData!=null){
+        var options = createOption(divId, chartType, chartTitle, categories);
+        options.series = $.parseJSON(chartData);
+        console.log(chartData);
+        var series = document.getElementById("form:hidden").value;
+        console.log(series);
+        console.log("NOOO");
+        console.log( document.getElementById("form:hidden"));
+        var chart = new Highcharts.Chart(divId,options);
+    }
+
 }
 
 function createOption(divId, chartType, chartTitle, categories){
@@ -26,6 +36,7 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
     if(tipoGrafica == 'Lineas'){
         var options = createOptionLine();
         var series = document.getElementById("form:hiddenForLine").value;
+        console.log(series);
         options.series = $.parseJSON(series);
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
@@ -36,6 +47,7 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
     }else if(tipoGrafica == 'Barras'){
         var options = createOptionBar();
         var series = document.getElementById("form:hiddenSForBar").value;
+        console.log(series);
         options.series = $.parseJSON(series);
         var categories = document.getElementById("form:hiddenCForBar").value;
         options.xAxis.categories = $.parseJSON(categories);
