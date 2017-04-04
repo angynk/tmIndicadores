@@ -20,11 +20,11 @@ public class MenuBean {
         }
     }
 
-    public void refreshChart(){
+    public void refreshResumen(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
             ec.redirect(ec.getRequestContextPath()
-                    + "/secured/extendedChart.xhtml");
+                    + "/secured/resumenIndicadores.xhtml");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.tmIndicadores.model.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -52,6 +53,9 @@ public class Programacion {
 
     @Column(name = "tipologia")
     private String tipologia;
+
+    @Transient
+    private String fechaFormatted;
 
 
     public Programacion() {
@@ -167,5 +171,14 @@ public class Programacion {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public String getFechaFormatted() {
+            SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+            return dt1.format(fecha);
+    }
+
+    public void setFechaFormatted(String fechaFormatted) {
+        this.fechaFormatted = fechaFormatted;
     }
 }
