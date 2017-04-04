@@ -41,6 +41,8 @@ public class BusesProgramadosBean {
     private String tipoGrafica;
     private String grafica;
     private String representacion;
+    private String titulo;
+    private String tituloEjeX;
 
     private String cambioDeGrafica;
 
@@ -59,6 +61,7 @@ public class BusesProgramadosBean {
 
     private String chartSeries;
     private String chartSeriesForLine;
+    private String chartCategoriesForLine;
     private String chartSeriesForBar;
     private String chartCategoriesForBar;
 
@@ -307,19 +310,22 @@ public class BusesProgramadosBean {
 
     public void generarLineasChart(List<Programacion> programacion){
         List<Series> series = new ArrayList<Series>();
-        List<List<Double>> dataPoints = new ArrayList<>();
-//        for(Programacion prog: programacion){
-//            dataPoints.add(new ArrayList<Double>(Arrays.asList((double)prog.getBuses())));
-//        }
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(43934.0)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(52503.0)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(57177.0)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(69658.0)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(97031.0)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(119931.0)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(137133.0)));
-        series.add(new Series("Instalacion", dataPoints));
+        List<List<Object>> dataPoints = new ArrayList<>();
+        List<List<String>> categorias = new ArrayList<>();
+        for(Programacion prog: programacion){
+            dataPoints.add(new ArrayList<Object>(Arrays.asList((double)prog.getBuses())));
+            categorias.add(new ArrayList<String>(Arrays.asList(formatoFecha(prog.getFecha()))));
+        }
+        titulo = "Gráfica Buses Programados";
+        tituloEjeX = "Número de Buses";
+        series.add(new Series("Buses", dataPoints));
         setChartSeriesForLine(new Gson().toJson(series));
+        setChartCategoriesForLine(new Gson().toJson(categorias));
+    }
+
+    private String formatoFecha(Date fecha) {
+        SimpleDateFormat   format = new SimpleDateFormat("yyyy-MM-dd");
+       return format.format(fecha);
     }
 
     public void generarBarrasChart(List<Programacion> programacion){
@@ -336,7 +342,7 @@ public class BusesProgramadosBean {
         dataPoints.add(new ArrayList<Double>(Arrays.asList(71.5)));
         dataPoints.add(new ArrayList<Double>(Arrays.asList(106.4)));
         dataPoints.add(new ArrayList<Double>(Arrays.asList(129.2)));
-        series.add(new Series("Tokyo", dataPoints));
+//        series.add(new Series("Tokyo", dataPoints));
         setChartSeriesForBar(new Gson().toJson(series));
 
     }
@@ -386,26 +392,6 @@ public class BusesProgramadosBean {
     }
 
 
-    public void invocarMetodo (){
-        System.out.println("");
-//        ScriptEngineManager manager = new ScriptEngineManager();
-//        ScriptEngine engine = manager.getEngineByName("JavaScript");
-//// read script file
-//        try {
-//            engine.eval(Files.newBufferedReader(Paths.get("C:/Scripts/Jsfunctions.js"), StandardCharsets.UTF_8));
-//            Invocable inv = (Invocable) engine;
-//// call function from script file
-//            inv.invokeFunction("renderChart", "container","area","Sample Chart", chartSeries, "");
-//        } catch (ScriptException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (NoSuchMethodException e) {
-//            e.printStackTrace();
-//        }
-
-
-    }
     public String getChartSeriesForLine() {
 //        if(genracionValida()){
             return chartSeriesForLine;
@@ -446,5 +432,29 @@ public class BusesProgramadosBean {
 
     public void setRepresentacion(String representacion) {
         this.representacion = representacion;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getTituloEjeX() {
+        return tituloEjeX;
+    }
+
+    public void setTituloEjeX(String tituloEjeX) {
+        this.tituloEjeX = tituloEjeX;
+    }
+
+    public String getChartCategoriesForLine() {
+        return chartCategoriesForLine;
+    }
+
+    public void setChartCategoriesForLine(String chartCategoriesForLine) {
+        this.chartCategoriesForLine = chartCategoriesForLine;
     }
 }

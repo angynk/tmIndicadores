@@ -34,10 +34,13 @@ function createOption(divId, chartType, chartTitle, categories){
 
 function renderChartLine(divId, chartType, chartTitle, chartData, categories,tipoGrafica){
     if(tipoGrafica == 'Lineas'){
-        var options = createOptionLine();
+        var titulo = document.getElementById("form:hiddenTittle").value;
+        var tituloX = document.getElementById("form:hiddenTittleX").value;
+        var options = createOptionLine(titulo,tituloX);
         var series = document.getElementById("form:hiddenForLine").value;
-        console.log(series);
         options.series = $.parseJSON(series);
+        var categorias = document.getElementById("form:hiddenCForLine").value;
+        options.xAxis.categories = $.parseJSON(categorias);
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
         var options = createOption(divId, chartType, chartTitle, categories);
@@ -99,31 +102,35 @@ function createOptionBar(){
     return options;
 }
 
-function createOptionLine(){
+function createOptionLine(titulo,tituloX){
     var options = {
         title: {
-            text: 'Solar Employment Growth by Sector, 2010-2016'
-        },
-
-        subtitle: {
-            text: 'Source: thesolarfoundation.com'
-        },
+            text: titulo
+        }
+        ,
+        xAxis: {
+        type: 'datetime',
+            categories: [],
+            "labels": {
+                formatter: function () {
+                    var date = new Date(this.value);
+                    return Highcharts.dateFormat('%d %b %Y', date);
+                }
+            },
+            title: {
+            text: 'Fecha'
+        }
+    },
 
         yAxis: {
             title: {
-                text: 'Number of Employees'
+                text: tituloX
             }
         },
         legend: {
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'middle'
-        },
-
-        plotOptions: {
-            series: {
-                pointStart: 2010
-            }
         },
 
         series: []};

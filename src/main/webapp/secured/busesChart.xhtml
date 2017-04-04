@@ -50,8 +50,11 @@
                 <p:outputPanel  id="panel" autoUpdate="true" >
                     <h:inputHidden id="hidden" value="#{bPBean.chartSeries}"/>
                     <h:inputHidden id="hiddenForLine" value="#{bPBean.chartSeriesForLine}"/>
+                    <h:inputHidden id="hiddenCForLine" value="#{bPBean.chartCategoriesForLine}"/>
                     <h:inputHidden id="hiddenCForBar" value="#{bPBean.chartCategoriesForBar}"/>
                     <h:inputHidden id="hiddenSForBar" value="#{bPBean.chartSeriesForBar}"/>
+                    <h:inputHidden id="hiddenTittle" value="#{bPBean.titulo}"/>
+                    <h:inputHidden id="hiddenTittleX" value="#{bPBean.tituloEjeX}"/>
                     <p:remoteCommand name="myCommand" actionListener="#{bPBean.generarChartSeries}" style="display: none;" />
 
                     <p:panel visible="#{bPBean.visibleGrafica}">

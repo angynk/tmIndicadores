@@ -50,7 +50,7 @@ public class ProgramacionDao {
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
         criteria.add(Restrictions.eq("periodicidad", periocidad));
         criteria.add(Restrictions.eq("tipologia", tipologia));
-        criteria.addOrder(Order.desc("buses"));
+        criteria.addOrder(Order.asc("fecha"));
         return criteria.list();
     }
 }
