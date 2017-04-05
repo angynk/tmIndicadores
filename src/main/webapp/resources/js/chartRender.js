@@ -14,19 +14,36 @@ function renderChart(divId, chartType, chartTitle, chartData, categories){
 
 }
 
-function createOption(divId, chartType, chartTitle, categories){
+function createOption(titulo,ejeX){
     var options = {
+        chart: {
+            type: 'scatter'
+        },
         xAxis: {
-            min: -0.5,
-            max: 5.5
+            type: 'datetime',
+            title: {
+                text: 'Fecha'
+            },
+            startOnTick: true,
+            endOnTick: true,
         },
         yAxis: {
-            min: 0
+            title: {
+                text: ejeX
+            }
         },
         title: {
-            text: 'Scatter plot with regression line'
+            text: titulo
         },
-        series: []
+        series: [{
+            regression: true ,
+            "regressionSettings": {"type": 'linear'},
+            name: 'habil',
+            type :'scatter',
+            data :[]}]
+        //data:[  [1, 1],
+        //    [2, 3],
+        //    [3, 9]]}]
     };
 
     return options;
@@ -38,7 +55,6 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         var tituloX = document.getElementById("form:hiddenTittleX").value;
         var options = createOptionLine(titulo,tituloX);
         var series = $.parseJSON(document.getElementById("form:hiddenForLine").value);
-        console.log(series);
         for(i = 0; i < series.length; i++){
             var data = series[i].data;
             for (j = 0; j < data.length; j++){
@@ -46,16 +62,25 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
                 data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
             }
         }
-        console.log(series);
         options.series = series;
-        //console.log(series);
-     //   var categorias = document.getElementById("form:hiddenCForLine").value;
-        //options.xAxis.categories = $.parseJSON(categorias);
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
-        var options = createOption(divId, chartType, chartTitle, categories);
-        var series = document.getElementById("form:hidden").value;
-        options.series = $.parseJSON(series);
+        var titulo = document.getElementById("form:hiddenTittle").value;
+        var ejeX = document.getElementById("form:hiddenTittleX").value;
+        var options = createOption(titulo,ejeX);
+        var series =  $.parseJSON(document.getElementById("form:hidden").value);
+        for(i = 0; i < series.length; i++){
+            var data = series[i].data;
+            for (j = 0; j < data.length; j++){
+                var date = new Date(data[j][0]);
+                data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
+            }
+        }
+        options.series[0].data =series[0].data;
+        console.log(document.getElementById("form:hidden").value);
+        //options.series.regression = true;
+        //options.series.regression = true;
+        console.log(JSON.stringify(options));
         var chart = new Highcharts.Chart(divId,options);
     }else if(tipoGrafica == 'Barras'){
         var options = createOptionBar();
@@ -120,13 +145,6 @@ function createOptionLine(titulo,tituloX){
         ,
         xAxis: {
         type: 'datetime',
-            //categories: [],
-            //"labels": {
-            //    formatter: function () {
-            //        var date = new Date(this.value);
-            //        return Highcharts.dateFormat('%d %b %Y', date);
-            //    }
-            //},
             title: {
             text: 'Fecha'
         }

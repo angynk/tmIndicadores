@@ -6,6 +6,8 @@ import java.util.List;
 public class Series {
     private String name;
     private String type;
+//    private boolean regression;
+//    private RegressionSettings regressionSettings;
     private List<List<Object>> data;
 
     public Series() {
@@ -26,5 +28,22 @@ public class Series {
         this.name = name;
         this.data = data;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 
 }
