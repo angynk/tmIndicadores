@@ -451,30 +451,9 @@ public class BusesProgramadosBean {
         dataPoints.add(point1);
         dataPoints.add(point2);
 
-
-//        List<List<Double>> dataRegressionLine = new ArrayList<>();
-//        List<Double> point= new ArrayList<Double>(Arrays.asList(1.0));
-//        List<Double> point7= new ArrayList<Double>(Arrays.asList(1.5));
-//        List<Double> point3= new ArrayList<Double>(Arrays.asList(2.8));
-//        List<Double> point4= new ArrayList<Double>(Arrays.asList(3.5));
-//        List<Double> point5= new ArrayList<Double>(Arrays.asList(3.9));
-//        List<Double> point6= new ArrayList<Double>(Arrays.asList(4.2));
-//
-//
-//        dataRegressionLine.add(point);
-//        dataRegressionLine.add(point7);
-//        dataRegressionLine.add(point3);
-//        dataRegressionLine.add(point4);
-//        dataRegressionLine.add(point5);
-//        dataRegressionLine.add(point6);
         Series serie = transformarASerieParaLineas(programacion,periocidad,indicador);
         serie.setType("scatter");
-//        serie.setRegression(true);
-//        serie.setRegressionSettings(new RegressionSettings("linear","rgba(223, 83, 83, .9)"));
         series.add(serie);
-
-     //  series.add(new Series("Regression Line", dataPoints,"line"));
-       // series.add(new Series("Observations", dataRegressionLine,"scatter"));
 
         setChartSeries(new Gson().toJson(series));
     }
@@ -493,10 +472,7 @@ public class BusesProgramadosBean {
     }
 
     public String getChartSeriesForBar() {
-//        if(genracionValida()){
             return chartSeriesForBar;
-//        }
-//        return "[]";
     }
 
     public void setChartSeriesForBar(String chartSeriesForBar) {
@@ -504,11 +480,7 @@ public class BusesProgramadosBean {
     }
 
     public String getChartCategoriesForBar() {
-
-//        if(genracionValida()){
             return chartCategoriesForBar;
-//        }
-//        return "[]";
     }
 
     public void setChartCategoriesForBar(String chartCategoriesForBar) {

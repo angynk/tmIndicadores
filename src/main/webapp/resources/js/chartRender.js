@@ -49,19 +49,25 @@ function createOption(titulo,ejeX){
     return options;
 };
 
+function convertDateToUTC(series){
+    for(i = 0; i < series.length; i++){
+        var data = series[i].data;
+        for (j = 0; j < data.length; j++){
+            var date = new Date(data[j][0]);
+            data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
+        }
+    }
+
+    return series;
+}
+
 function renderChartLine(divId, chartType, chartTitle, chartData, categories,tipoGrafica){
     if(tipoGrafica == 'Lineas'){
         var titulo = document.getElementById("form:hiddenTittle").value;
         var tituloX = document.getElementById("form:hiddenTittleX").value;
         var options = createOptionLine(titulo,tituloX);
         var series = $.parseJSON(document.getElementById("form:hiddenForLine").value);
-        for(i = 0; i < series.length; i++){
-            var data = series[i].data;
-            for (j = 0; j < data.length; j++){
-                var date = new Date(data[j][0]);
-                data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
-            }
-        }
+        series = convertDateToUTC(series);
         options.series = series;
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
@@ -69,30 +75,15 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         var ejeX = document.getElementById("form:hiddenTittleX").value;
         var options = createOption(titulo,ejeX);
         var series =  $.parseJSON(document.getElementById("form:hidden").value);
-        for(i = 0; i < series.length; i++){
-            var data = series[i].data;
-            for (j = 0; j < data.length; j++){
-                var date = new Date(data[j][0]);
-                data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
-            }
-        }
+        series = convertDateToUTC(series);
         options.series[0].data =series[0].data;
-        console.log(document.getElementById("form:hidden").value);
-        console.log(JSON.stringify(options));
         var chart = new Highcharts.Chart(divId,options);
     }else if(tipoGrafica == 'Barras'){
         var titulo = document.getElementById("form:hiddenTittle").value;
         var ejeX = document.getElementById("form:hiddenTittleX").value;
         var options = createOptionBar(titulo,ejeX);
         var series = $.parseJSON(document.getElementById("form:hiddenSForBar").value);
-        for(i = 0; i < series.length; i++){
-            var data = series[i].data;
-            for (j = 0; j < data.length; j++){
-                var date = new Date(data[j][0]);
-                data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
-            }
-        }
-        console.log(series);
+        series = convertDateToUTC(series);
         options.series = series;
         var categories = document.getElementById("form:hiddenCForBar").value;
         var chart = new Highcharts.Chart(divId,options);
