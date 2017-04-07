@@ -78,17 +78,21 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         }
         options.series[0].data =series[0].data;
         console.log(document.getElementById("form:hidden").value);
-        //options.series.regression = true;
-        //options.series.regression = true;
         console.log(JSON.stringify(options));
         var chart = new Highcharts.Chart(divId,options);
     }else if(tipoGrafica == 'Barras'){
         var options = createOptionBar();
-        var series = document.getElementById("form:hiddenSForBar").value;
+        var series = $.parseJSON(document.getElementById("form:hiddenSForBar").value);
+        for(i = 0; i < series.length; i++){
+            var data = series[i].data;
+            for (j = 0; j < data.length; j++){
+                var date = new Date(data[j][0]);
+                data[j][0]= Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())
+            }
+        }
         console.log(series);
-        options.series = $.parseJSON(series);
+        options.series = series;
         var categories = document.getElementById("form:hiddenCForBar").value;
-        options.xAxis.categories = $.parseJSON(categories);
         var chart = new Highcharts.Chart(divId,options);
     }
 
@@ -108,8 +112,9 @@ function createOptionBar(){
             text: 'Source: WorldClimate.com'
         },
         xAxis: {
-            categories: [],
-            crosshair: true
+            type: 'datetime'
+          //  categories: [],
+          //  crosshair: true
         },
         yAxis: {
             min: 0,

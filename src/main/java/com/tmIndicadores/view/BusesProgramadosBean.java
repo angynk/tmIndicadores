@@ -295,7 +295,7 @@ public class BusesProgramadosBean {
             List<Programacion> programacion = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
             generarRegressionChart(programacion);
             generarLineasChart(programacion);
-            generarBarrasChart(programacion);
+            generarBarrasChart(programacion,indicador);
         }else{
             List<Programacion> programacionHabil = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"HABIL",tipologia);
             List<Programacion> programacionSabado = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"SABADO",tipologia);
@@ -386,7 +386,7 @@ public class BusesProgramadosBean {
    }
 
 
-    public void generarBarrasChart(List<Programacion> programacion){
+    public void generarBarrasChart(List<Programacion> programacion, String tipoIndicador){
             List<String> categorias = new ArrayList<String>();
             categorias.add("Jan");
             categorias.add("Feb");
@@ -395,12 +395,25 @@ public class BusesProgramadosBean {
             setChartCategoriesForBar(new Gson().toJson(categorias));
 
         List<Series> series = new ArrayList<Series>();
-        List<List<Double>> dataPoints = new ArrayList<>();
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(49.9)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(71.5)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(106.4)));
-        dataPoints.add(new ArrayList<Double>(Arrays.asList(129.2)));
-//        series.add(new Series("Tokyo", dataPoints));
+        List<List<Object>> dataPoints = new ArrayList<>();
+        for(Programacion prog: programacion){
+            Object valor = null;
+            if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
+                valor = (double)prog.getBuses();
+            }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
+                valor = prog.getKmComercial();
+            }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
+                valor =  prog.getKmVacio();
+            }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
+                valor = (double) prog.getExpedicionComercial();
+            }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
+                valor = prog.getPorcentajeVacioFinal();
+            }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
+                valor = prog.getLineasCargadas();
+            }
+            dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
+        }
+         series.add(new Series("Tokyo", dataPoints));
         setChartSeriesForBar(new Gson().toJson(series));
 
     }
