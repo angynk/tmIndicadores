@@ -301,6 +301,7 @@ public class BusesProgramadosBean {
             List<Programacion> programacionSabado = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"SABADO",tipologia);
             List<Programacion> programacionFestivo = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"FESTIVO",tipologia);
             generarLineasChartPara(programacionHabil,programacionSabado,programacionFestivo);
+            generarBarrasChartPara(programacionHabil,programacionSabado,programacionFestivo);
         }
 
     }
@@ -313,6 +314,16 @@ public class BusesProgramadosBean {
         series.add(transformarASerieParaLineas(programacionSabado,"Sabado",indicador));
         series.add(transformarASerieParaLineas(programacionFestivo,"Festivo",indicador));
         setChartSeriesForLine(new Gson().toJson(series));
+    }
+
+    public void generarBarrasChartPara(List<Programacion> programacionHabil, List<Programacion> programacionSabado, List<Programacion> programacionFestivo){
+        titulo = definirTituloGrafica(indicador);
+        tituloEjeX = definirTituloX(indicador);
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineas(programacionHabil,"Habil",indicador));
+        series.add(transformarASerieParaLineas(programacionSabado,"Sabado",indicador));
+        series.add(transformarASerieParaLineas(programacionFestivo,"Festivo",indicador));
+        setChartSeriesForBar(new Gson().toJson(series));
     }
 
 
@@ -394,6 +405,8 @@ public class BusesProgramadosBean {
             categorias.add("Apr");
             setChartCategoriesForBar(new Gson().toJson(categorias));
 
+        titulo = definirTituloGrafica(indicador);
+        tituloEjeX = definirTituloX(indicador);
         List<Series> series = new ArrayList<Series>();
         List<List<Object>> dataPoints = new ArrayList<>();
         for(Programacion prog: programacion){
@@ -413,7 +426,7 @@ public class BusesProgramadosBean {
             }
             dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
         }
-         series.add(new Series("Tokyo", dataPoints));
+         series.add(new Series(periocidad, dataPoints));
         setChartSeriesForBar(new Gson().toJson(series));
 
     }

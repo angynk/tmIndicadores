@@ -81,7 +81,9 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         console.log(JSON.stringify(options));
         var chart = new Highcharts.Chart(divId,options);
     }else if(tipoGrafica == 'Barras'){
-        var options = createOptionBar();
+        var titulo = document.getElementById("form:hiddenTittle").value;
+        var ejeX = document.getElementById("form:hiddenTittleX").value;
+        var options = createOptionBar(titulo,ejeX);
         var series = $.parseJSON(document.getElementById("form:hiddenSForBar").value);
         for(i = 0; i < series.length; i++){
             var data = series[i].data;
@@ -100,26 +102,24 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
 
 }
 
-function createOptionBar(){
+function createOptionBar(titulo,ejeX){
     var options = {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Monthly Average Rainfall'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
+            text: titulo
         },
         xAxis: {
-            type: 'datetime'
-          //  categories: [],
-          //  crosshair: true
+            type: 'datetime',
+            title: {
+                text: 'Fecha'
+            }
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Rainfall (mm)'
+                text: ejeX
             }
         },
         tooltip: {
