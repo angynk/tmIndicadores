@@ -23,11 +23,17 @@ public class Programacion {
     @Column(name = "buses")
     private Integer buses;
 
-    @Column(name = "km_comerciales")
-    private Double kmComercial;
+    @Column(name = "km_comerciales_inicio")
+    private Double kmComercialIncio;
 
-    @Column(name = "km_vacio")
-    private Double kmVacio;
+    @Column(name = "km_vacio_inicio")
+    private Double kmVacioInicio;
+
+    @Column(name = "km_comerciales_fin")
+    private Double kmComercialFin;
+
+    @Column(name = "km_vacio_fin")
+    private Double kmVacioFin;
 
     @Column(name = "tiempo_exp")
     private String tiempoExpedicion;
@@ -83,22 +89,6 @@ public class Programacion {
 
     public void setBuses(Integer buses) {
         this.buses = buses;
-    }
-
-    public Double getKmComercial() {
-        return kmComercial;
-    }
-
-    public void setKmComercial(Double kmComercial) {
-        this.kmComercial = kmComercial;
-    }
-
-    public Double getKmVacio() {
-        return kmVacio;
-    }
-
-    public void setKmVacio(Double kmVacio) {
-        this.kmVacio = kmVacio;
     }
 
     public String getTiempoExpedicion() {
@@ -180,5 +170,37 @@ public class Programacion {
 
     public void setFechaFormatted(String fechaFormatted) {
         this.fechaFormatted = fechaFormatted;
+    }
+
+    public Double getKmComercialIncio() {
+        return kmComercialIncio;
+    }
+
+    public void setKmComercialIncio(Double kmComercialIncio) {
+        this.kmComercialIncio = kmComercialIncio;
+    }
+
+    public Double getKmVacioInicio() {
+        return kmVacioInicio;
+    }
+
+    public void setKmVacioInicio(Double kmVacioInicio) {
+        this.kmVacioInicio = kmVacioInicio;
+    }
+
+    public Double getKmComercialFin() {
+        return kmComercialFin;
+    }
+
+    public void setKmComercialFin(Double kmComercialFin) {
+        this.kmComercialFin = kmComercialFin;
+    }
+
+    public Double getKmVacioFin() {
+        return kmVacioFin;
+    }
+
+    public void setKmVacioFin(Double kmVacioFin) {
+        this.kmVacioFin = kmVacioFin;
     }
 }

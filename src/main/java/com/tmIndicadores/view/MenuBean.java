@@ -30,6 +30,16 @@ public class MenuBean {
         }
     }
 
+    public void refreshCargaIndicadores(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/cargarIdicadores.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

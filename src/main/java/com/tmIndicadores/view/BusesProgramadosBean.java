@@ -380,9 +380,9 @@ public class BusesProgramadosBean {
            if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
                valor = (double)prog.getBuses();
            }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
-               valor = prog.getKmComercial();
+               valor = prog.getKmComercialFin();
            }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
-               valor =  prog.getKmVacio();
+               valor =  prog.getKmVacioFin();
            }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
                valor = (double) prog.getExpedicionComercial();
            }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
@@ -414,9 +414,9 @@ public class BusesProgramadosBean {
             if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
                 valor = (double)prog.getBuses();
             }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
-                valor = prog.getKmComercial();
+                valor = prog.getKmComercialFin();
             }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
-                valor =  prog.getKmVacio();
+                valor =  prog.getKmVacioFin();
             }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
                 valor = (double) prog.getExpedicionComercial();
             }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
