@@ -161,3 +161,22 @@ function createOptionLine(titulo,tituloX){
 
     return options;
 };
+
+$(".chart-export").each(function() {
+    var jThis = $(this),
+        chartSelector = jThis.data("chartSelector"),
+        chart = $(chartSelector).highcharts();
+
+    $("*[data-type]", this).each(function() {
+        var jThis = $(this),
+            type = jThis.data("type");
+        if(Highcharts.exporting.supports(type)) {
+            jThis.click(function() {
+                chart.exportChartLocal({ type: type });
+            });
+        }
+        else {
+            jThis.attr("disabled", "disabled");
+        }
+    });
+});
