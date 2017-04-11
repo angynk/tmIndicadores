@@ -21,6 +21,10 @@ public class CargarIndicadoresBean {
     private Date fechaProgramacion;
     private UploadedFile traceLog;
 
+    @ManagedProperty("#{MessagesView}")
+    private MessagesView messagesView;
+
+
     @ManagedProperty("#{GoalProcessor}")
     private IndicadoresGoalProcessor idProcessor;
 
@@ -43,9 +47,12 @@ public class CargarIndicadoresBean {
         if(valid()){
             try {
                 idProcessor.processDataFromFile(traceLog.getFileName(),traceLog.getInputstream(),fechaProgramacion,razonProgramacion,tipologia,periocidad);
+                messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_INDICADORES_ALMACENADOS);
             } catch (IOException e) {
-                e.printStackTrace();
+                messagesView.error(Messages.MENSAJE_ARCHIVO_NO_EXCEL,Messages.ACCION_ARCHIVO_NO_EXCEL);
             }
+        }else{
+            messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);
         }
     }
 
@@ -111,5 +118,14 @@ public class CargarIndicadoresBean {
 
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
+    }
+
+
+    public MessagesView getMessagesView() {
+        return messagesView;
+    }
+
+    public void setMessagesView(MessagesView messagesView) {
+        this.messagesView = messagesView;
     }
 }
