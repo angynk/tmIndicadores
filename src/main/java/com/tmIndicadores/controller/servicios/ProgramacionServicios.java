@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,14 @@ public class ProgramacionServicios {
 
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad, String tipologia){
        return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+    }
+
+    public List<Programacion> getProgramacionesUltimoMes(String periocidad){
+        Date hoy = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(hoy);
+        calendar.add(Calendar.DAY_OF_YEAR, -30);
+        return programacionDao.getProgramacionesUltimoMes(periocidad,calendar.getTime(),hoy);
     }
 
 

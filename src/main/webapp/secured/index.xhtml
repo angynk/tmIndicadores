@@ -4,13 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 <h:body>
 
 	<ui:composition template="../template/common/commonLayout.xhtml">
 		<ui:define name="content">
 			<!--<link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>-->
-			<!--<link href="../resources/css/sb-admin.css" rel="stylesheet"/>-->
+			<link href="../resources/css/sb-admin.css" rel="stylesheet"/>
 			<!--<link href="../resources/css/plugins/morris.css" rel="stylesheet"/>-->
 			<link href="../resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 				<div id="page-wrapper">
@@ -21,26 +23,15 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<h1 class="page-header">
-									Dashboard <small>Statistics Overview</small>
+									Dashboard <small>Resumen Estadisticas</small>
 								</h1>
 								<ol class="breadcrumb">
 									<li class="active">
-										<i class="fa fa-dashboard"></i> Dashboard
+										<i class="fa fa-dashboard"></i> Número Programaciones - Últimos 30 días
 									</li>
 								</ol>
 							</div>
 						</div>
-						<!-- /.row -->
-
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="alert alert-info alert-dismissable">
-									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-									<i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
-								</div>
-							</div>
-						</div>
-						<!-- /.row -->
 
 						<div class="row">
 							<div class="col-lg-3 col-md-6">
@@ -48,21 +39,16 @@
 									<div class="panel-heading">
 										<div class="row">
 											<div class="col-xs-3">
-												<i class="fa fa-comments fa-5x"></i>
+												<i class="fa fa-briefcase fa-5x"></i>
 											</div>
 											<div class="col-xs-9 text-right">
-												<div class="huge">26</div>
-												<div>New Comments!</div>
+												<div class="huge">
+													<p:outputLabel  value="#{dashBean.progHabil}" />
+												</div>
+												<div>Hábil</div>
 											</div>
 										</div>
 									</div>
-									<a href="#">
-										<div class="panel-footer">
-											<span class="pull-left">View Details</span>
-											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
-									</a>
 								</div>
 							</div>
 							<div class="col-lg-3 col-md-6">
@@ -70,21 +56,16 @@
 									<div class="panel-heading">
 										<div class="row">
 											<div class="col-xs-3">
-												<i class="fa fa-tasks fa-5x"></i>
+												<i class="fa fa-coffee fa-5x"></i>
 											</div>
 											<div class="col-xs-9 text-right">
-												<div class="huge">12</div>
-												<div>New Tasks!</div>
+												<div class="huge">
+													<p:outputLabel  value="#{dashBean.progSabado}" />
+												</div>
+												<div>Sabado</div>
 											</div>
 										</div>
 									</div>
-									<a href="#">
-										<div class="panel-footer">
-											<span class="pull-left">View Details</span>
-											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
-									</a>
 								</div>
 							</div>
 							<div class="col-lg-3 col-md-6">
@@ -92,21 +73,16 @@
 									<div class="panel-heading">
 										<div class="row">
 											<div class="col-xs-3">
-												<i class="fa fa-shopping-cart fa-5x"></i>
+												<i class="fa fa-car fa-5x"></i>
 											</div>
 											<div class="col-xs-9 text-right">
-												<div class="huge">124</div>
-												<div>New Orders!</div>
+												<div class="huge">
+													<p:outputLabel  value="#{dashBean.progFestivo}" />
+												</div>
+												<div>Festivo</div>
 											</div>
 										</div>
 									</div>
-									<a href="#">
-										<div class="panel-footer">
-											<span class="pull-left">View Details</span>
-											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
-									</a>
 								</div>
 							</div>
 							<div class="col-lg-3 col-md-6">
@@ -114,21 +90,16 @@
 									<div class="panel-heading">
 										<div class="row">
 											<div class="col-xs-3">
-												<i class="fa fa-support fa-5x"></i>
+												<i class="fa fa-users fa-5x"></i>
 											</div>
 											<div class="col-xs-9 text-right">
-												<div class="huge">13</div>
-												<div>Support Tickets!</div>
+												<div class="huge">
+													<p:outputLabel  value="#{dashBean.progTotal}" />
+												</div>
+												<div>Total</div>
 											</div>
 										</div>
 									</div>
-									<a href="#">
-										<div class="panel-footer">
-											<span class="pull-left">View Details</span>
-											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
-									</a>
 								</div>
 							</div>
 						</div>
