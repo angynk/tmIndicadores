@@ -57,8 +57,9 @@ public class ProgramacionDao {
     public List<Programacion> getProgramacionesUltimoMes(String periocidad,Date fechaInicio, Date fechaFin){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
+        System.out.println(fechaInicio+"-"+fechaFin);
         criteria.add(Restrictions.eq("periodicidad", periocidad));
-        criteria.addOrder(Order.asc("fecha"));
+        criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
     }
 }

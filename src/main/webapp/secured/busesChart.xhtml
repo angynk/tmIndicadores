@@ -18,6 +18,7 @@
             <h:form  id="form">
                 <p:growl id="message" showDetail="true" />
                <p:panel id="basic" header="Kilometros comerciales"  style="margin-bottom:20px">
+                   <p:commandButton actionListener="#{bPBean.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                 <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                     <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
                     <p:calendar id="button" value="#{bPBean.fechaInicio}" showOn="button" />

@@ -55,9 +55,12 @@ public class DashboardBean {
 
     private List<SeriesPie> SeriesPies(List<Programacion> habil) {
         int vacio = 100;
-        if(habil.size()>0){
-           vacio= habil.get(0).getPorcentajeVacioFinal();
+        if(habil!=null){
+            if(habil.size()>0){
+                vacio= habil.get(0).getPorcentajeVacioFinal();
+            }
         }
+
         List<SeriesPie> seriesPie = new ArrayList<SeriesPie>();
         List<DataComposed> dataPie = new ArrayList<DataComposed>();
         dataPie.add(new DataComposed("Km Vacios",vacio));

@@ -66,6 +66,7 @@ public class IndicadoresGoalProcessor {
             programacion.setTiempoExpedicion(valores[TraceLogIndex.TIEMPO_SOLUCION]);
             programacion.setTipologia(tipologia);
             programacion.setPeriodicidad(periocidad);
+            programacion.setPorcentajeVacioFinal(20);
 
             programacionServicios.addProgramacion(programacion);
 
