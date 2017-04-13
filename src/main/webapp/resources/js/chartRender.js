@@ -180,3 +180,14 @@ $(".chart-export").each(function() {
         }
     });
 });
+
+function myfunction() {
+    var container = document.getElementById("contain");
+    console.log(container);
+    var options = createOptionLine("Kilometros comerciales","KM");
+    var series = $.parseJSON(document.getElementById("hiddenChartLine").value);
+    console.log(series);
+    series = convertDateToUTC(series);
+    options.series = series;
+    var chart = new Highcharts.Chart(container.id,options);
+}

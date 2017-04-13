@@ -1,11 +1,16 @@
 package com.tmIndicadores.view;
 
+import com.google.gson.Gson;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
+import com.tmIndicadores.model.entity.Programacion;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @ManagedBean(name = "dashBean")
 @ViewScoped
@@ -15,6 +20,8 @@ public class DashboardBean {
     private String progFestivo;
     private String progSabado;
     private String progTotal;
+    private String hiddenChartLine;
+
 
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
@@ -24,13 +31,41 @@ public class DashboardBean {
 
     @PostConstruct
     public void init(){
-        int habil = programacionServicios.getProgramacionesUltimoMes("HABIL").size();
+        List<Programacion> habil = programacionServicios.getProgramacionesUltimoMes("HABIL");
         int festivo = programacionServicios.getProgramacionesUltimoMes("FESTIVO").size();
         int sabado = programacionServicios.getProgramacionesUltimoMes("SABADO").size();
-        progHabil = habil+"";
+        progHabil = habil.size()+"";
         progFestivo = festivo+"";
         progSabado = sabado+"";
-        progTotal = habil+festivo+sabado+"";
+        progTotal = habil.size()+festivo+sabado+"";
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineas(habil,"Habil","KC"));
+        setHiddenChartLine(new Gson().toJson(series));
+
+    }
+
+    public Series transformarASerieParaLineas(List<Programacion> programacion, String nombre, String tipoIndicador){
+        List<List<Object>> dataPoints = new ArrayList<>();
+        Series serie = null;
+        for(Programacion prog: programacion){
+            Object valor = null;
+            if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
+                valor = (double)prog.getBuses();
+            }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
+                valor = prog.getKmComercialFin();
+            }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
+                valor =  prog.getKmVacioFin();
+            }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
+                valor = (double) prog.getExpedicionComercial();
+            }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
+                valor = prog.getPorcentajeVacioFinal();
+            }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
+                valor = prog.getLineasCargadas();
+            }
+            dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
+        }
+        serie = new Series(nombre, dataPoints);
+        return serie;
     }
 
     public ProgramacionServicios getProgramacionServicios() {
@@ -71,5 +106,13 @@ public class DashboardBean {
 
     public void setProgTotal(String progTotal) {
         this.progTotal = progTotal;
+    }
+
+    public String getHiddenChartLine() {
+        return hiddenChartLine;
+    }
+
+    public void setHiddenChartLine(String hiddenChartLine) {
+        this.hiddenChartLine = hiddenChartLine;
     }
 }
