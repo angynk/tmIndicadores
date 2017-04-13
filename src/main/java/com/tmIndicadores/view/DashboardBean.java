@@ -21,6 +21,7 @@ public class DashboardBean {
     private String progSabado;
     private String progTotal;
     private String hiddenChartLine;
+    private String hiddenChartPie;
 
    private List<Programacion>  ultimasProgramaciones;
 
@@ -40,11 +41,28 @@ public class DashboardBean {
         progFestivo = festivo.size()+"";
         progSabado = sabado.size()+"";
         progTotal = habil.size()+festivo.size()+sabado.size()+"";
-        List<Series> series = new ArrayList<Series>();
-        series.add(transformarASerieParaLineas(habil,"Habil","KC"));
-        series.add(transformarASerieParaLineas(festivo,"Festivo","KC"));
-        series.add(transformarASerieParaLineas(sabado,"Sabado","KC"));
+        List<Series> series = SeriesForLine(habil, festivo, sabado);
         setHiddenChartLine(new Gson().toJson(series));
+        ultimasProgramacionesTabla(habil, festivo, sabado);
+
+        List<SeriesPie> seriesPie = SeriesPies(habil);
+        setHiddenChartPie(new Gson().toJson(seriesPie));
+    }
+
+    private List<SeriesPie> SeriesPies(List<Programacion> habil) {
+        int vacio = 100;
+        if(habil.size()>0){
+           vacio= habil.get(0).getPorcentajeVacioFinal();
+        }
+        List<SeriesPie> seriesPie = new ArrayList<SeriesPie>();
+        List<DataComposed> dataPie = new ArrayList<DataComposed>();
+        dataPie.add(new DataComposed("Km Vacios Habil",vacio));
+        dataPie.add(new DataComposed("Km Comerciales Habil",100-vacio));
+        seriesPie.add( new SeriesPie("%",dataPie));
+        return seriesPie;
+    }
+
+    private void ultimasProgramacionesTabla(List<Programacion> habil, List<Programacion> festivo, List<Programacion> sabado) {
         ultimasProgramaciones = new ArrayList<>();
         if(habil.size()>0){
             ultimasProgramaciones.add(habil.get(0));
@@ -55,8 +73,14 @@ public class DashboardBean {
         if(festivo.size()>0){
             ultimasProgramaciones.add(festivo.get(0));
         }
+    }
 
-
+    private List<Series> SeriesForLine(List<Programacion> habil, List<Programacion> festivo, List<Programacion> sabado) {
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineas(habil,"Habil","KC"));
+        series.add(transformarASerieParaLineas(festivo,"Festivo","KC"));
+        series.add(transformarASerieParaLineas(sabado,"Sabado","KC"));
+        return series;
     }
 
     public Series transformarASerieParaLineas(List<Programacion> programacion, String nombre, String tipoIndicador){
@@ -137,5 +161,13 @@ public class DashboardBean {
 
     public void setUltimasProgramaciones(List<Programacion> ultimasProgramaciones) {
         this.ultimasProgramaciones = ultimasProgramaciones;
+    }
+
+    public String getHiddenChartPie() {
+        return hiddenChartPie;
+    }
+
+    public void setHiddenChartPie(String hiddenChartPie) {
+        this.hiddenChartPie = hiddenChartPie;
     }
 }

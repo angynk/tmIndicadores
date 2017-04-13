@@ -183,11 +183,45 @@ $(".chart-export").each(function() {
 
 function myfunction() {
     var container = document.getElementById("contain");
-    console.log(container);
     var options = createOptionLine("Kilometros comerciales","KM");
     var series = $.parseJSON(document.getElementById("hiddenChartLine").value);
-    console.log(series);
     series = convertDateToUTC(series);
     options.series = series;
     var chart = new Highcharts.Chart(container.id,options);
 }
+function myfunctionPie() {
+    var container = document.getElementById("containPie");
+    var options = createOptionPie("% Kilometros Vacios");
+    var series = $.parseJSON(document.getElementById("hiddenChartPie").value);
+
+    options.series = series;
+    console.log(JSON.stringify(options));
+    var chart = new Highcharts.Chart(container.id,options);
+}
+
+function createOptionPie(titulo){
+    var options = {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: titulo
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        }
+        ,
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: []};
+
+    return options;
+};
