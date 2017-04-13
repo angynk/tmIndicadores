@@ -1,18 +1,18 @@
-function renderChart(divId, chartType, chartTitle, chartData, categories){
-    console.log("entre");
-    console.log(chartData);
-    if(chartData!=null){
-        var options = createOption(divId, chartType, chartTitle, categories);
-        options.series = $.parseJSON(chartData);
-        console.log(chartData);
-        var series = document.getElementById("form:hidden").value;
-        console.log(series);
-        console.log("NOOO");
-        console.log( document.getElementById("form:hidden"));
-        var chart = new Highcharts.Chart(divId,options);
-    }
-
-}
+//function renderChart(divId, chartType, chartTitle, chartData, categories){
+//    console.log("entre");
+//    console.log(chartData);
+//    if(chartData!=null){
+//        var options = createOption(divId, chartType, chartTitle, categories);
+//        options.series = $.parseJSON(chartData);
+//        console.log(chartData);
+//        var series = document.getElementById("form:hidden").value;
+//        console.log(series);
+//        console.log("NOOO");
+//        console.log( document.getElementById("form:hidden"));
+//        var chart = new Highcharts.Chart(divId,options);
+//    }
+//
+//}
 
 function createOption(titulo,ejeX){
     var options = {
@@ -61,7 +61,10 @@ function convertDateToUTC(series){
     return series;
 }
 
-function renderChartLine(divId, chartType, chartTitle, chartData, categories,tipoGrafica){
+function renderChartLine(divId, chartType, chartTitle, chartData, categories,tipoGrafica,period){
+
+    document.getElementById("containerSabado").style.visibility = 'hidden';
+    document.getElementById("containerFestivo").style.visibility = 'hidden';
     if(tipoGrafica == 'Lineas'){
         var titulo = document.getElementById("form:hiddenTittle").value;
         var tituloX = document.getElementById("form:hiddenTittleX").value;
@@ -78,6 +81,24 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         series = convertDateToUTC(series);
         options.series[0].data =series[0].data;
         var chart = new Highcharts.Chart(divId,options);
+        if(period == 'TODOS'){
+            document.getElementById("containerSabado").style.visibility  = 'visible';
+            document.getElementById("containerFestivo").style.visibility  = 'visible';
+            var optionsSabado = createOption(titulo,ejeX);
+            var seriesSabado =  $.parseJSON(document.getElementById("form:hiddenSabado").value);
+            seriesSabado = convertDateToUTC(seriesSabado);
+            console.log(seriesSabado);
+            optionsSabado.series[0].data =seriesSabado[0].data;
+            var chartSabado = new Highcharts.Chart('containerSabado',optionsSabado);
+
+            var optionsFestivo = createOption(titulo,ejeX);
+            var seriesFestivo =  $.parseJSON(document.getElementById("form:hiddenFestivo").value);
+            seriesFestivo = convertDateToUTC(seriesFestivo);
+            optionsFestivo.series[0].data =seriesFestivo[0].data;
+            var chartFestivo = new Highcharts.Chart('containerFestivo',optionsFestivo);
+
+        }
+
     }else if(tipoGrafica == 'Barras'){
         var titulo = document.getElementById("form:hiddenTittle").value;
         var ejeX = document.getElementById("form:hiddenTittleX").value;

@@ -53,6 +53,8 @@ public class BusesProgramadosBean {
     private boolean visiblePuntosBuses;
 
     private String chartSeries;
+    private String chartSeriesSabado;
+    private String chartSeriesFestivo;
     private String chartSeriesForLine;
     private String chartCategoriesForLine;
     private String chartSeriesForBar;
@@ -305,7 +307,8 @@ public class BusesProgramadosBean {
     public void generarChartSeries(){
         if(!periocidad.equals("TODOS")){
             List<Programacion> programacion = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
-            generarRegressionChart(programacion);
+            List<Series> series = generarRegressionChart(programacion,periocidad);
+            setChartSeries(new Gson().toJson(series));
             generarLineasChart(programacion);
             generarBarrasChart(programacion,indicador);
         }else{
@@ -314,6 +317,12 @@ public class BusesProgramadosBean {
             List<Programacion> programacionFestivo = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"FESTIVO",tipologia);
             generarLineasChartPara(programacionHabil,programacionSabado,programacionFestivo);
             generarBarrasChartPara(programacionHabil,programacionSabado,programacionFestivo);
+            List<Series> series = generarRegressionChart(programacionHabil,"HABIL");
+            setChartSeries(new Gson().toJson(series));
+            List<Series> seriesS = generarRegressionChart(programacionSabado,"SABADO");
+            setChartSeriesSabado(new Gson().toJson(seriesS));
+            List<Series> seriesF = generarRegressionChart(programacionFestivo,"FESTIVO");
+            setChartSeriesFestivo(new Gson().toJson(seriesF));
         }
 
     }
@@ -444,7 +453,7 @@ public class BusesProgramadosBean {
     }
 
 
-    public void generarRegressionChart(List<Programacion> programacion){
+    public  List<Series> generarRegressionChart(List<Programacion> programacion, String period){
 
         titulo = definirTituloGrafica(indicador);
         tituloEjeX = "Número de Buses";
@@ -463,11 +472,11 @@ public class BusesProgramadosBean {
         dataPoints.add(point1);
         dataPoints.add(point2);
 
-        Series serie = transformarASerieParaLineas(programacion,periocidad,indicador);
+        Series serie = transformarASerieParaLineas(programacion,period,indicador);
         serie.setType("scatter");
         series.add(serie);
 
-        setChartSeries(new Gson().toJson(series));
+        return series;
     }
 
     public void setChartSeries(String chartSeries) {
@@ -537,5 +546,21 @@ public class BusesProgramadosBean {
 
     public void setIndicador(String indicador) {
         this.indicador = indicador;
+    }
+
+    public String getChartSeriesSabado() {
+        return chartSeriesSabado;
+    }
+
+    public void setChartSeriesSabado(String chartSeriesSabado) {
+        this.chartSeriesSabado = chartSeriesSabado;
+    }
+
+    public String getChartSeriesFestivo() {
+        return chartSeriesFestivo;
+    }
+
+    public void setChartSeriesFestivo(String chartSeriesFestivo) {
+        this.chartSeriesFestivo = chartSeriesFestivo;
     }
 }

@@ -19,7 +19,6 @@
 
                 <p:commandButton value="Generar" action="#{chartController.cargarData}"
                                  icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
-                                 oncomplete="renderChart('container','area','Sample Chart', '#{chartController.chartData}', '#{chartController.categories}');"
                                     update="@this"
                 />
                 <h:inputHidden id="hidden" value="#{chartController.chartData}"/>
