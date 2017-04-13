@@ -22,6 +22,7 @@ public class DashboardBean {
     private String progTotal;
     private String hiddenChartLine;
     private String hiddenChartPie;
+    private String hiddenChartPieSabado;
 
    private List<Programacion>  ultimasProgramaciones;
 
@@ -47,6 +48,9 @@ public class DashboardBean {
 
         List<SeriesPie> seriesPie = SeriesPies(habil);
         setHiddenChartPie(new Gson().toJson(seriesPie));
+
+        List<SeriesPie> seriesPieSabado = SeriesPies(sabado);
+        setHiddenChartPieSabado(new Gson().toJson(seriesPieSabado));
     }
 
     private List<SeriesPie> SeriesPies(List<Programacion> habil) {
@@ -56,8 +60,8 @@ public class DashboardBean {
         }
         List<SeriesPie> seriesPie = new ArrayList<SeriesPie>();
         List<DataComposed> dataPie = new ArrayList<DataComposed>();
-        dataPie.add(new DataComposed("Km Vacios Habil",vacio));
-        dataPie.add(new DataComposed("Km Comerciales Habil",100-vacio));
+        dataPie.add(new DataComposed("Km Vacios",vacio));
+        dataPie.add(new DataComposed("Km Comerciales",100-vacio));
         seriesPie.add( new SeriesPie("%",dataPie));
         return seriesPie;
     }
@@ -169,5 +173,13 @@ public class DashboardBean {
 
     public void setHiddenChartPie(String hiddenChartPie) {
         this.hiddenChartPie = hiddenChartPie;
+    }
+
+    public String getHiddenChartPieSabado() {
+        return hiddenChartPieSabado;
+    }
+
+    public void setHiddenChartPieSabado(String hiddenChartPieSabado) {
+        this.hiddenChartPieSabado = hiddenChartPieSabado;
     }
 }

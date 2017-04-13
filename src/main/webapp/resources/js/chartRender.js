@@ -191,12 +191,25 @@ function myfunction() {
 }
 function myfunctionPie() {
     var container = document.getElementById("containPie");
-    var options = createOptionPie("% Kilometros Vacios");
+    var options = createOptionPie("Hábil");
     var series = $.parseJSON(document.getElementById("hiddenChartPie").value);
 
     options.series = series;
     console.log(JSON.stringify(options));
     var chart = new Highcharts.Chart(container.id,options);
+
+
+
+}
+
+function myfunctionPieSabado() {
+    var containerS = document.getElementById("containPieS");
+    var optionsS = createOptionPie("Sabado");
+    var seriesS = $.parseJSON(document.getElementById("hiddenChartPieS").value);
+    console.log(seriesS);
+    optionsS.series = seriesS;
+    console.log(JSON.stringify(optionsS));
+    var chartS = new Highcharts.Chart(containerS.id,optionsS);
 }
 
 function createOptionPie(titulo){
