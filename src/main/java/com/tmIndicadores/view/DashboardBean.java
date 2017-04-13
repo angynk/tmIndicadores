@@ -22,6 +22,8 @@ public class DashboardBean {
     private String progTotal;
     private String hiddenChartLine;
 
+   private List<Programacion>  ultimasProgramaciones;
+
 
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
@@ -32,15 +34,28 @@ public class DashboardBean {
     @PostConstruct
     public void init(){
         List<Programacion> habil = programacionServicios.getProgramacionesUltimoMes("HABIL");
-        int festivo = programacionServicios.getProgramacionesUltimoMes("FESTIVO").size();
-        int sabado = programacionServicios.getProgramacionesUltimoMes("SABADO").size();
+        List<Programacion> festivo = programacionServicios.getProgramacionesUltimoMes("FESTIVO");
+        List<Programacion> sabado = programacionServicios.getProgramacionesUltimoMes("SABADO");
         progHabil = habil.size()+"";
-        progFestivo = festivo+"";
-        progSabado = sabado+"";
-        progTotal = habil.size()+festivo+sabado+"";
+        progFestivo = festivo.size()+"";
+        progSabado = sabado.size()+"";
+        progTotal = habil.size()+festivo.size()+sabado.size()+"";
         List<Series> series = new ArrayList<Series>();
         series.add(transformarASerieParaLineas(habil,"Habil","KC"));
+        series.add(transformarASerieParaLineas(festivo,"Festivo","KC"));
+        series.add(transformarASerieParaLineas(sabado,"Sabado","KC"));
         setHiddenChartLine(new Gson().toJson(series));
+        ultimasProgramaciones = new ArrayList<>();
+        if(habil.size()>0){
+            ultimasProgramaciones.add(habil.get(0));
+        }
+        if(sabado.size()>0){
+            ultimasProgramaciones.add(sabado.get(0));
+        }
+        if(festivo.size()>0){
+            ultimasProgramaciones.add(festivo.get(0));
+        }
+
 
     }
 
@@ -114,5 +129,13 @@ public class DashboardBean {
 
     public void setHiddenChartLine(String hiddenChartLine) {
         this.hiddenChartLine = hiddenChartLine;
+    }
+
+    public List<Programacion> getUltimasProgramaciones() {
+        return ultimasProgramaciones;
+    }
+
+    public void setUltimasProgramaciones(List<Programacion> ultimasProgramaciones) {
+        this.ultimasProgramaciones = ultimasProgramaciones;
     }
 }
