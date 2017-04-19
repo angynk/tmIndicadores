@@ -15,6 +15,9 @@ public class Usuario {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "role")
+    private String role;
+
     @Column(name = "usuario")
     private String usuario;
 
@@ -66,4 +69,17 @@ public class Usuario {
     public void setArea(String area) {
         this.area = area;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean hasRole(Role role) {
+        return this.role.equals(role);
+    }
+
 }

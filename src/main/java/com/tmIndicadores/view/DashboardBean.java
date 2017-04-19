@@ -57,7 +57,7 @@ public class DashboardBean {
         int vacio = 100;
         if(habil!=null){
             if(habil.size()>0){
-                vacio= habil.get(0).getPorcentajeVacioFinal();
+                vacio= (int) habil.get(0).getPorcentajeVacioFinal().intValue();
             }
         }
 

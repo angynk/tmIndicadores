@@ -35,9 +35,8 @@
                                 <p:menuitem value="Visualizar Indicadores" action="#{menu.refreshBusesProgramados}" />
                                 <p:menuitem value="Resumen Indicadores" action="#{menu.refreshResumen}" />
                             </p:submenu>
-                            <p:submenu label="Cargar Indicadores">
+                            <p:submenu label="Cargar Indicadores" rendered="#{loginBean.hasRole('ADMIN')}">
                                 <p:menuitem value="Actualizar datos" action="#{menu.refreshCargaIndicadores}" />
-
                             </p:submenu>
                         </p:column>
                     </p:submenu>

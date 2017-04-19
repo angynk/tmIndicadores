@@ -17,7 +17,7 @@
 
             <h:form  id="form">
                 <p:growl id="message" showDetail="true" />
-                <p:panel id="basic" header="Kilometros comerciales"  style="margin-bottom:20px">
+                <p:panel id="basic" header="Indicadores GOAL BUS"  style="margin-bottom:20px">
                     <p:commandButton actionListener="#{RIBean.inicioReturn}" id="inicio2"  icon="ui-icon ui-icon-home" title="inicio" />
                     <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
@@ -83,9 +83,9 @@
                                     <h:outputText value="#{prog.buses}"  style="width: 75px"/>
                                 </p:column>
 
-                                <p:column filterBy="#{prog.kmComercial}" headerText="KM Comercial"  filterMatchMode="contains" sortBy="#{prog.kmComercial}"
+                                <p:column filterBy="#{prog.kmComercialFin}" headerText="KM Comercial"  filterMatchMode="contains" sortBy="#{prog.kmComercialFin}"
                                           style="width: 120px">
-                                    <h:outputText value="#{prog.kmComercial}" />
+                                    <h:outputText value="#{prog.kmComercialFin}" />
 
                                 </p:column>
 
@@ -94,9 +94,9 @@
                                     <h:outputText value="#{prog.expedicionComercial}" />
                                 </p:column>
 
-                                <p:column filterBy="#{prog.kmVacio}" headerText="KM Vacio"  filterMatchMode="contains" sortBy="#{prog.kmVacio}"
+                                <p:column filterBy="#{prog.kmVacioFin}" headerText="KM Vacio"  filterMatchMode="contains" sortBy="#{prog.kmVacioFin}"
                                           style="width: 120px">
-                                    <h:outputText value="#{prog.kmVacio}" />
+                                    <h:outputText value="#{prog.kmVacioFin}" />
                                 </p:column>
 
                                 <p:column filterBy="#{prog.porcentajeVacioFinal}" headerText="% Vacio"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioFinal}"

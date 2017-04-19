@@ -24,18 +24,18 @@ public class IndicadoresGoalProcessor {
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
     private String destination="C:\\temp\\";
 
-    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia, String periocidad){
+    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia, String periocidad,String lineasC){
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Indicadores Goal Bus con Archivo>>");
         processorUtils.copyFile(fileName,in,destination);
         destination=destination+fileName;
-        readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad);
+        readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName);
         logDatos.add(new LogDatos("<<Fin Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
         return logDatos;
     }
 
-    private void readExcelAndSaveData(String destination, Date fechaProgramacion, String razon,String tipologia, String periocidad) {
+    private void readExcelAndSaveData(String destination, Date fechaProgramacion, String razon,String tipologia, String periocidad,String lineasC,String filename) {
         BufferedReader br = null;
         String line = "";
         String previousLine ="";
@@ -48,6 +48,7 @@ public class IndicadoresGoalProcessor {
             br = new BufferedReader(new FileReader(destination));
             br.readLine(); // Leer encabezados
             line = br.readLine();
+            String [] cuadroInfo = filename.split("_");
             String [] valores = line.split(cvsSplitBy);
             km_comer_inicial = Double.parseDouble(valores[TraceLogIndex.KM_LINEA]);
             km_vacio_inicial = Double.parseDouble(valores[TraceLogIndex.KM_VACIO]);
@@ -56,17 +57,22 @@ public class IndicadoresGoalProcessor {
             }
             valores = previousLine.split(cvsSplitBy);
             Programacion programacion = new Programacion();
+            programacion.setCuadro(cuadroInfo[2]);
             programacion.setFecha(fechaProgramacion);
             programacion.setRazonCambio(razon);
             programacion.setKmComercialIncio(km_comer_inicial);
             programacion.setKmVacioInicio(km_vacio_inicial);
+            programacion.setPorcentajeVacioInicio(km_vacio_inicial/km_comer_inicial);
+            programacion.setLineasCargadas(Integer.parseInt(lineasC));
             programacion.setKmComercialFin(Double.parseDouble(valores[TraceLogIndex.KM_LINEA]));
             programacion.setKmVacioFin(Double.parseDouble(valores[TraceLogIndex.KM_VACIO]));
+            programacion.setPorcentajeVacioFinal(programacion.getKmVacioFin()/programacion.getKmComercialFin());
             programacion.setBuses(Integer.parseInt(valores[TraceLogIndex.NUM_BUSES]));
-            programacion.setTiempoExpedicion(valores[TraceLogIndex.TIEMPO_SOLUCION]);
+            programacion.setTiempoExpedicion(valores[TraceLogIndex.TOTAL_HORAS]);
+            programacion.setExpedicionComercial(Integer.parseInt(valores[TraceLogIndex.NUM_VIAJES]));
+            programacion.setTiempoProcesamiento(valores[TraceLogIndex.TIEMPO_SOLUCION]);
             programacion.setTipologia(tipologia);
             programacion.setPeriodicidad(periocidad);
-            programacion.setPorcentajeVacioFinal(20);
 
             programacionServicios.addProgramacion(programacion);
 

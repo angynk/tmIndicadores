@@ -2,6 +2,7 @@ package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.Util;
 import com.tmIndicadores.controller.servicios.UsuarioServicios;
+import com.tmIndicadores.model.entity.Role;
 import com.tmIndicadores.model.entity.Usuario;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,7 @@ public class LoginBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private String uname;
     private String password;
+    private String role;
 
 
     @ManagedProperty(value="#{navigationBean}")
@@ -56,6 +58,9 @@ public class LoginBean implements Serializable {
             if (usuario.getContrasena().equals(password)) {
                 HttpSession session = Util.getSession();
                 session.setAttribute("user", uname);
+                session.setAttribute("role", usuario.getRole());
+                this.role =usuario.getRole();
+
                 return navigationBean.redirectToWelcome();
             } else {
                 FacesContext.getCurrentInstance().addMessage(
@@ -96,5 +101,17 @@ public class LoginBean implements Serializable {
 
     public void setUsuarioServicios(UsuarioServicios usuarioServicios) {
         this.usuarioServicios = usuarioServicios;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean hasRole(String role) {
+        return this.role.equals(role);
     }
 }

@@ -18,6 +18,7 @@ public class CargarIndicadoresBean {
 
     private String tipoGeneracion;
     private String razonProgramacion;
+    private String lineasCargadas;
     private String periocidad;
     private String tipologia;
     private Date fechaProgramacion;
@@ -48,7 +49,7 @@ public class CargarIndicadoresBean {
     public void cargarArchivo(){
         if(valid()){
             try {
-                idProcessor.processDataFromFile(traceLog.getFileName(),traceLog.getInputstream(),fechaProgramacion,razonProgramacion,tipologia,periocidad);
+                idProcessor.processDataFromFile(traceLog.getFileName(),traceLog.getInputstream(),fechaProgramacion,razonProgramacion,tipologia,periocidad,lineasCargadas);
                 messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_INDICADORES_ALMACENADOS);
             } catch (IOException e) {
                 messagesView.error(Messages.MENSAJE_ARCHIVO_NO_EXCEL,Messages.ACCION_ARCHIVO_NO_EXCEL);
@@ -59,7 +60,7 @@ public class CargarIndicadoresBean {
     }
 
     private boolean valid() {
-        if(fechaProgramacion!= null && razonProgramacion!=null && tipologia!=null && periocidad!=null){
+        if(fechaProgramacion!= null && razonProgramacion!=null && tipologia!=null && periocidad!=null && lineasCargadas!=null){
             return true;
         }
         return false;
@@ -139,5 +140,13 @@ public class CargarIndicadoresBean {
 
     public void setMessagesView(MessagesView messagesView) {
         this.messagesView = messagesView;
+    }
+
+    public String getLineasCargadas() {
+        return lineasCargadas;
+    }
+
+    public void setLineasCargadas(String lineasCargadas) {
+        this.lineasCargadas = lineasCargadas;
     }
 }

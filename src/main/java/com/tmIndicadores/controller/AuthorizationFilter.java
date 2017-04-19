@@ -1,6 +1,8 @@
 package com.tmIndicadores.controller;
 
 
+import com.tmIndicadores.model.entity.Role;
+
 import javax.faces.application.ResourceHandler;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -28,9 +30,11 @@ public class AuthorizationFilter implements Filter {
         String loginURL = request.getContextPath() + "/login.xhtml";
 
         boolean loggedIn = (session != null) && (session.getAttribute("user") != null);
+      //  boolean isAdmin = session.getAttribute("role").equals(Role.ADMIN.toString());
         boolean loginRequest = request.getRequestURI().equals(loginURL);
         boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
         boolean ajaxRequest = "partial/ajax".equals(request.getHeader("Faces-Request"));
+
 
         if (loggedIn || loginRequest || resourceRequest) {
             if (!resourceRequest) { // Prevent browser from caching restricted resources. See also http://stackoverflow.com/q/4194207/157882

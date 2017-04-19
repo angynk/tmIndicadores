@@ -38,11 +38,17 @@ public class Programacion {
     @Column(name = "tiempo_exp")
     private String tiempoExpedicion;
 
+    @Column(name = "tiempo_pro")
+    private String tiempoProcesamiento;
+
     @Column(name = "exp_comercial")
     private Integer expedicionComercial;
 
     @Column(name = "por_vacio_final")
-    private Integer porcentajeVacioFinal;
+    private Double porcentajeVacioFinal;
+
+    @Column(name = "por_vacio_inicio")
+    private Double porcentajeVacioInicio;
 
     @Column(name = "lineas_cargadas")
     private Integer lineasCargadas;
@@ -107,13 +113,7 @@ public class Programacion {
         this.expedicionComercial = expedicionComercial;
     }
 
-    public Integer getPorcentajeVacioFinal() {
-        return porcentajeVacioFinal;
-    }
 
-    public void setPorcentajeVacioFinal(Integer porcentajeVacioFinal) {
-        this.porcentajeVacioFinal = porcentajeVacioFinal;
-    }
 
     public Integer getLineasCargadas() {
         return lineasCargadas;
@@ -202,5 +202,29 @@ public class Programacion {
 
     public void setKmVacioFin(Double kmVacioFin) {
         this.kmVacioFin = kmVacioFin;
+    }
+
+    public String getTiempoProcesamiento() {
+        return tiempoProcesamiento;
+    }
+
+    public void setTiempoProcesamiento(String tiempoProcesamiento) {
+        this.tiempoProcesamiento = tiempoProcesamiento;
+    }
+
+    public Double getPorcentajeVacioFinal() {
+        return porcentajeVacioFinal;
+    }
+
+    public void setPorcentajeVacioFinal(Double porcentajeVacioFinal) {
+        this.porcentajeVacioFinal = porcentajeVacioFinal;
+    }
+
+    public Double getPorcentajeVacioInicio() {
+        return porcentajeVacioInicio;
+    }
+
+    public void setPorcentajeVacioInicio(Double porcentajeVacioInicio) {
+        this.porcentajeVacioInicio = porcentajeVacioInicio;
     }
 }
