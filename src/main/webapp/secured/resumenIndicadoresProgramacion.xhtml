@@ -17,7 +17,7 @@
 
             <h:form  id="form">
                 <p:growl id="message" showDetail="true" />
-                <p:panel id="basic" header="Indicadores GOAL BUS"  style="margin-bottom:20px">
+                <p:panel id="basic" header="Resumen de Indicadores de programación GoalBus"  style="margin-bottom:20px">
                     <p:commandButton actionListener="#{RIPBean.inicioReturn}" id="inicio2"  icon="ui-icon ui-icon-home" title="inicio" />
                     <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
@@ -74,17 +74,17 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.cuadro}" headerText="Cuadro"  filterMatchMode="contains" sortBy="#{prog.cuadro}"
-                                      style="width: 115px">
+                                      style="width: 120px">
                                 <h:outputText value="#{prog.cuadro}" style="width: 50px" />
                             </p:column>
 
                             <p:column filterBy="#{prog.buses}" headerText="Buses"  filterMatchMode="contains" sortBy="#{prog.buses}"
-                                      style="width: 115px">
+                                      style="width: 125px">
                                 <h:outputText value="#{prog.buses}"  style="width: 50px"/>
                             </p:column>
 
                             <p:column filterBy="#{prog.tiempoProcesamiento}" headerText="Tiempo Sol"  filterMatchMode="contains" sortBy="#{prog.tiempoProcesamiento}"
-                                      style="width: 115px">
+                                      style="width: 130px">
                                 <h:outputText value="#{prog.tiempoProcesamiento}"  style="width: 50px"/>
                             </p:column>
 
@@ -93,35 +93,35 @@
                                 <h:outputText value="#{prog.expedicionComercial}" />
                             </p:column>
 
-                            <p:column filterBy="#{prog.kmComercialIncio}" headerText="KM Comercial Inicio"  filterMatchMode="contains" sortBy="#{prog.kmComercialIncio}"
-                                      style="width: 120px">
+                            <p:column filterBy="#{prog.kmComercialIncio}" headerText="KM Comercial I"  filterMatchMode="contains" sortBy="#{prog.kmComercialIncio}"
+                                      style="width: 160px">
                                 <h:outputText value="#{prog.kmComercialIncio}" />
 
                             </p:column>
 
-                            <p:column filterBy="#{prog.kmComercialFin}" headerText="KM Comercial Fin"  filterMatchMode="contains" sortBy="#{prog.kmComercialFin}"
-                                      style="width: 120px">
+                            <p:column filterBy="#{prog.kmComercialFin}" headerText="KM Comercial F"  filterMatchMode="contains" sortBy="#{prog.kmComercialFin}"
+                                      style="width: 160px">
                                 <h:outputText value="#{prog.kmComercialFin}" />
 
                             </p:column>
 
-                            <p:column filterBy="#{prog.kmVacioInicio}" headerText="KM Vacio Incio"  filterMatchMode="contains" sortBy="#{prog.kmVacioInicio}"
+                            <p:column filterBy="#{prog.kmVacioInicio}" headerText="KM Vacio I"  filterMatchMode="contains" sortBy="#{prog.kmVacioInicio}"
                                       style="width: 120px">
                                 <h:outputText value="#{prog.kmVacioInicio}" />
                             </p:column>
 
-                            <p:column filterBy="#{prog.kmVacioFin}" headerText="KM Vacio Fin"  filterMatchMode="contains" sortBy="#{prog.kmVacioFin}"
-                                      style="width: 120px">
+                            <p:column filterBy="#{prog.kmVacioFin}" headerText="KM Vacio F"  filterMatchMode="contains" sortBy="#{prog.kmVacioFin}"
+                                      style="width: 135px">
                                 <h:outputText value="#{prog.kmVacioFin}" />
                             </p:column>
 
                             <p:column filterBy="#{prog.porcentajeVacioInicio}" headerText="% Vacio Inicio"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioInicio}"
-                                      style="width:115px">
+                                      style="width:125px">
                                 <h:outputText value="#{prog.porcentajeVacioInicio}" style="width: 50px"/>
                             </p:column>
 
                             <p:column filterBy="#{prog.porcentajeVacioFinal}" headerText="% Vacio Fin"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioFinal}"
-                                      style="width:115px">
+                                      style="width:135px">
                                 <h:outputText value="#{prog.porcentajeVacioFinal}" style="width: 50px"/>
                             </p:column>
 
@@ -131,8 +131,8 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.razonCambio}" headerText="Razon"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"
-                                      style="width:115px">
-                                <h:outputText value="#{prog.razonCambio}" style="width: 50px"/>
+                                      style="width:205px">
+                                <h:outputText value="#{prog.razonCambio}" style="width: 100px"/>
                             </p:column>
 
                         </p:dataTable>

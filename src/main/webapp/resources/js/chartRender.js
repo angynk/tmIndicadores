@@ -13,7 +13,22 @@
 //    }
 //
 //}
-
+var highchartsOptions = Highcharts.setOptions({
+        lang: {
+            loading: 'Espere...',
+            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            exportButtonTitle: "Exportar",
+            printButtonTitle: "Imprimir",
+            downloadPNG: 'Descargar imagen PNG',
+            downloadJPEG: 'Descargar imagen JPEG',
+            downloadPDF: 'Descargar documento PDF',
+            downloadSVG: 'Descargar imagen SVG',
+            downloadCSV: 'Descargar archivo CSV',
+            downloadXLS: 'Descargar archivo CSV'
+        }
+    }
+);
 function createOption(titulo,ejeX){
     var options = {
         chart: {
@@ -74,7 +89,7 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         options.series = series;
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
-        var titulo = document.getElementById("form:hiddenTittle").value;
+        var titulo = document.getElementById("form:hiddenTittle").value +" - Hábil";
         var ejeX = document.getElementById("form:hiddenTittleX").value;
         var options = createOption(titulo,ejeX);
         var series =  $.parseJSON(document.getElementById("form:hidden").value);
@@ -84,14 +99,14 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         if(period == 'TODOS'){
             document.getElementById("containerSabado").style.visibility  = 'visible';
             document.getElementById("containerFestivo").style.visibility  = 'visible';
-            var optionsSabado = createOption(titulo,ejeX);
+            var optionsSabado = createOption(document.getElementById("form:hiddenTittleSabado").value,ejeX);
             var seriesSabado =  $.parseJSON(document.getElementById("form:hiddenSabado").value);
             seriesSabado = convertDateToUTC(seriesSabado);
             console.log(seriesSabado);
             optionsSabado.series[0].data =seriesSabado[0].data;
             var chartSabado = new Highcharts.Chart('containerSabado',optionsSabado);
 
-            var optionsFestivo = createOption(titulo,ejeX);
+            var optionsFestivo = createOption(document.getElementById("form:hiddenTittleFestivo").value,ejeX);
             var seriesFestivo =  $.parseJSON(document.getElementById("form:hiddenFestivo").value);
             seriesFestivo = convertDateToUTC(seriesFestivo);
             optionsFestivo.series[0].data =seriesFestivo[0].data;

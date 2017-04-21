@@ -35,6 +35,8 @@ public class BusesProgramadosBean {
     private String grafica;
     private String representacion;
     private String titulo;
+    private String tituloSabado;
+    private String tituloFestivo;
     private String tituloEjeX;
 
     private String cambioDeGrafica;
@@ -320,8 +322,11 @@ public class BusesProgramadosBean {
             List<Series> series = generarRegressionChart(programacionHabil,"HABIL");
             setChartSeries(new Gson().toJson(series));
             List<Series> seriesS = generarRegressionChart(programacionSabado,"SABADO");
+            tituloSabado = definirTituloGrafica(indicador)+" - Sabado";
             setChartSeriesSabado(new Gson().toJson(seriesS));
             List<Series> seriesF = generarRegressionChart(programacionFestivo,"FESTIVO");
+            tituloFestivo = definirTituloGrafica(indicador)+" - Festivo";
+            titulo = definirTituloGrafica(indicador);
             setChartSeriesFestivo(new Gson().toJson(seriesF));
         }
 
@@ -329,7 +334,7 @@ public class BusesProgramadosBean {
 
     public void generarLineasChartPara(List<Programacion> programacionHabil, List<Programacion> programacionSabado, List<Programacion> programacionFestivo){
         titulo = definirTituloGrafica(indicador);
-        tituloEjeX = "Número de Buses";
+        tituloEjeX = definirTituloX(indicador);
         List<Series> series = new ArrayList<Series>();
         series.add(transformarASerieParaLineas(programacionHabil,"Habil",indicador));
         series.add(transformarASerieParaLineas(programacionSabado,"Sabado",indicador));
@@ -376,7 +381,7 @@ public class BusesProgramadosBean {
     }
 
     private String definirTituloX(String tipoIndicador) {
-        String titulo = "Número de ";
+        String titulo = "";
         if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
             titulo = titulo +IndicadorEnum.NUMERO_BUSES.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
@@ -456,7 +461,10 @@ public class BusesProgramadosBean {
     public  List<Series> generarRegressionChart(List<Programacion> programacion, String period){
 
         titulo = definirTituloGrafica(indicador);
-        tituloEjeX = "Número de Buses";
+        titulo = titulo +" - "+period;
+
+
+        tituloEjeX = definirTituloX(indicador);
         List<Series> series = new ArrayList<Series>();
 
         List<List<Double>> dataPoints = new ArrayList<>();
@@ -562,5 +570,21 @@ public class BusesProgramadosBean {
 
     public void setChartSeriesFestivo(String chartSeriesFestivo) {
         this.chartSeriesFestivo = chartSeriesFestivo;
+    }
+
+    public String getTituloSabado() {
+        return tituloSabado;
+    }
+
+    public void setTituloSabado(String tituloSabado) {
+        this.tituloSabado = tituloSabado;
+    }
+
+    public String getTituloFestivo() {
+        return tituloFestivo;
+    }
+
+    public void setTituloFestivo(String tituloFestivo) {
+        this.tituloFestivo = tituloFestivo;
     }
 }

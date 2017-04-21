@@ -8,7 +8,7 @@ public enum IndicadorEnum {
     KM_VACIO("KV","Kilometros en Vacio"),
     EXP_COMERCIAL("EC","Expediciónes Comerciales"),
     LINEA_CARGADA("LC","Lineas Cargadas"),
-    POR_VACIOS("PV","Porcentaje Vacios");
+    POR_VACIOS("PV","Porcentaje Vacio %");
 
     private final String identifier;
     private final String nombre;
