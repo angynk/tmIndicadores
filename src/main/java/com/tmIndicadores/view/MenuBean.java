@@ -50,6 +50,16 @@ public class MenuBean {
         }
     }
 
+    public void refreshModProgramaciones(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/modProgramacion.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.tmIndicadores.view;
 
+
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
 
@@ -16,9 +17,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@ManagedBean(name = "RIPBean")
+@ManagedBean(name = "MPBean")
 @ViewScoped
-public class ResumenIndicadoresProgBean {
+public class ModProgramacionBean {
 
     private Date fechaInicio;
     private Date fechaFin;
@@ -29,12 +30,13 @@ public class ResumenIndicadoresProgBean {
 
     private boolean visibleResumen;
     private List<Programacion> programacionRecords ;
+    private Programacion selectedProg;
 
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
 
 
-    public ResumenIndicadoresProgBean() {
+    public ModProgramacionBean() {
     }
 
     @PostConstruct
@@ -56,15 +58,35 @@ public class ResumenIndicadoresProgBean {
 
     public void generar(){
         if(genracionValida()){
-            programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+            programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad);
             visibleResumen = true;
         }else{
             addMessage(FacesMessage.SEVERITY_INFO,"Complete los datos para generar la grafica", "");
         }
     }
 
+    public void eliminar(){
+        programacionServicios.deleteProgramacion(selectedProg);
+        addMessage(FacesMessage.SEVERITY_INFO,"Servicio Eliminado", "");
+//        programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad);
+        refreshModProgramaciones();
+    }
+
+    public void refreshModProgramaciones(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/modProgramacion.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
     private boolean genracionValida() {
-        if(fechaInicio!= null && fechaFin!=null && tipologia!=null && periocidad!=null ){
+        if(fechaInicio!= null && fechaFin!=null && periocidad!=null ){
             return true;
         }
         return false;
@@ -147,5 +169,13 @@ public class ResumenIndicadoresProgBean {
 
     public void setProgramacionServicios(ProgramacionServicios programacionServicios) {
         this.programacionServicios = programacionServicios;
+    }
+
+    public Programacion getSelectedProg() {
+        return selectedProg;
+    }
+
+    public void setSelectedProg(Programacion selectedProg) {
+        this.selectedProg = selectedProg;
     }
 }

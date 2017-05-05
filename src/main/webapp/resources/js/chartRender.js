@@ -18,6 +18,8 @@ var highchartsOptions = Highcharts.setOptions({
             loading: 'Espere...',
             months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
             shortMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            weekdays: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
+            shortWeekdays: ['Sun', 'Mån', 'Tys', 'Ons', 'Tors', 'Fre', 'Laur'],
             exportButtonTitle: "Exportar",
             printButtonTitle: "Imprimir",
             downloadPNG: 'Descargar imagen PNG',
@@ -25,7 +27,9 @@ var highchartsOptions = Highcharts.setOptions({
             downloadPDF: 'Descargar documento PDF',
             downloadSVG: 'Descargar imagen SVG',
             downloadCSV: 'Descargar archivo CSV',
-            downloadXLS: 'Descargar archivo CSV'
+            downloadXLS: 'Descargar archivo CSV',
+            printChart: 'Imprimir Gráfica'
+
         }
     }
 );

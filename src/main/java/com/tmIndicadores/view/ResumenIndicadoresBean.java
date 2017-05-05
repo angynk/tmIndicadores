@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,8 +39,15 @@ public class ResumenIndicadoresBean {
 
     @PostConstruct
     public void init(){
-        visibleResumen = false;
-        programacionRecords = new ArrayList<>();
+        visibleResumen = true;
+        fechaFin = new Date();
+        tipologia = "DEF";
+        periocidad = "HABIL";
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaFin);
+        c.add(Calendar.MONTH, -6);
+        fechaInicio = c.getTime();
+        programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
     }
 
     public void inicio(){
@@ -71,6 +79,8 @@ public class ResumenIndicadoresBean {
             e.printStackTrace();
         }
     }
+
+
 
     public void addMessage(FacesMessage.Severity severity , String summary, String detail) {
         FacesMessage message = new FacesMessage(severity, summary, detail);
@@ -140,4 +150,5 @@ public class ResumenIndicadoresBean {
     public void setProgramacionServicios(ProgramacionServicios programacionServicios) {
         this.programacionServicios = programacionServicios;
     }
+
 }
