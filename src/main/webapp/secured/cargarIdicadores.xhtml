@@ -15,18 +15,9 @@
             <h:form enctype="multipart/form-data">
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
-                <p:panel id="basic" header="Generar Matriz de distancia"  style="margin-bottom:20px">
+                <p:panel id="basic" header="Cargar Indicadores Goal Bus"  style="margin-bottom:20px">
                     <p:commandButton actionListener="#{cargarBean.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                     <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
-                        <p:panelGrid style="border:none" columns="5" >
-                            <p:outputLabel  value="Tipo Generación:" />
-                            <p:selectOneRadio id="busqueda" value="#{cargarBean.tipoGeneracion}">
-                                <p:ajax process="@this" update="@form" listener="#{cargarBean.cambiarTipoGeneracion}"/>
-                                <f:selectItem itemLabel="Calcular" itemValue="1" />
-                                <f:selectItem itemLabel="Cargar Archivo" itemValue="2" />
-                            </p:selectOneRadio>
-
-                        </p:panelGrid>
                         <p:panel  style="border:none">
                             <p:panelGrid columns="4">
                                 <p:outputLabel value="Tipología:" for="tipologia" />

@@ -49,5 +49,9 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionesUltimoMes(periocidad,calendar.getTime(),hoy);
     }
 
+    public boolean isCuadroAlready(String cuadro){
+        return programacionDao.isCuadroAlready(cuadro);
+    }
+
 
 }

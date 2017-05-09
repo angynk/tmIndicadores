@@ -83,6 +83,14 @@ public class ModProgramacionBean {
     }
 
 
+    public void actualizar(){
+        programacionServicios.updateProgramacion(selectedProg);
+        addMessage(FacesMessage.SEVERITY_INFO,"Programación actualizada", "");
+    }
+
+    public void cancelar(){
+
+    }
 
 
     private boolean genracionValida() {

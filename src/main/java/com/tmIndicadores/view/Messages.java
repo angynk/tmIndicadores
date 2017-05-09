@@ -13,7 +13,9 @@ public class Messages {
 
     //INFORMACION
     public static final String MENSAJE_CARGA_EXITOSA = "Carga exitosa";
+    public static final String MENSAJE_CARGA_FALLIDA = "Carga Fallida";
     public static final String ACCION_INDICADORES_ALMACENADOS = "Indicadores GoalBus Almacenados";
+    public static final String ACCION_INDICADORES_REVISAR = "Verificar los campos y la existencia de la programación";
 
 
 }

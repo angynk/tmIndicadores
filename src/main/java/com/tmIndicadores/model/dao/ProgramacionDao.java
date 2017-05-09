@@ -44,6 +44,15 @@ public class ProgramacionDao {
         getSessionFactory().getCurrentSession().update(programacion);
     }
 
+    public boolean isCuadroAlready(String cuadro){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("cuadro", cuadro));
+        List list = criteria.list();
+        if(list.size()>0){
+            return true;
+        }
+        return false;
+    }
 
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipologia){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);

@@ -28,10 +28,18 @@ public class IndicadoresGoalProcessor {
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Indicadores Goal Bus con Archivo>>");
-        processorUtils.copyFile(fileName,in,destination);
-        destination=destination+fileName;
-        readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName);
+        String [] cuadroInfo = fileName.split("_");
+        String cuadroNuevo = cuadroInfo[2];
+        if(!programacionServicios.isCuadroAlready(cuadroNuevo)){
+            processorUtils.copyFile(fileName,in,destination);
+            destination=destination+fileName;
+            readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName);
+        }else{
+            logDatos.add(new LogDatos("<<El cuadro de programación ya existe>>", TipoLog.ERROR));
+        }
+
         logDatos.add(new LogDatos("<<Fin Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
+
         return logDatos;
     }
 
