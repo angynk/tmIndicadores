@@ -114,13 +114,22 @@
                                     <h:inputText value="#{MPBean.selectedProg.cuadro}"  />
 
                                     <h:outputText value="Buses:" style="color:black" />
-                                    <h:inputText value="#{MPBean.selectedProg.buses}" disabled="true" style="background-color: #d6d7d8" />
+                                    <h:inputText value="#{MPBean.selectedProg.buses}" />
 
                                     <h:outputText value="Razon Cambio:" style="color:black"/>
                                     <h:inputText value="#{MPBean.selectedProg.razonCambio}"  />
 
                                     <h:outputText value="Lineas Cargadas:" style="color:black"/>
                                     <h:inputText value="#{MPBean.selectedProg.lineasCargadas}"  />
+
+                                    <h:outputText value="Km Comerciales:" style="color:black" />
+                                    <h:inputText value="#{MPBean.selectedProg.kmComercialFin}" />
+
+                                    <h:outputText value="Km Vacio:" style="color:black" />
+                                    <h:inputText value="#{MPBean.selectedProg.kmVacioFin}" />
+
+                                    <h:outputText value="% Vacio:" style="color:black" />
+                                    <h:inputText value="#{MPBean.selectedProg.porcentajeVacioFinal}" />
 
                                 </p:panelGrid>
                                 <p:panelGrid columns="2">
