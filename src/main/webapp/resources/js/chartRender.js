@@ -27,7 +27,7 @@ var highchartsOptions = Highcharts.setOptions({
             downloadPDF: 'Descargar documento PDF',
             downloadSVG: 'Descargar imagen SVG',
             downloadCSV: 'Descargar archivo CSV',
-            downloadXLS: 'Descargar archivo CSV',
+            downloadXLS: 'Descargar archivo XLS',
             printChart: 'Imprimir Gráfica'
 
         }
@@ -93,7 +93,7 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         options.series = series;
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
-        var titulo = document.getElementById("form:hiddenTittle").value +" - Hábil";
+        var titulo = document.getElementById("form:hiddenTittle").value ;
         var ejeX = document.getElementById("form:hiddenTittleX").value;
         var options = createOption(titulo,ejeX);
         var series =  $.parseJSON(document.getElementById("form:hidden").value);

@@ -53,7 +53,13 @@ public class ModProgramacionBean {
     }
 
     public void inicio(){
-
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void generar(){

@@ -29,6 +29,7 @@ public class ResumenIndicadoresProgBean {
 
     private boolean visibleResumen;
     private List<Programacion> programacionRecords ;
+    private List<Programacion> filteredProgramacionRecords ;
 
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
@@ -147,5 +148,13 @@ public class ResumenIndicadoresProgBean {
 
     public void setProgramacionServicios(ProgramacionServicios programacionServicios) {
         this.programacionServicios = programacionServicios;
+    }
+
+    public List<Programacion> getFilteredProgramacionRecords() {
+        return filteredProgramacionRecords;
+    }
+
+    public void setFilteredProgramacionRecords(List<Programacion> filteredProgramacionRecords) {
+        this.filteredProgramacionRecords = filteredProgramacionRecords;
     }
 }

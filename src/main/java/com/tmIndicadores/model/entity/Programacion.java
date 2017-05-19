@@ -164,8 +164,11 @@ public class Programacion {
     }
 
     public String getFechaFormatted() {
+        if(fecha!=null){
             SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
             return dt1.format(fecha);
+        }
+          return "";
     }
 
     public void setFechaFormatted(String fechaFormatted) {

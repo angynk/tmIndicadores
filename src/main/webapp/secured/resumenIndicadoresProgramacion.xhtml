@@ -37,11 +37,6 @@
                             <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
                             <f:selectItem itemLabel="Todos" itemValue="DEF" />
                         </p:selectOneMenu>
-                        <p:outputLabel for="tipoGrafica" value="Tipo de Gráfica:" />
-                        <p:selectOneMenu id="tipoGrafica" value="#{RIPBean.tipoDatos}" style="width:125px">
-                            <f:selectItem itemLabel="Con Saltos" itemValue="S" />
-                            <f:selectItem itemLabel="Con Repeticiones" itemValue="R" />
-                        </p:selectOneMenu>
                     </h:panelGrid>
                     <p:commandButton value="Generar" action="#{RIPBean.generar}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
@@ -52,8 +47,6 @@
                     <p:panel visible="#{RIPBean.visibleResumen}">
                         <div style="margin-top:10px"/>
                         <p:panelGrid columns="4">
-                            <p:commandButton actionListener="#{RIPBean.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
-
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
                                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
@@ -66,6 +59,7 @@
                         <p:dataTable id="prog" var="prog" value="#{RIPBean.programacionRecords}" widgetVar="ProgTable"
                                      emptyMessage="No hay registros relacionados a la busqueda"
                                      scrollable="true" scrollWidth="98%" scrollHeight="410"
+                                     filteredValue="#{RIPBean.filteredProgramacionRecords}"
                                      editable="true">
 
                             <p:column filterBy="#{prog.fechaFormatted}" headerText="Fecha"  filterMatchMode="contains" sortBy="#{prog.fecha}"

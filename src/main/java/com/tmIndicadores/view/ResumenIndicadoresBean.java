@@ -29,6 +29,7 @@ public class ResumenIndicadoresBean {
 
     private boolean visibleResumen;
     private List<Programacion> programacionRecords ;
+    private List<Programacion> filteredProgramacionRecords ;
 
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
@@ -51,7 +52,13 @@ public class ResumenIndicadoresBean {
     }
 
     public void inicio(){
-
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void generar(){
@@ -151,4 +158,11 @@ public class ResumenIndicadoresBean {
         this.programacionServicios = programacionServicios;
     }
 
+    public List<Programacion> getFilteredProgramacionRecords() {
+        return filteredProgramacionRecords;
+    }
+
+    public void setFilteredProgramacionRecords(List<Programacion> filteredProgramacionRecords) {
+        this.filteredProgramacionRecords = filteredProgramacionRecords;
+    }
 }
