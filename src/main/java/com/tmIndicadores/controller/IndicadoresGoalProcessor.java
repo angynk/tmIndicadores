@@ -22,7 +22,7 @@ public class IndicadoresGoalProcessor {
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
-    private String destination="C:\\temp\\";
+    private String destination="C:\\temp\\Indicadores\\";
 
     public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia, String periocidad,String lineasC){
         logDatos = new ArrayList<>();
