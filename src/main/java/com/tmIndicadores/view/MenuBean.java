@@ -50,6 +50,16 @@ public class MenuBean {
         }
     }
 
+    public void refreshDuplicarProgramacion(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/duplicarProgramacion.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshModProgramaciones(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {

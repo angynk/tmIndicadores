@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+        <ui:define name="content">
+            <h:form enctype="multipart/form-data">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:panel id="basic" header="Duplicar Indicadores Goal Bus"  style="margin-bottom:20px">
+                    <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                        <p:panel  style="border:none">
+                            <p:panelGrid columns="4">
+                                <p:outputLabel value="Tipología:"  />
+                                <p:outputLabel value="Razón Programación:" for="razon" />
+                                <p:inputText value="#{duplicarBean.razonProgramacion}" id="razon"/>
+                                <p:outputLabel for="buttonV" value="Fecha de Programación (DD-MM-AAAA):" />
+                                <p:calendar id="buttonV" value="#{duplicarBean.fechaProgramacion}" showOn="button" selection="multiple" />
+
+                                <p:commandButton value="Guardar" action="#{duplicarBean.duplicar}" ajax="false"
+                                                 icon="ui-icon ui-icon-disk" id="withIcon"
+                                                 async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                                 oncomplete="PF('dlg2').hide()"
+                                />
+                            </p:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+
+
+
+
+                </p:panel>
+
+                <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
+                           minHeight="40" style="height: 40px">
+                    <h:outputText value="En Proceso.." />
+                    <p:graphicImage name="images/ajaxloadingbar.gif" />
+                </p:dialog>
+
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>
