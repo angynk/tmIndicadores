@@ -7,14 +7,18 @@
       >
 
 	<h:head>
-		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
-		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js"  />
+		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
 		<h:outputStylesheet name="common-style.css" library="css" />
 		<h:outputStylesheet name="css/bootstrap.min.css" />
 		<h:outputStylesheet name="css/simple-sidebar.css" />
 		<h:outputScript name="js/bootstrap.min.js" />
-
-		<!--<h:outputScript name="js/jquery.js" />-->
+		<h:outputScript  name="js/jquery-ui.multidatespicker.js" />
+		<script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('#mdp-demo').multiDatesPicker();
+            });
+		</script>
 	</h:head>
     
     <h:body>
