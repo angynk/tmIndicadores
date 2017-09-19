@@ -33,8 +33,8 @@ public class ProgramacionServicios {
     }
 
 
-    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad, String tipologia){
-        return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad, String tipologia,String tipoDatos){
+        return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
     }
 
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad){
@@ -51,6 +51,10 @@ public class ProgramacionServicios {
 
     public boolean isCuadroAlready(String cuadro){
         return programacionDao.isCuadroAlready(cuadro);
+    }
+
+    public List<Programacion> getProgramacionbyFecha(Date fecha){
+        return programacionDao.getProgramacionbyFecha(fecha);
     }
 
 

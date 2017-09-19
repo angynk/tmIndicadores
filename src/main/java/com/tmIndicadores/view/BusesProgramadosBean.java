@@ -38,6 +38,7 @@ public class BusesProgramadosBean {
     private String tituloSabado;
     private String tituloFestivo;
     private String tituloEjeX;
+    private String tipoDatos;
 
     private String cambioDeGrafica;
 
@@ -308,15 +309,15 @@ public class BusesProgramadosBean {
 
     public void generarChartSeries(){
         if(!periocidad.equals("TODOS")){
-            List<Programacion> programacion = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+            List<Programacion> programacion = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
             List<Series> series = generarRegressionChart(programacion,periocidad);
             setChartSeries(new Gson().toJson(series));
             generarLineasChart(programacion);
             generarBarrasChart(programacion,indicador);
         }else{
-            List<Programacion> programacionHabil = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"HABIL",tipologia);
-            List<Programacion> programacionSabado = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"SABADO",tipologia);
-            List<Programacion> programacionFestivo = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"FESTIVO",tipologia);
+            List<Programacion> programacionHabil = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"HABIL",tipologia,tipoDatos);
+            List<Programacion> programacionSabado = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"SABADO",tipologia,tipoDatos);
+            List<Programacion> programacionFestivo = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,"FESTIVO",tipologia,tipoDatos);
             generarLineasChartPara(programacionHabil,programacionSabado,programacionFestivo);
             generarBarrasChartPara(programacionHabil,programacionSabado,programacionFestivo);
             List<Series> series = generarRegressionChart(programacionHabil,"HABIL");
@@ -586,5 +587,13 @@ public class BusesProgramadosBean {
 
     public void setTituloFestivo(String tituloFestivo) {
         this.tituloFestivo = tituloFestivo;
+    }
+
+    public String getTipoDatos() {
+        return tipoDatos;
+    }
+
+    public void setTipoDatos(String tipoDatos) {
+        this.tipoDatos = tipoDatos;
     }
 }

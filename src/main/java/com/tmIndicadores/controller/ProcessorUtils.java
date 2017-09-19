@@ -3,6 +3,9 @@ package com.tmIndicadores.controller;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class ProcessorUtils {
@@ -34,5 +37,17 @@ public class ProcessorUtils {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static Date fromStringToDate(String fechaString){
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            Date date = formatter.parse(fechaString);
+            return date;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

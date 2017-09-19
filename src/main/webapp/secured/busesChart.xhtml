@@ -46,6 +46,11 @@
                         <f:selectItem itemLabel="% Vacios" itemValue="PV" />
                         <f:selectItem itemLabel="Lineas Cargadas" itemValue="LC" />
                     </p:selectOneMenu>
+                    <p:outputLabel for="tipoProg" value="Tipo Datos:" />
+                    <p:selectOneMenu id="tipoProg" value="#{bPBean.tipoDatos}" style="width:125px">
+                        <f:selectItem itemLabel="Datos programaciones" itemValue="N" />
+                        <f:selectItem itemLabel="Datos dia a dia" itemValue="D" />
+                    </p:selectOneMenu>
                 </h:panelGrid>
                 <p:commandButton value="Generar" action="#{bPBean.generar}"
                                  icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
