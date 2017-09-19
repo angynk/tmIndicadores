@@ -1,9 +1,12 @@
 package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.DuplicarProgramacionProcessor;
+import com.tmIndicadores.controller.LogDatos;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
@@ -19,18 +22,34 @@ public class DuplicarIndicadoresBean {
     private String razonProgramacion;
     private String fechas;
     private Date fechaADuplicar;
+    private List<LogDatos> logDatos;
+    private boolean resultadosVisibles;
 
-    @Autowired
+    @ManagedProperty("#{DuplicarProcessor}")
     private DuplicarProgramacionProcessor duplicarProgramacionProcessor;
 
+    @ManagedProperty("#{MessagesView}")
+    private MessagesView messagesView;
+
     public DuplicarIndicadoresBean() {
+    }
+
+    @PostConstruct
+    public void init() {
+        resultadosVisibles = false;
     }
 
     public void duplicar(){
         //Obtener fechas
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         fechas = ec.getRequestParameterMap().get("fechas");
-
+        logDatos = duplicarProgramacionProcessor.duplicarProgramacion(fechaADuplicar,fechas);
+        resultadosVisibles = true;
+        if(duplicarProgramacionProcessor.isDuplicacionValida()){
+            messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"");
+        }else{
+            messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.VALIDE_LOG);
+        }
     }
 
     public String getRazonProgramacion() {
@@ -63,5 +82,29 @@ public class DuplicarIndicadoresBean {
 
     public void setDuplicarProgramacionProcessor(DuplicarProgramacionProcessor duplicarProgramacionProcessor) {
         this.duplicarProgramacionProcessor = duplicarProgramacionProcessor;
+    }
+
+    public List<LogDatos> getLogDatos() {
+        return logDatos;
+    }
+
+    public void setLogDatos(List<LogDatos> logDatos) {
+        this.logDatos = logDatos;
+    }
+
+    public boolean isResultadosVisibles() {
+        return resultadosVisibles;
+    }
+
+    public void setResultadosVisibles(boolean resultadosVisibles) {
+        this.resultadosVisibles = resultadosVisibles;
+    }
+
+    public MessagesView getMessagesView() {
+        return messagesView;
+    }
+
+    public void setMessagesView(MessagesView messagesView) {
+        this.messagesView = messagesView;
     }
 }

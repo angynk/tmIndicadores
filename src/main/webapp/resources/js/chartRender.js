@@ -202,7 +202,7 @@ function createOptionLine(titulo,tituloX){
     return options;
 };
 
-$(".chart-export").each(function() {
+$(".container").each(function() {
     var jThis = $(this),
         chartSelector = jThis.data("chartSelector"),
         chart = $(chartSelector).highcharts();

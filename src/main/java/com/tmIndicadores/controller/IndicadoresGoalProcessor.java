@@ -81,6 +81,7 @@ public class IndicadoresGoalProcessor {
             programacion.setTiempoProcesamiento(valores[TraceLogIndex.TIEMPO_SOLUCION]);
             programacion.setTipologia(tipologia);
             programacion.setPeriodicidad(periocidad);
+            programacion.setTipoProgramacion("N");
 
             programacionServicios.addProgramacion(programacion);
 

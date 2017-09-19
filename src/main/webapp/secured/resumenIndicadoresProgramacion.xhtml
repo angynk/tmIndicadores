@@ -18,7 +18,6 @@
             <h:form  id="form">
                 <p:growl id="message" showDetail="true" />
                 <p:panel id="basic" header="Resumen de Indicadores de programación GoalBus"  style="margin-bottom:20px">
-                    <p:commandButton actionListener="#{RIPBean.inicioReturn}" id="inicio2"  icon="ui-icon ui-icon-home" title="inicio" />
                     <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
                         <p:calendar id="button" value="#{RIPBean.fechaInicio}" showOn="button" />
@@ -36,6 +35,11 @@
                             <f:selectItem itemLabel="Articulado" itemValue="ART" />
                             <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
                             <f:selectItem itemLabel="Todos" itemValue="DEF" />
+                        </p:selectOneMenu>
+                        <p:outputLabel for="tipoProg" value="Tipo Datos:" />
+                        <p:selectOneMenu id="tipoProg" value="#{RIPBean.tipoDatos}" style="width:125px">
+                            <f:selectItem itemLabel="Datos programaciones" itemValue="N" />
+                            <f:selectItem itemLabel="Datos dia a dia" itemValue="D" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <p:commandButton value="Generar" action="#{RIPBean.generar}" ajax="false"

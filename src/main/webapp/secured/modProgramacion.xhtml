@@ -17,8 +17,7 @@
 
             <h:form  id="form">
                 <p:growl id="message" showDetail="true" />
-                <p:panel id="basic" header="Resumen de Indicadores Gerenciales GoalBus"  style="margin-bottom:20px">
-                    <p:commandButton actionListener="#{MPBean.inicioReturn}" id="inicio2"  icon="ui-icon ui-icon-home" title="inicio" />
+                <p:panel id="basic" header="Modificar Resumen Programacion GoalBus"  style="margin-bottom:20px">
                     <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
                         <p:calendar id="button" value="#{MPBean.fechaInicio}" showOn="button" />
@@ -30,6 +29,11 @@
                             <f:selectItem itemLabel="Sabado" itemValue="SABADO" />
                             <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                             <f:selectItem itemLabel="Todos" itemValue="TODOS" />
+                        </p:selectOneMenu>
+                        <p:outputLabel for="tipoProg" value="Tipo Datos:" />
+                        <p:selectOneMenu id="tipoProg" value="#{MPBean.tipoDatos}" style="width:125px">
+                            <f:selectItem itemLabel="Datos programaciones" itemValue="N" />
+                            <f:selectItem itemLabel="Datos dia a dia" itemValue="D" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <p:commandButton value="Buscar" action="#{MPBean.generar}" ajax="false"
@@ -65,7 +69,7 @@
                                 <h:outputText value="#{prog.cuadro}" style="width: 75px" />
                             </p:column>
 
-                            <p:column filterBy="#{prog.tipologia}" headerText="Tipo"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
+                            <p:column filterBy="#{prog.tipologia}" headerText="Tipologìa"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
                                       style="width: 70px">
                                 <h:outputText value="#{prog.tipologia}"  style="width: 75px"/>
                             </p:column>
@@ -82,8 +86,13 @@
 
 
                             <p:column filterBy="#{prog.lineasCargadas}" headerText="Líneas"  filterMatchMode="contains" sortBy="#{prog.lineasCargadas}"
+                                                 style="width:80px">
+                            <h:outputText value="#{prog.lineasCargadas}" style="width: 90px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{prog.tipoProgramacionFormatted}" headerText="Tipo"  filterMatchMode="contains" sortBy="#{prog.tipoProgramacion}"
                                       style="width:80px">
-                                <h:outputText value="#{prog.lineasCargadas}" style="width: 90px"/>
+                                <h:outputText value="#{prog.tipoProgramacionFormatted}" style="width: 90px"/>
                             </p:column>
 
                             <p:column style="width:32px;text-align: center" exportable="false">

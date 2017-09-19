@@ -21,7 +21,7 @@
                         <p:panel  style="border:none">
                             <p:panelGrid columns="5">
                                 <p:outputLabel value="Fecha de Programacion :"  />
-                                <p:calendar  value="#{duplicarBean.fechaADuplicar}" showOn="button" />
+                                <p:calendar  value="#{duplicarBean.fechaADuplicar}" />
                                 <p:outputLabel  value="Fechas a Duplicar:" />
                                 <input id="mdp-demo" name="fechas"/>
                                 <p:commandButton value="Duplicar" action="#{duplicarBean.duplicar}" ajax="false"
@@ -32,10 +32,20 @@
                             </p:panelGrid>
                         </p:panel>
                     </h:panelGrid>
-
-
-
-
+                </p:panel>
+                <p:panel visible="#{duplicarBean.resultadosVisibles}">
+                    <p:accordionPanel style="width: 100%" activeIndex="null">
+                        <p:tab title="Resultados">
+                            <h:panelGrid columns="2" cellpadding="10" style="width: 100%">
+                                <p:dataList value="#{duplicarBean.logDatos}" var="log" type="ordered" style="width: 100%">
+                                    <f:facet name="header">
+                                        Log
+                                    </f:facet>
+                                    #{log.tipoLog} : #{log.mensaje}
+                                </p:dataList>
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
                 </p:panel>
 
                 <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"

@@ -48,16 +48,14 @@ public class ResumenIndicadoresProgBean {
         c.setTime(fechaFin);
         c.add(Calendar.MONTH, -6);
         fechaInicio = c.getTime();
-        programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+        tipoDatos = "N";
+        programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
     }
 
-    public void inicio(){
-
-    }
 
     public void generar(){
         if(genracionValida()){
-            programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+            programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
             visibleResumen = true;
         }else{
             addMessage(FacesMessage.SEVERITY_INFO,"Complete los datos para generar la grafica", "");
@@ -71,15 +69,6 @@ public class ResumenIndicadoresProgBean {
         return false;
     }
 
-    public void inicioReturn(){
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            ec.redirect(ec.getRequestContextPath()
-                    + "/secured/index.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void addMessage(FacesMessage.Severity severity , String summary, String detail) {
         FacesMessage message = new FacesMessage(severity, summary, detail);

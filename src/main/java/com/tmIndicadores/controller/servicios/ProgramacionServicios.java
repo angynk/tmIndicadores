@@ -37,8 +37,8 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
     }
 
-    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad){
-        return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad);
+    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipoDatos){
+        return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipoDatos);
     }
 
     public List<Programacion> getProgramacionesUltimoMes(String periocidad){

@@ -49,22 +49,15 @@ public class ModProgramacionBean {
         c.setTime(fechaFin);
         c.add(Calendar.MONTH, -6);
         fechaInicio = c.getTime();
-        programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia);
+        tipoDatos = "N";
+        programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipoDatos);
     }
 
-    public void inicio(){
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            ec.redirect(ec.getRequestContextPath()
-                    + "/secured/index.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public void generar(){
         if(genracionValida()){
-            programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad);
+            programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipoDatos);
             visibleResumen = true;
         }else{
             addMessage(FacesMessage.SEVERITY_INFO,"Complete los datos para generar la grafica", "");

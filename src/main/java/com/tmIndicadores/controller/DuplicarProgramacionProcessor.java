@@ -15,26 +15,29 @@ public class DuplicarProgramacionProcessor {
 
     @Autowired
     private ProgramacionServicios programacionServicios;
+    private boolean duplicacionValida = true;
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
 
     public List<LogDatos> duplicarProgramacion(Date fechaADuplicar, String fechas){
         logDatos = new ArrayList<>();
+        duplicacionValida = true;
         logDatos.add(new LogDatos("<<Inicio Duplicacion programacion>>", TipoLog.INFO));
         List<Programacion> programaciones = encontrarProgramacionActual(fechaADuplicar);
         if(programaciones.size()>0){
             List<Date> fechasRecords = convertirAfechas(fechas);
             if(fechasRecords.size()>0){
                 duplicarDatosProgramacion(fechasRecords,programaciones);
-                logDatos.add(new LogDatos("<<Fin Duplicacion programacion>>", TipoLog.INFO));
             }else{
+                duplicacionValida = false;
                 logDatos.add(new LogDatos("El formato de Fechas es Incorrecto",TipoLog.ERROR));
             }
         }else{
+            duplicacionValida = false;
             logDatos.add(new LogDatos("No existe ningunaProgramacion Para la Fecha definida",TipoLog.ERROR));
         }
-
+        logDatos.add(new LogDatos("<<Fin Duplicacion programacion>>", TipoLog.INFO));
         return logDatos;
     }
 
@@ -42,9 +45,13 @@ public class DuplicarProgramacionProcessor {
         for(Date fecha:fechasRecords){
             for(Programacion prog:programaciones){
                 insertarProgramacion(fecha,prog);
+                logDatos.add(new LogDatos("Programacion Duplicada ("+fecha.toString()+") del Cuadro: "+prog.getCuadro()+" ,Tipo Dia: "+prog.getPeriodicidad()
+                        +" ,Tipologia: "+prog.getTipologia(), TipoLog.INFO));
             }
         }
     }
+
+
 
     private void insertarProgramacion(Date fecha, Programacion prog) {
         Programacion nuevaProgramacion = transpasarDatosObjetoProgramacion(prog);
@@ -91,5 +98,13 @@ public class DuplicarProgramacionProcessor {
 
     private  List<Programacion> encontrarProgramacionActual(Date fechaProg) {
        return programacionServicios.getProgramacionbyFecha(fechaProg);
+    }
+
+    public boolean isDuplicacionValida() {
+        return duplicacionValida;
+    }
+
+    public void setDuplicacionValida(boolean duplicacionValida) {
+        this.duplicacionValida = duplicacionValida;
     }
 }

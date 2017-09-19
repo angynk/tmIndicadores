@@ -133,15 +133,6 @@ public class BusesProgramadosBean {
 
     }
 
-    public void inicio(){
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            ec.redirect(ec.getRequestContextPath()
-                    + "/secured/index.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void changeEvent() {
         System.out.println("entre");

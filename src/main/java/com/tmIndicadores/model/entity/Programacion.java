@@ -68,6 +68,8 @@ public class Programacion {
 
     @Transient
     private String fechaFormatted;
+    @Transient
+    private String tipoProgramacionFormatted;
 
 
     public Programacion() {
@@ -171,6 +173,7 @@ public class Programacion {
           return "";
     }
 
+
     public void setFechaFormatted(String fechaFormatted) {
         this.fechaFormatted = fechaFormatted;
     }
@@ -229,5 +232,10 @@ public class Programacion {
 
     public void setPorcentajeVacioInicio(Double porcentajeVacioInicio) {
         this.porcentajeVacioInicio = porcentajeVacioInicio;
+    }
+
+    public String getTipoProgramacionFormatted() {
+        if(tipoProgramacion.equals("N")) return "Programada";
+        return "Duplicado";
     }
 }

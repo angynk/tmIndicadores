@@ -20,6 +20,15 @@ public class MenuBean {
         }
     }
 
+    public void refreshDashboard(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void refreshResumen(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {

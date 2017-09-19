@@ -44,9 +44,6 @@ public class CargarIndicadoresBean {
         tipologia = "ART";
     }
 
-    public void cambiarTipoGeneracion(){
-
-    }
 
     public void cargarArchivo(){
         if(valid()){
@@ -78,15 +75,6 @@ public class CargarIndicadoresBean {
         return tipoGeneracion;
     }
 
-    public void inicio(){
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            ec.redirect(ec.getRequestContextPath()
-                    + "/secured/index.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void setTipoGeneracion(String tipoGeneracion) {
         this.tipoGeneracion = tipoGeneracion;

@@ -77,11 +77,14 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
-    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad){
+    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipoDatos){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
         if(!periocidad.equals("TODOS")){
             criteria.add(Restrictions.eq("periodicidad", periocidad));
+        }
+        if(tipoDatos.equals("N")){
+            criteria.add(Restrictions.eq("tipoProgramacion",tipoDatos));
         }
         criteria.addOrder(Order.asc("fecha"));
         return criteria.list();
@@ -90,7 +93,7 @@ public class ProgramacionDao {
     public List<Programacion> getProgramacionesUltimoMes(String periocidad,Date fechaInicio, Date fechaFin){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
-        System.out.println(fechaInicio+"-"+fechaFin);
+        criteria.add(Restrictions.eq("tipoProgramacion","N"));
         criteria.add(Restrictions.eq("periodicidad", periocidad));
         criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
