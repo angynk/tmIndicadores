@@ -27,6 +27,7 @@
         <!-- List of XML mapping files -->
         <mapping class="com.tmIndicadores.model.entity.Usuario"/>
         <mapping class="com.tmIndicadores.model.entity.Programacion"/>
+        <mapping class="com.tmIndicadores.model.entity.Role"/>
 
     </session-factory>
 </hibernate-configuration>

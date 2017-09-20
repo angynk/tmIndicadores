@@ -15,14 +15,18 @@ public class Usuario {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "role")
-    private String role;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "roleu", nullable = false)
+    private Role role;
 
     @Column(name = "usuario")
     private String usuario;
 
     @Column(name = "contrasena")
     private String contrasena;
+
+    @Column(name = "activo")
+    private boolean activo;
 
     @Column(name = "area")
     private String area;
@@ -70,16 +74,19 @@ public class Usuario {
         this.area = area;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public boolean hasRole(Role role) {
-        return this.role.equals(role);
+    public boolean isActivo() {
+        return activo;
     }
 
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }

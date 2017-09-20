@@ -15,11 +15,14 @@
 
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a href="#">Indicadores Programación BRT</a>
+                            <a >Indicadores Programación BRT</a>
                         </div>
                         <div>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>  <p:commandLink action="#{loginBean.logout}"><span class="ui-icon-person"></span>Salir</p:commandLink></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>  <p:outputLabel value="#{loginBean.nombreUsuario}" class="ui-icon-person"></p:outputLabel></li>
                             </ul>
                         </div>
                     </div>
@@ -41,10 +44,10 @@
                             </p:submenu>
                         </p:column>
                     </p:submenu>
-                    <p:submenu label="Carga de Indicadores" icon="ui-icon-script" rendered="#{loginBean.hasRole('ADMIN')}">
+                    <p:submenu label="Carga de Indicadores" icon="ui-icon-script" rendered="#{loginBean.puedeEditar()}">
                         <p:column>
                             <p:submenu label="Cargar Indicadores">
-                                <p:menuitem value="Agregrar Programacion" action="#{menu.refreshCargaIndicadores}" />
+                                <p:menuitem value="Agregrar Programacion" action="#{menu.refreshCargaIndicadores}"  />
                                 <p:menuitem value="Duplicar Programacion" action="#{menu.refreshDuplicarProgramacion}" />
                                 <p:menuitem value="Modificar Programaciones" action="#{menu.refreshModProgramaciones}" />
                             </p:submenu>

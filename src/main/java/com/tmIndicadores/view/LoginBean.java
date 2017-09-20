@@ -20,8 +20,9 @@ public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String uname;
+    private String nombreUsuario;
     private String password;
-    private String role;
+    private Role role;
 
 
     @ManagedProperty(value="#{navigationBean}")
@@ -60,6 +61,7 @@ public class LoginBean implements Serializable {
                 session.setAttribute("user", uname);
                 session.setAttribute("role", usuario.getRole());
                 this.role =usuario.getRole();
+                this.nombreUsuario = usuario.getNombre();
 
                 return navigationBean.redirectToWelcome();
             } else {
@@ -103,15 +105,37 @@ public class LoginBean implements Serializable {
         this.usuarioServicios = usuarioServicios;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     public boolean hasRole(String role) {
         return this.role.equals(role);
+    }
+
+    public boolean puedeEditar(){
+        if(role!= null){
+           return role.isPermisoEscribir();
+        }
+        return false;
+    }
+
+    public boolean puedeEliminar(){
+        if(role!= null){
+            return role.isPermisoEliminar();
+        }
+        return false;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }

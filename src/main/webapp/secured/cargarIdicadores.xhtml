@@ -38,7 +38,8 @@
                                 <p:outputLabel for="buttonV" value="Fecha de Programación (DD-MM-AAAA):" />
                                 <p:calendar id="buttonV" value="#{cargarBean.fechaProgramacion}" showOn="button" />
                                 <p:outputLabel value="TraceLog GOAL Bus:" />
-                                <p:fileUpload value="#{cargarBean.traceLog}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|csv)$/"/>
+                                <p:fileUpload value="#{cargarBean.traceLog}" label="Seleccionar"
+                                              mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|csv)$/"/>
 
                                 <p:commandButton value="Guardar" action="#{cargarBean.cargarArchivo}" ajax="false"
                                                  icon="ui-icon ui-icon-disk" id="withIcon"

@@ -1,8 +1,6 @@
 package com.tmIndicadores.controller;
 
 
-import com.tmIndicadores.model.entity.Role;
-
 import javax.faces.application.ResourceHandler;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
