@@ -10,19 +10,17 @@
             <!--<div style="background-color: #2e6da4">-->
             <h:form id="formSideBar">
                 <div class="menu">
-
-
-
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a >Indicadores Programación BRT</a>
+                            <a class="navbar-brand" href="#"><span>
+                                <img src="../resources/images/dashboard.png" height="24"/></span> Indicadores <span class="text-danger"> BRT</span></a>
                         </div>
                         <div>
                             <ul class="nav navbar-nav navbar-right">
-                                <li>  <p:commandLink action="#{loginBean.logout}"><span class="ui-icon-person"></span>Salir</p:commandLink></li>
-                            </ul>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>  <p:outputLabel value="#{loginBean.nombreUsuario}" class="ui-icon-person"></p:outputLabel></li>
+                                <li><a><p:outputLabel class="icon-camera-retro" style="font-style: italic" value="#{loginBean.nombreUsuario}">  </p:outputLabel></a></li>
+
+                                <li><p:commandButton action="#{loginBean.logout}" value="Desconectarse" styleClass="btn btn-danger btn-margin-right navbar-btn"
+                                                     icon="ui-icon-circle-arrow-e" >Desconectarse</p:commandButton></li>
                             </ul>
                         </div>
                     </div>
@@ -31,7 +29,7 @@
                 <p:panel style="border:none;padding-top: 5px;">
 
 
-                <p:megaMenu orientation="horizontal" style="margin-top:30px;">
+                <p:megaMenu orientation="horizontal" style="margin-top:40px;">
                     <p:submenu label="Indicadores GoalBus" icon="ui-icon-script">
                         <p:column>
                             <p:submenu label="Visualizar Indicadores">
