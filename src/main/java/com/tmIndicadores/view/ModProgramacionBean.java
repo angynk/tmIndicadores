@@ -64,6 +64,11 @@ public class ModProgramacionBean {
         }
     }
 
+    public void cargarTodo(){
+        programacionRecords = programacionServicios.getAll();
+        visibleResumen = true;
+    }
+
     public void eliminar(){
         programacionServicios.deleteProgramacion(selectedProg);
         addMessage(FacesMessage.SEVERITY_INFO,"Servicio Eliminado", "");

@@ -62,6 +62,11 @@ public class ResumenIndicadoresProgBean {
         }
     }
 
+    public void cargarTodo(){
+        programacionRecords = programacionServicios.getAll();
+        visibleResumen = true;
+    }
+
     private boolean genracionValida() {
         if(fechaInicio!= null && fechaFin!=null && tipologia!=null && periocidad!=null ){
             return true;

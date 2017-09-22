@@ -42,8 +42,10 @@
                     </h:panelGrid>
                     <p:commandButton value="Generar" action="#{RIBean.generar}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
-                    >
-                    </p:commandButton>
+                    />
+                    <p:commandButton value="Cargar Todo" action="#{RIBean.cargarTodo}" ajax="false"
+                                     icon="ui-icon ui-icon-caret-1-s"  styleClass="boton"
+                    />
 
                         <div style="height: 10px"></div>
                         <p:panel visible="#{RIBean.visibleResumen}">

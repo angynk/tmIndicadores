@@ -35,7 +35,7 @@ public class DuplicarProgramacionProcessor {
             }
         }else{
             duplicacionValida = false;
-            logDatos.add(new LogDatos("No existe ningunaProgramacion Para la Fecha definida",TipoLog.ERROR));
+            logDatos.add(new LogDatos("No existe ninguna Programacion Para la Fecha definida",TipoLog.ERROR));
         }
         logDatos.add(new LogDatos("<<Fin Duplicacion programacion>>", TipoLog.INFO));
         return logDatos;
@@ -50,8 +50,9 @@ public class DuplicarProgramacionProcessor {
                             +" ,Tipologia: "+prog.getTipologia(), TipoLog.INFO));
                 }
             }else{
-                logDatos.add(new LogDatos("Programacion No Duplicada ("+fecha.toString()+"), para esa" +
+                logDatos.add(new LogDatos("Programacion No Duplicada ("+fecha.toString()+"), para esa " +
                         "fecha ya hay una programación asociada ", TipoLog.ERROR));
+                duplicacionValida = false;
             }
 
         }
