@@ -35,6 +35,8 @@
                                 <p:inputText value="#{cargarBean.razonProgramacion}" id="razon"/>
                                 <p:outputLabel value="Líneas Cargadas:" for="lineasC" />
                                 <p:inputText value="#{cargarBean.lineasCargadas}" id="lineasC"/>
+                                <p:outputLabel value="Cuadro Programaciòn:"/>
+                                <p:inputText value="#{cargarBean.cuadro}" />
                                 <p:outputLabel for="buttonV" value="Fecha de Programación (DD-MM-AAAA):" />
                                 <p:calendar id="buttonV" value="#{cargarBean.fechaProgramacion}" showOn="button" />
                                 <p:outputLabel value="TraceLog GOAL Bus:" />
@@ -53,6 +55,21 @@
 
 
 
+                </p:panel>
+
+                <p:panel visible="#{cargarBean.resultadosVisibles}">
+                    <p:accordionPanel style="width: 100%" activeIndex="null">
+                        <p:tab title="Resultados">
+                            <h:panelGrid columns="2" cellpadding="10" style="width: 100%">
+                                <p:dataList value="#{cargarBean.logDatos}" var="log" type="ordered" style="width: 100%">
+                                    <f:facet name="header">
+                                        Log
+                                    </f:facet>
+                                    #{log.tipoLog} : #{log.mensaje}
+                                </p:dataList>
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
                 </p:panel>
 
                 <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"

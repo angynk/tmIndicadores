@@ -23,8 +23,11 @@ public class CargarIndicadoresBean {
     private String lineasCargadas;
     private String periocidad;
     private String tipologia;
+    private String cuadro;
     private Date fechaProgramacion;
     private UploadedFile traceLog;
+    private List<LogDatos> logDatos;
+    private boolean resultadosVisibles;
 
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
@@ -42,14 +45,16 @@ public class CargarIndicadoresBean {
         tipoGeneracion ="1";
         periocidad ="HABIL";
         tipologia = "ART";
+        resultadosVisibles = false;
     }
 
 
     public void cargarArchivo(){
         if(valid()){
             try {
-                List<LogDatos> logDatoses = idProcessor.processDataFromFile(traceLog.getFileName(), traceLog.getInputstream(), fechaProgramacion, razonProgramacion, tipologia, periocidad, lineasCargadas);
-                if(logDatoses.size()>2){
+                logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), traceLog.getInputstream(), fechaProgramacion, razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro);
+                resultadosVisibles = true;
+                if(logDatos.size()>2){
                     messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
                 }else{
                     messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_INDICADORES_ALMACENADOS);
@@ -143,5 +148,29 @@ public class CargarIndicadoresBean {
 
     public void setLineasCargadas(String lineasCargadas) {
         this.lineasCargadas = lineasCargadas;
+    }
+
+    public String getCuadro() {
+        return cuadro;
+    }
+
+    public void setCuadro(String cuadro) {
+        this.cuadro = cuadro;
+    }
+
+    public List<LogDatos> getLogDatos() {
+        return logDatos;
+    }
+
+    public void setLogDatos(List<LogDatos> logDatos) {
+        this.logDatos = logDatos;
+    }
+
+    public boolean isResultadosVisibles() {
+        return resultadosVisibles;
+    }
+
+    public void setResultadosVisibles(boolean resultadosVisibles) {
+        this.resultadosVisibles = resultadosVisibles;
     }
 }

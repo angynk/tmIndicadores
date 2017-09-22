@@ -57,5 +57,9 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionbyFecha(fecha);
     }
 
+    public List<Programacion> getProgramacionbyFechaTipologiaPeriocidad(Date fecha,String tipologia, String periocidad ){
+        return programacionDao.getProgramacionbyFechaTipologiaPeriocidad(fecha,tipologia,periocidad);
+    }
+
 
 }

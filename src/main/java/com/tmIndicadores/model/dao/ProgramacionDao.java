@@ -60,6 +60,14 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
+    public List<Programacion> getProgramacionbyFechaTipologiaPeriocidad(Date fecha,String tipologia, String periocidad ){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("fecha", fecha));
+        criteria.add(Restrictions.eq("tipologia", tipologia));
+        criteria.add(Restrictions.eq("periodicidad", periocidad));
+        return criteria.list();
+    }
+
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipologia,String tipoDatos){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
