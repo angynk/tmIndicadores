@@ -43,14 +43,28 @@ public class DuplicarProgramacionProcessor {
 
     private void duplicarDatosProgramacion(List<Date> fechasRecords, List<Programacion> programaciones) {
         for(Date fecha:fechasRecords){
-            for(Programacion prog:programaciones){
-                insertarProgramacion(fecha,prog);
-                logDatos.add(new LogDatos("Programacion Duplicada ("+fecha.toString()+") del Cuadro: "+prog.getCuadro()+" ,Tipo Dia: "+prog.getPeriodicidad()
-                        +" ,Tipologia: "+prog.getTipologia(), TipoLog.INFO));
+            if(fechaNoTieneProgramacion(fecha)){
+                for(Programacion prog:programaciones){
+                    insertarProgramacion(fecha,prog);
+                    logDatos.add(new LogDatos("Programacion Duplicada ("+fecha.toString()+") del Cuadro: "+prog.getCuadro()+" ,Tipo Dia: "+prog.getPeriodicidad()
+                            +" ,Tipologia: "+prog.getTipologia(), TipoLog.INFO));
+                }
+            }else{
+                logDatos.add(new LogDatos("Programacion No Duplicada ("+fecha.toString()+"), para esa" +
+                        "fecha ya hay una programación asociada ", TipoLog.ERROR));
             }
+
         }
     }
 
+    private boolean fechaNoTieneProgramacion(Date fecha) {
+        List<Programacion> programacionbyFecha = programacionServicios.getProgramacionbyFecha(fecha);
+        if(programacionbyFecha.size()>0){
+            return false;
+        }
+        return true;
+
+    }
 
 
     private void insertarProgramacion(Date fecha, Programacion prog) {
