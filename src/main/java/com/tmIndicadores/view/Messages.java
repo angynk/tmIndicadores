@@ -9,6 +9,9 @@ public class Messages {
     public static final String ACCION_CAMPOS_INCOMPLETOS = "Complete todos los campos";
     public static final String MENSAJE_ARCHIVO_NO_EXCEL = "Error con el archivo cargado";
     public static final String ACCION_ARCHIVO_NO_EXCEL = "Verifique el el archivo sea de tipo csv";
+    public static final String ACCION_PASSWORD_OLD = "Contraseña Actual Incorrecta";
+    public static final String ACCION_PASSWORD_NEW = "Las nueva contraseña no coincide";
+    public static final String ACCION_CAMBIO_PASSWORD = "La contraseña fue actualizada";
     public static final String VALIDE_LOG = "Verifique el log de resultados";
 
 
