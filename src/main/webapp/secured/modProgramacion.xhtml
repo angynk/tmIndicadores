@@ -40,7 +40,7 @@
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
                     >
                     </p:commandButton>
-                    <p:commandButton value="Cargar Todo" action="#{MPBean.cargarTodo}" ajax="false"
+                    <p:commandButton value="Visualizar Todo" action="#{MPBean.cargarTodo}" ajax="false"
                                      icon="ui-icon ui-icon-caret-1-s"  styleClass="boton"
                     />
 
@@ -119,7 +119,7 @@
 
                         <p:dialog header="Programación Informacion" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:outputPanel id="carDetail" style="text-align:center;">
-                                <p:panelGrid  columns="4" rendered="#{not empty MPBean.selectedProg}" columnClasses="label,value" >
+                                <p:panelGrid  columns="4" rendered="#{not empty MPBean.selectedProg}" columnClasses="value" >
 
                                     <h:outputText value="Cuadro:" style="color:black"/>
                                     <h:inputText value="#{MPBean.selectedProg.cuadro}"  />

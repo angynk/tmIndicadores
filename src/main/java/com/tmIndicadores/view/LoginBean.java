@@ -98,7 +98,7 @@ public class LoginBean implements Serializable {
     public String logout() {
         HttpSession session = Util.getSession();
         session.invalidate();
-        return navigationBean.toLogin();
+        return navigationBean.redirectToLogin();
     }
 
     public String gotoperfil(){
