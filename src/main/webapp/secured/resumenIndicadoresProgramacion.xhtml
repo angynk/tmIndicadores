@@ -135,6 +135,11 @@
                                 <h:outputText value="#{prog.razonCambio}" style="width: 100px"/>
                             </p:column>
 
+                            <p:column filterBy="#{prog.tipoProgramacionFormatted}" headerText="Tipo"  filterMatchMode="contains" sortBy="#{prog.tipoProgramacion}"
+                                      style="width:80px">
+                                <h:outputText value="#{prog.tipoProgramacionFormatted}" style="width: 90px"/>
+                            </p:column>
+
                         </p:dataTable>
                     </p:panel>
 

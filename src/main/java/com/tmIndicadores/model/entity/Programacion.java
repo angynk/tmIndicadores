@@ -17,6 +17,9 @@ public class Programacion {
     @Column(name = "fecha")
     private Date fecha;
 
+    @Column(name = "fecha_duplicado")
+    private Date fechaDuplicada;
+
     @Column(name = "cuadro")
     private String cuadro;
 
@@ -235,7 +238,17 @@ public class Programacion {
     }
 
     public String getTipoProgramacionFormatted() {
-        if(tipoProgramacion.equals("N")) return "Programada";
-        return "Duplicado";
+        if(tipoProgramacion.equals("N")) return "Nueva";
+        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+        if(fechaDuplicada!=null) return dt1.format(fechaDuplicada);
+        return "";
+    }
+
+    public Date getFechaDuplicada() {
+        return fechaDuplicada;
+    }
+
+    public void setFechaDuplicada(Date fechaDuplicada) {
+        this.fechaDuplicada = fechaDuplicada;
     }
 }

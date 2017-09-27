@@ -92,6 +92,7 @@ public class DuplicarProgramacionProcessor {
         nuevo.setTiempoExpedicion(prog.getTiempoExpedicion());
         nuevo.setTiempoProcesamiento(prog.getTiempoProcesamiento());
         nuevo.setTipoProgramacion("D");
+        nuevo.setFechaDuplicada(prog.getFecha());
         return nuevo;
     }
 
