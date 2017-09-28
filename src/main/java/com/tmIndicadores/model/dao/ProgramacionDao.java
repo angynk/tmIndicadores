@@ -62,6 +62,7 @@ public class ProgramacionDao {
 
     public List<Programacion> getAll(){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
     }
 
@@ -70,6 +71,7 @@ public class ProgramacionDao {
         criteria.add(Restrictions.eq("fecha", fecha));
         criteria.add(Restrictions.eq("tipologia", tipologia));
         criteria.add(Restrictions.eq("periodicidad", periocidad));
+        criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
     }
 
@@ -87,6 +89,7 @@ public class ProgramacionDao {
         if(tipoDatos.equals("N")){
             criteria.add(Restrictions.eq("tipoProgramacion",tipoDatos));
         }
+        criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
     }
 
@@ -99,7 +102,7 @@ public class ProgramacionDao {
         if(tipoDatos.equals("N")){
             criteria.add(Restrictions.eq("tipoProgramacion",tipoDatos));
         }
-        criteria.addOrder(Order.asc("fecha"));
+        criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
     }
 

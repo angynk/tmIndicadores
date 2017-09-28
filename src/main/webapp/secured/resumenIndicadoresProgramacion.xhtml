@@ -84,13 +84,13 @@
                                 <h:outputText value="#{prog.buses}"  style="width: 50px"/>
                             </p:column>
 
-                            <p:column filterBy="#{prog.tiempoProcesamiento}" headerText="Tiempo Sol"  filterMatchMode="contains" sortBy="#{prog.tiempoProcesamiento}"
+                            <p:column filterBy="#{prog.tiempoExpedicion}" headerText="Tiempo Sol"  filterMatchMode="contains" sortBy="#{prog.tiempoExpedicion}"
                                       style="width: 130px">
-                                <h:outputText value="#{prog.tiempoProcesamiento}"  style="width: 50px"/>
+                                <h:outputText value="#{prog.tiempoExpedicion}"  style="width: 50px"/>
                             </p:column>
 
                             <p:column filterBy="#{prog.expedicionComercial}" headerText="Exp Comercial"  filterMatchMode="contains" sortBy="#{prog.expedicionComercial}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="false">
                                 <h:outputText value="#{prog.expedicionComercial}" />
                             </p:column>
 
@@ -131,7 +131,7 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.razonCambio}" headerText="Razon"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"
-                                      style="width:205px">
+                                      style="width:205px" visible="false">
                                 <h:outputText value="#{prog.razonCambio}" style="width: 100px"/>
                             </p:column>
 
