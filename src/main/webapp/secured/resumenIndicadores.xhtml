@@ -55,7 +55,7 @@
                                 <h:commandLink>
                                     <p:graphicImage value="/resources/images/excel.png" width="24"/>
                                     <p:dataExporter type="xls"
-                                                    target="prog" fileName="Resumen Indicadores"  />
+                                                    target="prog" fileName="Resumen Indicadores"  postProcessor="#{RIBean.postProcessXLS}"/>
                                 </h:commandLink>
                             </p:panelGrid>
                             <div style="margin-top:10px"/>
@@ -88,7 +88,8 @@
 
                                 <p:column filterBy="#{prog.kmComercialFin}" headerText="KM Comercial"  filterMatchMode="contains" sortBy="#{prog.kmComercialFin}"
                                           style="width: 145px">
-                                    <h:outputText value="#{prog.kmComercialFin}" />
+                                    <h:outputText value="#{prog.kmComercialFin}" >
+                                    </h:outputText>
 
                                 </p:column>
 
@@ -99,7 +100,8 @@
 
                                 <p:column filterBy="#{prog.kmVacioFin}" headerText="KM Vacio"  filterMatchMode="contains" sortBy="#{prog.kmVacioFin}"
                                           style="width: 120px">
-                                    <h:outputText value="#{prog.kmVacioFin}" />
+                                    <h:outputText value="#{prog.kmVacioFin}" >
+                                    </h:outputText>
                                 </p:column>
 
                                 <p:column filterBy="#{prog.porcentajeVacioFinal}" headerText="% Vacio"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioFinal}"

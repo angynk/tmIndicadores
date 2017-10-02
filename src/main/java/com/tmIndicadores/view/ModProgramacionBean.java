@@ -1,6 +1,7 @@
 package com.tmIndicadores.view;
 
 
+import com.tmIndicadores.controller.ProcessorUtils;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
 
@@ -192,5 +193,9 @@ public class ModProgramacionBean {
 
     public void setSelectedProg(Programacion selectedProg) {
         this.selectedProg = selectedProg;
+    }
+
+    public void postProcessXLS(Object document) {
+        ProcessorUtils.postProcessXLS(document);
     }
 }

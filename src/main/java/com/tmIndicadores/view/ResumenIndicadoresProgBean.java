@@ -1,5 +1,6 @@
 package com.tmIndicadores.view;
 
+import com.tmIndicadores.controller.ProcessorUtils;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
 
@@ -150,5 +151,9 @@ public class ResumenIndicadoresProgBean {
 
     public void setFilteredProgramacionRecords(List<Programacion> filteredProgramacionRecords) {
         this.filteredProgramacionRecords = filteredProgramacionRecords;
+    }
+
+    public void postProcessXLS(Object document) {
+        ProcessorUtils.postProcessXLS(document);
     }
 }

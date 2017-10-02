@@ -1,7 +1,10 @@
 package com.tmIndicadores.view;
 
+import com.tmIndicadores.controller.ProcessorUtils;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -152,5 +155,9 @@ public class ResumenIndicadoresBean {
 
     public void setFilteredProgramacionRecords(List<Programacion> filteredProgramacionRecords) {
         this.filteredProgramacionRecords = filteredProgramacionRecords;
+    }
+
+    public void postProcessXLS(Object document) {
+        ProcessorUtils.postProcessXLS(document);
     }
 }

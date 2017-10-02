@@ -53,7 +53,7 @@
                             <h:commandLink>
                                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
                                 <p:dataExporter type="xls"
-                                                target="prog" fileName="Resumen Indicadores"  />
+                                                target="prog" fileName="Resumen Indicadores"  postProcessor="#{MPBean.postProcessXLS}"/>
                             </h:commandLink>
                         </p:panelGrid>
                         <div style="margin-top:10px"/>
