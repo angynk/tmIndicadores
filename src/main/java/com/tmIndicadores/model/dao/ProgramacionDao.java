@@ -54,6 +54,17 @@ public class ProgramacionDao {
         return false;
     }
 
+    public boolean isDEFAlready(Date fecha){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("fecha", fecha));
+        criteria.add(Restrictions.eq("tipologia", "DEF"));
+        List list = criteria.list();
+        if(list.size()>0){
+            return true;
+        }
+        return false;
+    }
+
     public List<Programacion> getProgramacionbyFecha(Date fecha){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("fecha", fecha));
@@ -112,6 +123,13 @@ public class ProgramacionDao {
         criteria.add(Restrictions.eq("tipoProgramacion","N"));
         criteria.add(Restrictions.eq("periodicidad", periocidad));
         criteria.addOrder(Order.desc("fecha"));
+        return criteria.list();
+    }
+
+    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.between("fecha", fechaInicio,fechaFin));
+        criteria.add(Restrictions.not(Restrictions.eq("tipologia","DEF")));
         return criteria.list();
     }
 }

@@ -15,8 +15,19 @@
             <h:form enctype="multipart/form-data">
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
-                <p:panel id="basic" header="Cargar Indicadores Goal Bus"  style="margin-bottom:20px">
-                    <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                <p:panel>
+                    <p:panelGrid columns="4">
+                    <p:outputLabel value="Tipo de Carga:"  />
+                    <p:selectOneMenu  value="#{cargarBean.tipoCarga}" style="width:125px">
+                        <f:selectItem itemLabel="Nueva Carga" itemValue="NC" />
+                        <f:selectItem itemLabel="Calcular Definitivo" itemValue="CD" />
+                    </p:selectOneMenu>
+                    <p:commandButton value="Cargar" action="#{cargarBean.habilitarTipoCarga}" ajax="false" />
+                        <p:commandButton value="Reiniciar" action="#{cargarBean.reiniciar}" ajax="false" />
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel id="basic" header="Cargar Indicadores Goal Bus"  style="margin-bottom:20px" visible="#{cargarBean.cargaArchivo}">
+                    <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5" >
                         <p:panel  style="border:none">
                             <p:panelGrid columns="4">
                                 <p:outputLabel value="Tipología:" for="tipologia" />
@@ -52,8 +63,34 @@
                         </p:panel>
                     </h:panelGrid>
 
+                </p:panel>
 
+                <p:panel  header="Buscar Programaciones"  style="margin-bottom:20px" visible="#{cargarBean.generarDEF}">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel  value="Fecha Inicio" />
+                        <p:calendar  value="#{cargarBean.fechaIniBusquedaDef}" showOn="button" />
+                        <p:outputLabel  value="Fecha Fin" />
+                        <p:calendar  value="#{cargarBean.fechaFinBusquedaDef}" showOn="button" />
+                        <p:commandButton value="Buscar" action="#{cargarBean.buscar}" ajax="false" disabled="#{cargarBean.listaProg}"/>
 
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel visible="#{cargarBean.listaProg}" header="Calcular Indicador" style="height:500px;position:relative;">
+                    <p:panelGrid columns="4" styleClass="centered">
+                        <p:outputLabel value="Cuadro Programaciòn:"/>
+                        <p:inputText value="#{cargarBean.cuadroDef}" />
+                        <p:outputLabel  value="Fecha de Programación DEF" />
+                        <p:calendar  value="#{cargarBean.fechaProgramacionDef}" showOn="button" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="1" styleClass="centered">
+                        <p:outputLabel  value="Fechas" colspan="4"/>
+                        <p:pickList id="pickList" value="#{cargarBean.progList}" var="prog" itemLabel="#{prog}" itemValue="#{prog}" colspan="4">
+                            <f:facet name="sourceCaption">Disponibles</f:facet>
+                            <f:facet name="targetCaption">Seleccionadas</f:facet>
+                        </p:pickList>
+                        <div style="height: 5px"></div>
+                        <p:commandButton value="Calcular DEF" action="#{cargarBean.calcularDEF}" ajax="false" />
+                    </p:panelGrid>
 
                 </p:panel>
 

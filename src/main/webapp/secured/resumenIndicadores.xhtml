@@ -67,28 +67,33 @@
                                          editable="true">
 
                                 <p:column filterBy="#{prog.fechaFormatted}" headerText="Fecha"  filterMatchMode="contains" sortBy="#{prog.fecha}"
-                                          style="width: 70px">
-                                    <h:outputText value="#{prog.fechaFormatted}" style="width: 75px" />
+                                          style="width: 115px">
+                                    <h:outputText value="#{prog.fechaFormatted}" style="width: 50px" />
                                 </p:column>
 
                                 <p:column filterBy="#{prog.cuadro}" headerText="Cuadro"  filterMatchMode="contains" sortBy="#{prog.cuadro}"
-                                          style="width: 70px">
-                                    <h:outputText value="#{prog.cuadro}" style="width: 75px" />
+                                                     style="width: 115px">
+                                <h:outputText value="#{prog.cuadro}" style="width: 50px" />
+                            </p:column>
+
+                                <p:column filterBy="#{prog.tipologia}" headerText="Tipologia"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
+                                          style="width: 115px">
+                                    <h:outputText value="#{prog.tipologia}" style="width: 50px" />
                                 </p:column>
 
                                 <p:column filterBy="#{prog.buses}" headerText="Buses"  filterMatchMode="contains" sortBy="#{prog.buses}"
-                                          style="width: 70px">
-                                    <h:outputText value="#{prog.buses}"  style="width: 75px"/>
+                                          style="width: 115px">
+                                    <h:outputText value="#{prog.buses}"  style="width: 50px"/>
                                 </p:column>
 
                                 <p:column filterBy="#{prog.kmComercialFin}" headerText="KM Comercial"  filterMatchMode="contains" sortBy="#{prog.kmComercialFin}"
-                                          style="width: 120px">
+                                          style="width: 145px">
                                     <h:outputText value="#{prog.kmComercialFin}" />
 
                                 </p:column>
 
                                 <p:column filterBy="#{prog.tiempoExpedicion}" headerText="Tiempo Exp"  filterMatchMode="contains" sortBy="#{prog.tiempoExpedicion}"
-                                          style="width: 120px">
+                                          style="width: 130px">
                                     <h:outputText value="#{prog.tiempoExpedicion}" />
                                 </p:column>
 
@@ -98,18 +103,18 @@
                                 </p:column>
 
                                 <p:column filterBy="#{prog.porcentajeVacioFinal}" headerText="% Vacio"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioFinal}"
-                                          style="width:80px">
-                                    <h:outputText value="#{prog.porcentajeVacioFinal}" style="width: 90px"/>
+                                          style="width:115px">
+                                    <h:outputText value="#{prog.porcentajeVacioFinal}" style="width: 50px"/>
                                 </p:column>
 
                                 <p:column filterBy="#{prog.lineasCargadas}" headerText="Líneas"  filterMatchMode="contains" sortBy="#{prog.lineasCargadas}"
-                                          style="width:80px">
+                                          style="width:115px">
                                     <h:outputText value="#{prog.lineasCargadas}" style="width: 90px"/>
                                 </p:column>
 
                                 <p:column filterBy="#{prog.tipoProgramacionFormatted}" headerText="Tipo"  filterMatchMode="contains" sortBy="#{prog.tipoProgramacion}"
-                                          style="width:80px">
-                                    <h:outputText value="#{prog.tipoProgramacionFormatted}" style="width: 90px"/>
+                                          style="width:115px">
+                                    <h:outputText value="#{prog.tipoProgramacionFormatted}" />
                                 </p:column>
 
                                 <p:column filterBy="#{prog.razonCambio}" headerText="Razon Cambio"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"

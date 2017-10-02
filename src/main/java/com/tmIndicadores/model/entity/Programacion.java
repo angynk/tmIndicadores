@@ -251,4 +251,10 @@ public class Programacion {
     public void setFechaDuplicada(Date fechaDuplicada) {
         this.fechaDuplicada = fechaDuplicada;
     }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+        return dt1.format(fecha)+"-"+tipologia;
+    }
 }

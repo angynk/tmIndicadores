@@ -79,6 +79,11 @@
                                 <h:outputText value="#{prog.cuadro}" style="width: 50px" />
                             </p:column>
 
+                            <p:column filterBy="#{prog.tipologia}" headerText="Tipologia"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
+                                      style="width: 115px">
+                                <h:outputText value="#{prog.tipologia}" style="width: 50px" />
+                            </p:column>
+
                             <p:column filterBy="#{prog.buses}" headerText="Buses"  filterMatchMode="contains" sortBy="#{prog.buses}"
                                       style="width: 125px">
                                 <h:outputText value="#{prog.buses}"  style="width: 50px"/>
@@ -106,7 +111,7 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.kmVacioInicio}" headerText="KM Vacio I"  filterMatchMode="contains" sortBy="#{prog.kmVacioInicio}"
-                                      style="width: 120px">
+                                      style="width: 130px">
                                 <h:outputText value="#{prog.kmVacioInicio}" />
                             </p:column>
 
@@ -121,7 +126,7 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.porcentajeVacioFinal}" headerText="% Vacio Fin"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioFinal}"
-                                      style="width:135px">
+                                      style="width:140px">
                                 <h:outputText value="#{prog.porcentajeVacioFinal}" style="width: 50px"/>
                             </p:column>
 
@@ -136,8 +141,8 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.tipoProgramacionFormatted}" headerText="Tipo"  filterMatchMode="contains" sortBy="#{prog.tipoProgramacion}"
-                                      style="width:80px">
-                                <h:outputText value="#{prog.tipoProgramacionFormatted}" style="width: 90px"/>
+                                      style="width:115px">
+                                <h:outputText value="#{prog.tipoProgramacionFormatted}" />
                             </p:column>
 
                         </p:dataTable>

@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "MPBean")
-@SessionScoped
+@ViewScoped
 public class ModProgramacionBean {
 
     private Date fechaInicio;
