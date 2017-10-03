@@ -34,21 +34,21 @@
                                 <p:selectOneMenu id="tipologia" value="#{cargarBean.tipologia}" style="width:125px">
                                     <f:selectItem itemLabel="Articulado" itemValue="ART" />
                                     <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
-                                    <f:selectItem itemLabel="Todos" itemValue="DEF" />
+                                    <f:selectItem itemLabel="Definitivo" itemValue="DEF" />
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Periocidad:" for="periocidad" />
                                 <p:selectOneMenu id="periocidad" value="#{cargarBean.periocidad}" style="width:125px">
-                                    <f:selectItem itemLabel="Habil" itemValue="HABIL" />
-                                    <f:selectItem itemLabel="Sabado" itemValue="SABADO" />
+                                    <f:selectItem itemLabel="Hábil" itemValue="HABIL" />
+                                    <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
                                     <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Razón Programación:" for="razon" />
                                 <p:inputText value="#{cargarBean.razonProgramacion}" id="razon"/>
                                 <p:outputLabel value="Líneas Cargadas:" for="lineasC" />
                                 <p:inputText value="#{cargarBean.lineasCargadas}" id="lineasC"/>
-                                <p:outputLabel value="Cuadro Programaciòn:"/>
+                                <p:outputLabel value="Cuadro Programación:"/>
                                 <p:inputText value="#{cargarBean.cuadro}" />
-                                <p:outputLabel for="buttonV" value="Fecha de Programación (DD-MM-AAAA):" />
+                                <p:outputLabel for="buttonV" value="Fecha de Programación (DD/MM/AAAA):" />
                                 <p:calendar id="buttonV" value="#{cargarBean.fechaProgramacion}" showOn="button" />
                                 <p:outputLabel value="TraceLog GOAL Bus:" />
                                 <p:fileUpload value="#{cargarBean.traceLog}" label="Seleccionar"
@@ -77,7 +77,7 @@
                 </p:panel>
                 <p:panel visible="#{cargarBean.listaProg}" header="Calcular Indicador" style="height:500px;position:relative;">
                     <p:panelGrid columns="4" styleClass="centered">
-                        <p:outputLabel value="Cuadro Programaciòn:"/>
+                        <p:outputLabel value="Cuadro Programación:"/>
                         <p:inputText value="#{cargarBean.cuadroDef}" />
                         <p:outputLabel  value="Fecha de Programación DEF" />
                         <p:calendar  value="#{cargarBean.fechaProgramacionDef}" showOn="button" />

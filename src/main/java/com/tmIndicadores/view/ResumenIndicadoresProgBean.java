@@ -49,7 +49,7 @@ public class ResumenIndicadoresProgBean {
         c.setTime(fechaFin);
         c.add(Calendar.MONTH, -6);
         fechaInicio = c.getTime();
-        tipoDatos = "N";
+        tipoDatos = "D";
         programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
     }
 

@@ -91,15 +91,19 @@ public class CargarIndicadoresBean {
     }
 
     public void buscar(){
-        listaProg = true;
 
         if(fechaIniBusquedaDef!=null && fechaFinBusquedaDef!=null){
             List<Programacion> listaSource = programacionServicios.getProgramacionbyAttributes(fechaIniBusquedaDef,fechaFinBusquedaDef);
             progMap = crearMapaProg(listaSource);
             List<Programacion> listaTarget =  new ArrayList<Programacion>();
             progList = new DualListModel<Programacion>(listaSource, listaTarget);
+            listaProg = true;
+            generarDEF = false;
+        }else{
+            messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"Seleccione fechas para buscar programaciones para el calculo del indicador definitivo");
+            listaProg = false;
         }
-        generarDEF = false;
+
 
     }
 
@@ -114,8 +118,9 @@ public class CargarIndicadoresBean {
     public void calcularDEF(){
         logDatos.add(new LogDatos("<<Inicio Calculo Indicador Definitivo>>", TipoLog.INFO));
         if(programacionServicios.isDEFAlready(fechaProgramacionDef)){
-            logDatos.add(new LogDatos("La fecha seleccionada ya tiene una programaciòn definitiva", TipoLog.ERROR));
+            logDatos.add(new LogDatos("La fecha seleccionada ya tiene una programación definitiva", TipoLog.ERROR));
             messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"La fecha seleccionada ya tiene una programaciòn definitiva");
+            resultadosVisibles = true;
         }else{
             if(progList.getTarget().size()>0 && cuadroDef!=null && fechaProgramacionDef!=null){
                 List<Programacion> programaciones = progList.getTarget();
@@ -128,15 +133,16 @@ public class CargarIndicadoresBean {
                 programacionServicios.addProgramacion(nueva);
                 logDatos.add(new LogDatos("Nueva Programacion DEF ", TipoLog.INFO));
                 messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"Nuevo Indicador Definitivo");
+                resultadosVisibles = true;
 
             }else{
                 messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"Complete todos los campos");
-                logDatos.add(new LogDatos("Complete todos los campos", TipoLog.ERROR));
+                resultadosVisibles = false;
             }
 
 
         }
-        resultadosVisibles = true;
+
         logDatos.add(new LogDatos("<<Fin Calculo Indicador Definitivo>>", TipoLog.INFO));
     }
 

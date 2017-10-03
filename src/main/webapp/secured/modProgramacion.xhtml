@@ -25,15 +25,15 @@
                         <p:calendar id="buttonV" value="#{MPBean.fechaFin}" showOn="button" />
                         <p:outputLabel for="periocidad" value="Tipo Día:" />
                         <p:selectOneMenu id="periocidad" value="#{MPBean.periocidad}" style="width:125px">
-                            <f:selectItem itemLabel="Habil" itemValue="HABIL" />
-                            <f:selectItem itemLabel="Sabado" itemValue="SABADO" />
+                            <f:selectItem itemLabel="Hábil" itemValue="HABIL" />
+                            <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
                             <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                             <f:selectItem itemLabel="Todos" itemValue="TODOS" />
                         </p:selectOneMenu>
                         <p:outputLabel for="tipoProg" value="Tipo Datos:" />
                         <p:selectOneMenu id="tipoProg" value="#{MPBean.tipoDatos}" style="width:125px">
-                            <f:selectItem itemLabel="Datos programaciones" itemValue="N" />
-                            <f:selectItem itemLabel="Datos dia a dia" itemValue="D" />
+                            <f:selectItem itemLabel="Programaciones Principales" itemValue="N" />
+                            <f:selectItem itemLabel="Todas las Programaciones" itemValue="D" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <p:commandButton value="Buscar" action="#{MPBean.generar}" ajax="false"
@@ -73,7 +73,7 @@
                                 <h:outputText value="#{prog.cuadro}" style="width: 50px" />
                             </p:column>
 
-                            <p:column filterBy="#{prog.tipologia}" headerText="Tipologìa"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
+                            <p:column filterBy="#{prog.tipologia}" headerText="Tipología"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
                                       style="width: 75px">
                                 <h:outputText value="#{prog.tipologia}"  style="width: 75px"/>
                             </p:column>
@@ -83,7 +83,7 @@
                                 <h:outputText value="#{prog.periodicidad}"  style="width: 75px"/>
                             </p:column>
 
-                            <p:column filterBy="#{prog.razonCambio}" headerText="Razon"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"
+                            <p:column filterBy="#{prog.razonCambio}" headerText="Razón"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"
                                       style="width: 150px">
                                 <h:outputText value="#{prog.razonCambio}"  style="width: 150px"/>
                             </p:column>
@@ -127,10 +127,10 @@
                                     <h:outputText value="Buses:" style="color:black" />
                                     <h:inputText value="#{MPBean.selectedProg.buses}" />
 
-                                    <h:outputText value="Razon Cambio:" style="color:black"/>
+                                    <h:outputText value="Razón Cambio:" style="color:black"/>
                                     <h:inputText value="#{MPBean.selectedProg.razonCambio}"  />
 
-                                    <h:outputText value="Lineas Cargadas:" style="color:black"/>
+                                    <h:outputText value="Líneas Cargadas:" style="color:black"/>
                                     <h:inputText value="#{MPBean.selectedProg.lineasCargadas}"  />
 
                                     <h:outputText value="Km Comerciales:" style="color:black" />

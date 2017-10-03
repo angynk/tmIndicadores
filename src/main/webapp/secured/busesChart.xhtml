@@ -26,7 +26,7 @@
                     <p:outputLabel for="periocidad" value="Tipo Día:" />
                     <p:selectOneMenu id="periocidad" value="#{bPBean.periocidad}" style="width:125px">
                         <f:selectItem itemLabel="Habil" itemValue="HABIL" />
-                        <f:selectItem itemLabel="Sabado" itemValue="SABADO" />
+                        <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
                         <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                         <f:selectItem itemLabel="Todos" itemValue="TODOS" />
                     </p:selectOneMenu>
@@ -34,7 +34,7 @@
                     <p:selectOneMenu id="tipologia" value="#{bPBean.tipologia}" style="width:125px">
                         <f:selectItem itemLabel="Articulado" itemValue="ART" />
                         <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
-                        <f:selectItem itemLabel="Todos" itemValue="DEF" />
+                        <f:selectItem itemLabel="Definitivo" itemValue="DEF" />
                     </p:selectOneMenu>
                     <p:outputLabel for="indicador" value="Indicador:" />
                     <p:selectOneMenu id="indicador" value="#{bPBean.indicador}" style="width:175px">
@@ -43,12 +43,12 @@
                         <f:selectItem itemLabel="KM Vacios" itemValue="KV" />
                         <f:selectItem itemLabel="EXP Comercial" itemValue="EC" />
                         <f:selectItem itemLabel="% Vacios" itemValue="PV" />
-                        <f:selectItem itemLabel="Lineas Cargadas" itemValue="LC" />
+                        <f:selectItem itemLabel="Líneas Cargadas" itemValue="LC" />
                     </p:selectOneMenu>
                     <p:outputLabel for="tipoProg" value="Tipo Datos:" />
                     <p:selectOneMenu id="tipoProg" value="#{bPBean.tipoDatos}" style="width:125px">
-                        <f:selectItem itemLabel="Datos programaciones" itemValue="N" />
-                        <f:selectItem itemLabel="Datos dia a dia" itemValue="D" />
+                        <f:selectItem itemLabel="Programaciones Principales" itemValue="N" />
+                        <f:selectItem itemLabel="Todas las Programaciones" itemValue="D" />
                     </p:selectOneMenu>
                 </h:panelGrid>
                 <p:commandButton value="Generar" action="#{bPBean.generar}"

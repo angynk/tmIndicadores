@@ -26,20 +26,20 @@
                         <p:outputLabel for="periocidad" value="Tipo Día:" />
                         <p:selectOneMenu id="periocidad" value="#{RIPBean.periocidad}" style="width:125px">
                             <f:selectItem itemLabel="Habil" itemValue="HABIL" />
-                            <f:selectItem itemLabel="Sabado" itemValue="SABADO" />
+                            <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
                             <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                             <f:selectItem itemLabel="Todos" itemValue="TODOS" />
                         </p:selectOneMenu>
-                        <p:outputLabel for="tipologia" value="Tipologia:" />
+                        <p:outputLabel for="tipologia" value="Tipología:" />
                         <p:selectOneMenu id="tipologia" value="#{RIPBean.tipologia}" style="width:125px">
                             <f:selectItem itemLabel="Articulado" itemValue="ART" />
                             <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
-                            <f:selectItem itemLabel="Todos" itemValue="DEF" />
+                            <f:selectItem itemLabel="Definitivo" itemValue="DEF" />
                         </p:selectOneMenu>
                         <p:outputLabel for="tipoProg" value="Tipo Datos:" />
                         <p:selectOneMenu id="tipoProg" value="#{RIPBean.tipoDatos}" style="width:125px">
-                            <f:selectItem itemLabel="Datos programaciones" itemValue="N" />
-                            <f:selectItem itemLabel="Datos dia a dia" itemValue="D" />
+                            <f:selectItem itemLabel="Programaciones Principales" itemValue="N" />
+                            <f:selectItem itemLabel="Todas las Programaciones" itemValue="D" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <p:commandButton value="Generar" action="#{RIPBean.generar}" ajax="false"
@@ -79,7 +79,7 @@
                                 <h:outputText value="#{prog.cuadro}" style="width: 50px" />
                             </p:column>
 
-                            <p:column filterBy="#{prog.tipologia}" headerText="Tipologia"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
+                            <p:column filterBy="#{prog.tipologia}" headerText="Tipología"  filterMatchMode="contains" sortBy="#{prog.tipologia}"
                                       style="width: 115px">
                                 <h:outputText value="#{prog.tipologia}" style="width: 50px" />
                             </p:column>
@@ -135,7 +135,7 @@
                                 <h:outputText value="#{prog.lineasCargadas}" style="width: 50px"/>
                             </p:column>
 
-                            <p:column filterBy="#{prog.razonCambio}" headerText="Razon"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"
+                            <p:column filterBy="#{prog.razonCambio}" headerText="Razón"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"
                                       style="width:205px" visible="false">
                                 <h:outputText value="#{prog.razonCambio}" style="width: 100px"/>
                             </p:column>
