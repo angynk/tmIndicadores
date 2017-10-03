@@ -61,7 +61,7 @@
                         <p:dataTable id="prog" var="prog" value="#{MPBean.programacionRecords}" widgetVar="ProgTable"
                                      emptyMessage="No hay registros relacionados a la busqueda"
                                      scrollable="true" scrollWidth="98%" scrollHeight="410"
-                                     editable="true">
+                                     editable="true" >
 
                             <p:column filterBy="#{prog.fechaFormatted}" headerText="Fecha"  filterMatchMode="contains" sortBy="#{prog.fecha}"
                                       style="width: 50px">
@@ -105,7 +105,7 @@
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center" exportable="false" rendered="#{loginBean.puedeEliminar()}">
+                            <p:column style="width:32px;text-align: center" exportable="false" rendered="#{loginBean.puedeEliminar()}" >
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
                                                  title="GDeleteButton"
@@ -162,7 +162,7 @@
                             <p:commandButton title="GDelYesButton"
                                              value="Si"
                                              action="#{MPBean.eliminar}"
-                                             oncomplete="PF('groupDeleteConfirm').hide()"
+                                             oncomplete="PF('groupDeleteConfirm').hide()" update="@form" ajax="true"
                             />
                             <p:commandButton title="GDelNoButton"
                                              value="No"

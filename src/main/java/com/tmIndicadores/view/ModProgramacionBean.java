@@ -77,7 +77,7 @@ public class ModProgramacionBean {
       //  refreshModProgramaciones();
         programacionRecords.remove(selectedProg);
         addMessage(FacesMessage.SEVERITY_INFO,"Programación eliminada", "");
-        refreshModProgramaciones();
+       // refreshModProgramaciones();
     }
 
     public void refreshModProgramaciones(){
