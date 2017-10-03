@@ -59,7 +59,7 @@
                         <div style="margin-top:10px"/>
 
                         <p:dataTable id="prog" var="prog" value="#{MPBean.programacionRecords}" widgetVar="ProgTable"
-                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     emptyMessage="No hay registros relacionados a la busqueda" filteredValue="#{MPBean.programacionRecordsFiltered}"
                                      scrollable="true" scrollWidth="98%" scrollHeight="410"
                                      editable="true" >
 

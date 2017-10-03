@@ -32,6 +32,7 @@ public class ModProgramacionBean {
 
     private boolean visibleResumen;
     private List<Programacion> programacionRecords ;
+    private List<Programacion> programacionRecordsFiltered ;
     private Programacion selectedProg;
 
     @ManagedProperty(value="#{ProgramacionServicios}")
@@ -197,5 +198,13 @@ public class ModProgramacionBean {
 
     public void postProcessXLS(Object document) {
         ProcessorUtils.postProcessXLS(document);
+    }
+
+    public List<Programacion> getProgramacionRecordsFiltered() {
+        return programacionRecordsFiltered;
+    }
+
+    public void setProgramacionRecordsFiltered(List<Programacion> programacionRecordsFiltered) {
+        this.programacionRecordsFiltered = programacionRecordsFiltered;
     }
 }
