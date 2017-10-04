@@ -29,8 +29,8 @@
                     <p:outputLabel value=""  />
                     <p:outputLabel value=""  />
                     <p:outputLabel value="Modo:"  />
-                    <p:selectOneMenu  value="#{RIBean.modo}" style="width:90%">
-                        <f:selectItems value="#{RIBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                    <p:selectOneMenu  value="#{bPBean.modo}" style="width:90%">
+                        <f:selectItems value="#{bPBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
                         <p:ajax update="@form" listener="#{bPBean.updateTipologias}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Tipología:" for="tipologia" />
