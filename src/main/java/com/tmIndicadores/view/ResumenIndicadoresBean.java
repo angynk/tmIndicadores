@@ -1,5 +1,7 @@
 package com.tmIndicadores.view;
 
+import com.tmIndicadores.controller.ListObject;
+import com.tmIndicadores.controller.ModosUtil;
 import com.tmIndicadores.controller.ProcessorUtils;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
@@ -30,6 +32,10 @@ public class ResumenIndicadoresBean {
     private String tipologia;
     private String tipoDatos;
 
+    private String modo;
+    private List<ListObject> modos;
+    private List<ListObject> tipologias;
+
     private boolean visibleResumen;
     private List<Programacion> programacionRecords ;
     private List<Programacion> filteredProgramacionRecords ;
@@ -53,6 +59,30 @@ public class ResumenIndicadoresBean {
         fechaInicio = c.getTime();
         tipoDatos = "D";
         programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
+        modo = "TRO";
+        cargarListaModos();
+        cargarListaTipologiaTroncal();
+    }
+
+    private void cargarListaTipologiaTroncal() {
+        tipologias = ModosUtil.cargarListaTipologiaTroncal();
+    }
+
+    private void cargarListaTipologiaDual() {
+        tipologias = ModosUtil.cargarListaTipologiaDual();
+    }
+
+    public void cargarListaModos(){
+        modos = ModosUtil.cargarListaModos();
+    }
+
+
+    public void updateTipologias(){
+        if(modo.equals("TRO")){
+            cargarListaTipologiaTroncal();
+        }else{
+            cargarListaTipologiaDual();
+        }
     }
 
 
@@ -159,5 +189,29 @@ public class ResumenIndicadoresBean {
 
     public void postProcessXLS(Object document) {
         ProcessorUtils.postProcessXLS(document);
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
+    }
+
+    public List<ListObject> getTipologias() {
+        return tipologias;
+    }
+
+    public void setTipologias(List<ListObject> tipologias) {
+        this.tipologias = tipologias;
     }
 }

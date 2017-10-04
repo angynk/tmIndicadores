@@ -18,31 +18,35 @@
             <h:form  id="form">
                 <p:growl id="message" showDetail="true" />
                 <p:panel id="basic" header="Resumen de Indicadores de programación GoalBus"  style="margin-bottom:20px">
-                    <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
-                        <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
+                    <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="10" cellspacing="10">
+                        <p:outputLabel for="button" value="Fecha Inicio (DD/MM/AAAA):" />
                         <p:calendar id="button" value="#{RIPBean.fechaInicio}" showOn="button" />
-                        <p:outputLabel for="buttonV" value="Fecha Fin (DD-MM-AAAA):" />
+                        <p:outputLabel for="buttonV" value="Fecha Fin (DD/MM/AAAA):" />
                         <p:calendar id="buttonV" value="#{RIPBean.fechaFin}" showOn="button" />
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value="Modo:"  />
+                        <p:selectOneMenu  value="#{RIPBean.modo}" style="width:90%">
+                            <f:selectItems value="#{RIPBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                            <p:ajax update="@form" listener="#{RIPBean.updateTipologias}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Tipología:" for="tipologia" />
+                        <p:selectOneMenu id="tipologia" value="#{RIPBean.tipologia}" style="width:90%">
+                            <f:selectItems value="#{RIPBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel for="periocidad" value="Tipo Día:" />
-                        <p:selectOneMenu id="periocidad" value="#{RIPBean.periocidad}" style="width:125px">
+                        <p:selectOneMenu id="periocidad" value="#{RIPBean.periocidad}" style="width:90%">
                             <f:selectItem itemLabel="Habil" itemValue="HABIL" />
                             <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
                             <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                             <f:selectItem itemLabel="Todos" itemValue="TODOS" />
                         </p:selectOneMenu>
-                        <p:outputLabel for="tipologia" value="Tipología:" />
-                        <p:selectOneMenu id="tipologia" value="#{RIPBean.tipologia}" style="width:125px">
-                            <f:selectItem itemLabel="Articulado" itemValue="ART" />
-                            <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
-                            <f:selectItem itemLabel="Definitivo Troncal" itemValue="DEF" />
-                            <f:selectItem itemLabel="Dual Hibrido" itemValue="DU-HI" />
-                            <f:selectItem itemLabel="Dual Disel" itemValue="DU-DI" />
-                            <f:selectItem itemLabel="Definitivo Dual" itemValue="DU-DEF" />
-                        </p:selectOneMenu>
-                        <p:outputLabel for="tipoProg" value="Tipo Datos:" />
-                        <p:selectOneMenu id="tipoProg" value="#{RIPBean.tipoDatos}" style="width:125px">
-                            <f:selectItem itemLabel="Programaciones Principales" itemValue="N" />
-                            <f:selectItem itemLabel="Todas las Programaciones" itemValue="D" />
+                        <p:outputLabel for="tipoProg" value="Programaciones:" />
+                        <p:selectOneMenu id="tipoProg" value="#{RIPBean.tipoDatos}" style="width:90%">
+                            <f:selectItem itemLabel="Principales" itemValue="N" />
+                            <f:selectItem itemLabel="Todas" itemValue="D" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <p:commandButton value="Generar" action="#{RIPBean.generar}" ajax="false"
@@ -124,7 +128,7 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.porcentajeVacioInicio}" headerText="% Vacio Inicio"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioInicio}"
-                                      style="width:125px">
+                                      style="width:135px">
                                 <h:outputText value="#{prog.porcentajeVacioInicio}" style="width: 50px"/>
                             </p:column>
 
