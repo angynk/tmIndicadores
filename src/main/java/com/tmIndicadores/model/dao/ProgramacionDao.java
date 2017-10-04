@@ -4,6 +4,7 @@ import com.tmIndicadores.model.entity.Programacion;
 import com.tmIndicadores.model.entity.Usuario;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +55,10 @@ public class ProgramacionDao {
         return false;
     }
 
-    public boolean isDEFAlready(Date fecha){
+    public boolean isDEFAlready(Date fecha,String tipoDEF){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("fecha", fecha));
-        criteria.add(Restrictions.eq("tipologia", "DEF"));
+        criteria.add(Restrictions.eq("tipologia", tipoDEF));
         List list = criteria.list();
         if(list.size()>0){
             return true;
@@ -65,9 +66,21 @@ public class ProgramacionDao {
         return false;
     }
 
+    public List<Programacion> getProgramacionbyFecha(Date fecha,String modo){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("fecha", fecha));
+
+        if(modo.equals("DUA") || modo.equals("TRO")){
+            criteria.add(Restrictions.eq("modo", modo));
+        }
+
+        return criteria.list();
+    }
+
     public List<Programacion> getProgramacionbyFecha(Date fecha){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("fecha", fecha));
+
         return criteria.list();
     }
 

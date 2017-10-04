@@ -30,11 +30,14 @@
                     <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5" >
                         <p:panel  style="border:none">
                             <p:panelGrid columns="4">
+                                <p:outputLabel value="Modo:"  />
+                                <p:selectOneMenu  value="#{cargarBean.modo}" style="margin-left:2px; width:90%;">
+                                    <f:selectItems value="#{cargarBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                                    <p:ajax update="@form" listener="#{cargarBean.updateTipologias}"/>
+                                </p:selectOneMenu>
                                 <p:outputLabel value="Tipología:" for="tipologia" />
                                 <p:selectOneMenu id="tipologia" value="#{cargarBean.tipologia}" style="width:125px">
-                                    <f:selectItem itemLabel="Articulado" itemValue="ART" />
-                                    <f:selectItem itemLabel="Biarticulado" itemValue="BI" />
-                                    <f:selectItem itemLabel="Definitivo" itemValue="DEF" />
+                                    <f:selectItems value="#{cargarBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Periocidad:" for="periocidad" />
                                 <p:selectOneMenu id="periocidad" value="#{cargarBean.periocidad}" style="width:125px">
@@ -54,7 +57,7 @@
                                 <p:fileUpload value="#{cargarBean.traceLog}" label="Seleccionar"
                                               mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|csv)$/"/>
 
-                                <p:commandButton value="Guardar" action="#{cargarBean.cargarArchivo}" ajax="false"
+                                <p:commandButton value="Cargar Indicador" action="#{cargarBean.cargarArchivo}" ajax="false"
                                                  icon="ui-icon ui-icon-disk" id="withIcon"
                                                  async="true" process="@form" onclick="PF('dlg2').show();" global="false"
                                                  oncomplete="PF('dlg2').hide()"
@@ -76,7 +79,12 @@
                     </p:panelGrid>
                 </p:panel>
                 <p:panel visible="#{cargarBean.listaProg}" header="Calcular Indicador" style="height:500px;position:relative;">
-                    <p:panelGrid columns="4" styleClass="centered">
+                    <p:panelGrid columns="6" styleClass="centered">
+                        <p:outputLabel value="Tipo Definitivo:"/>
+                        <p:selectOneMenu  value="#{cargarBean.tipoDEF}" style="width:140px">
+                            <f:selectItem itemLabel="Definitivo Troncal" itemValue="DEF" />
+                            <f:selectItem itemLabel="Definitivo Dual" itemValue="DU-DEF" />
+                        </p:selectOneMenu>
                         <p:outputLabel value="Cuadro Programación:"/>
                         <p:inputText value="#{cargarBean.cuadroDef}" />
                         <p:outputLabel  value="Fecha de Programación DEF" />

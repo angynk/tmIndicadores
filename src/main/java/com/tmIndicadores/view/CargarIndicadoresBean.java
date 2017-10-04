@@ -1,8 +1,6 @@
 package com.tmIndicadores.view;
 
-import com.tmIndicadores.controller.IndicadoresGoalProcessor;
-import com.tmIndicadores.controller.LogDatos;
-import com.tmIndicadores.controller.TipoLog;
+import com.tmIndicadores.controller.*;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
 import org.primefaces.model.DualListModel;
@@ -26,6 +24,10 @@ public class CargarIndicadoresBean {
     private String lineasCargadas;
     private String periocidad;
     private String tipologia;
+    private String tipoDEF;
+    private String modo;
+    private List<ListObject> modos;
+    private List<ListObject> tipologias;
     private String cuadro;
     private String cuadroDef;
     private Date fechaProgramacion;
@@ -63,10 +65,36 @@ public class CargarIndicadoresBean {
         tipologia = "ART";
         resultadosVisibles = false;
         tipoCarga = "NC";
+        tipoDEF = "DEF";
         cargaArchivo = false;
         generarDEF = false;
         progList = new DualListModel<Programacion>();
         logDatos = new ArrayList<LogDatos>();
+        modo = "TRO";
+        cargarListaModos();
+        cargarListaTipologiaTroncal();
+
+    }
+
+    private void cargarListaTipologiaTroncal() {
+        tipologias = ModosUtil.cargarListaTipologiaTroncal();
+    }
+
+    private void cargarListaTipologiaDual() {
+        tipologias = ModosUtil.cargarListaTipologiaDual();
+    }
+
+    public void cargarListaModos(){
+        modos = ModosUtil.cargarListaModos();
+    }
+
+
+    public void updateTipologias(){
+        if(modo.equals("TRO")){
+            cargarListaTipologiaTroncal();
+        }else{
+            cargarListaTipologiaDual();
+        }
     }
 
     public void habilitarTipoCarga(){
@@ -117,7 +145,7 @@ public class CargarIndicadoresBean {
 
     public void calcularDEF(){
         logDatos.add(new LogDatos("<<Inicio Calculo Indicador Definitivo>>", TipoLog.INFO));
-        if(programacionServicios.isDEFAlready(fechaProgramacionDef)){
+        if(programacionServicios.isDEFAlready(fechaProgramacionDef,tipoDEF)){
             logDatos.add(new LogDatos("La fecha seleccionada ya tiene una programación definitiva", TipoLog.ERROR));
             messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"La fecha seleccionada ya tiene una programaciòn definitiva");
             resultadosVisibles = true;
@@ -125,13 +153,14 @@ public class CargarIndicadoresBean {
             if(progList.getTarget().size()>0 && cuadroDef!=null && fechaProgramacionDef!=null){
                 List<Programacion> programaciones = progList.getTarget();
                 Programacion nueva = new Programacion();
-                nueva.setTipologia("DEF");
+                nueva.setTipologia(tipoDEF);
+                nueva.setModo(ModosUtil.getModoPorDEF(tipoDEF));
                 nueva.setCuadro(cuadroDef);
                 nueva.setFecha(fechaProgramacionDef);
                 copiarInformacionBase(programaciones, nueva);
                 nueva = calcularValorProgramacion(programaciones,nueva);
                 programacionServicios.addProgramacion(nueva);
-                logDatos.add(new LogDatos("Nueva Programacion DEF ", TipoLog.INFO));
+                logDatos.add(new LogDatos("Nueva Programacion "+tipoDEF, TipoLog.INFO));
                 messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"Nuevo Indicador Definitivo");
                 resultadosVisibles = true;
 
@@ -205,7 +234,7 @@ public class CargarIndicadoresBean {
     public void cargarArchivo(){
         if(valid()){
             try {
-                logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), traceLog.getInputstream(), fechaProgramacion, razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro);
+                logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), traceLog.getInputstream(), fechaProgramacion, razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro,modo);
                 resultadosVisibles = true;
                 if(logDatos.size()>2){
                     messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
@@ -405,5 +434,37 @@ public class CargarIndicadoresBean {
 
     public void setGenerarDEF(boolean generarDEF) {
         this.generarDEF = generarDEF;
+    }
+
+    public String getTipoDEF() {
+        return tipoDEF;
+    }
+
+    public void setTipoDEF(String tipoDEF) {
+        this.tipoDEF = tipoDEF;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
+    }
+
+    public List<ListObject> getTipologias() {
+        return tipologias;
+    }
+
+    public void setTipologias(List<ListObject> tipologias) {
+        this.tipologias = tipologias;
     }
 }

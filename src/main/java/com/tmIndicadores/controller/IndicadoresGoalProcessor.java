@@ -24,7 +24,7 @@ public class IndicadoresGoalProcessor {
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
     private String destination = PathFiles.PATH;
 
-    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia, String periocidad,String lineasC,String cuadro){
+    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia, String periocidad,String lineasC,String cuadro,String modo){
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Indicadores Goal Bus con Archivo>>");
@@ -32,7 +32,7 @@ public class IndicadoresGoalProcessor {
             if(noExistenDatosParaLaFecha(fechaProgramacion,tipologia,periocidad)){
                 processorUtils.copyFile(fileName,in,destination);
                 destination=destination+fileName;
-                readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro);
+                readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro,modo);
             }else{
                 logDatos.add(new LogDatos("Ya existe una programación para el dia "+periocidad+" "+fechaProgramacion.toString()+" Tipologia  "+tipologia, TipoLog.ERROR));
             }
@@ -59,7 +59,7 @@ public class IndicadoresGoalProcessor {
         return false;
     }
 
-    private void readExcelAndSaveData(String destination, Date fechaProgramacion, String razon,String tipologia, String periocidad,String lineasC,String filename,String cuadro) {
+    private void readExcelAndSaveData(String destination, Date fechaProgramacion, String razon,String tipologia, String periocidad,String lineasC,String filename,String cuadro,String modo) {
         BufferedReader br = null;
         String line = "";
         String previousLine ="";
@@ -98,6 +98,7 @@ public class IndicadoresGoalProcessor {
             programacion.setTipologia(tipologia);
             programacion.setPeriodicidad(periocidad);
             programacion.setTipoProgramacion("N");
+            programacion.setModo(modo);
 
             programacionServicios.addProgramacion(programacion);
 

@@ -20,11 +20,11 @@ public class DuplicarProgramacionProcessor {
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
 
-    public List<LogDatos> duplicarProgramacion(Date fechaADuplicar, String fechas){
+    public List<LogDatos> duplicarProgramacion(Date fechaADuplicar, String fechas,String modo){
         logDatos = new ArrayList<>();
         duplicacionValida = true;
         logDatos.add(new LogDatos("<<Inicio Duplicacion programacion>>", TipoLog.INFO));
-        List<Programacion> programaciones = encontrarProgramacionActual(fechaADuplicar);
+        List<Programacion> programaciones = encontrarProgramacionActual(fechaADuplicar,modo);
         if(programaciones.size()>0){
             List<Date> fechasRecords = convertirAfechas(fechas);
             if(fechasRecords.size()>0){
@@ -93,6 +93,7 @@ public class DuplicarProgramacionProcessor {
         nuevo.setTiempoProcesamiento(prog.getTiempoProcesamiento());
         nuevo.setTipoProgramacion("D");
         nuevo.setFechaDuplicada(prog.getFecha());
+        nuevo.setModo(prog.getModo());
         return nuevo;
     }
 
@@ -112,8 +113,8 @@ public class DuplicarProgramacionProcessor {
     }
 
 
-    private  List<Programacion> encontrarProgramacionActual(Date fechaProg) {
-       return programacionServicios.getProgramacionbyFecha(fechaProg);
+    private  List<Programacion> encontrarProgramacionActual(Date fechaProg,String modo) {
+       return programacionServicios.getProgramacionbyFecha(fechaProg,modo);
     }
 
     public boolean isDuplicacionValida() {

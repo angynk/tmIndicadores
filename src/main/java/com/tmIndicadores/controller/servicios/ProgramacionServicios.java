@@ -61,6 +61,10 @@ public class ProgramacionServicios {
         return programacionDao.isCuadroAlready(cuadro);
     }
 
+    public List<Programacion> getProgramacionbyFecha(Date fecha,String modo){
+        return programacionDao.getProgramacionbyFecha(fecha,modo);
+    }
+
     public List<Programacion> getProgramacionbyFecha(Date fecha){
         return programacionDao.getProgramacionbyFecha(fecha);
     }
@@ -69,8 +73,8 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionbyFechaTipologiaPeriocidad(fecha,tipologia,periocidad);
     }
 
-    public boolean isDEFAlready(Date fecha){
-        return  programacionDao.isDEFAlready(fecha);
+    public boolean isDEFAlready(Date fecha,String tipoDEF){
+        return  programacionDao.isDEFAlready(fecha,tipoDEF);
     }
 
 

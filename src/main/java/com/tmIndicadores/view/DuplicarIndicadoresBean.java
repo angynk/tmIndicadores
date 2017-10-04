@@ -21,6 +21,7 @@ public class DuplicarIndicadoresBean {
 
     private String razonProgramacion;
     private String fechas;
+    private String modo;
     private Date fechaADuplicar;
     private List<LogDatos> logDatos;
     private boolean resultadosVisibles;
@@ -43,7 +44,7 @@ public class DuplicarIndicadoresBean {
         //Obtener fechas
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         fechas = ec.getRequestParameterMap().get("fechas");
-        logDatos = duplicarProgramacionProcessor.duplicarProgramacion(fechaADuplicar,fechas);
+        logDatos = duplicarProgramacionProcessor.duplicarProgramacion(fechaADuplicar,fechas,modo);
         resultadosVisibles = true;
         if(duplicarProgramacionProcessor.isDuplicacionValida()){
             messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"");
@@ -106,5 +107,13 @@ public class DuplicarIndicadoresBean {
 
     public void setMessagesView(MessagesView messagesView) {
         this.messagesView = messagesView;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
     }
 }

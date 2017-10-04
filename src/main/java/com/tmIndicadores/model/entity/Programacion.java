@@ -69,6 +69,9 @@ public class Programacion {
     @Column(name = "tipologia")
     private String tipologia;
 
+    @Column(name = "modo")
+    private String modo;
+
     @Transient
     private String fechaFormatted;
     @Transient
@@ -256,5 +259,13 @@ public class Programacion {
     public String toString() {
         SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
         return dt1.format(fecha)+"-"+tipologia;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
     }
 }

@@ -19,11 +19,17 @@
                 <p:panel id="basic" header="Duplicar Indicadores Goal Bus"  style="margin-bottom:20px">
                     <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:panel  style="border:none">
-                            <p:panelGrid columns="5">
+                            <p:panelGrid columns="7">
                                 <p:outputLabel value="Fecha de Programación :"  />
                                 <p:calendar  value="#{duplicarBean.fechaADuplicar}" />
                                 <p:outputLabel  value="Fechas a Duplicar:" />
                                 <input id="mdp-demo" name="fechas"/>
+                                <p:outputLabel value="Modo:"/>
+                                <p:selectOneMenu  value="#{duplicarBean.modo}" style="width:140px">
+                                    <f:selectItem itemLabel="Troncal" itemValue="TRO" />
+                                    <f:selectItem itemLabel="Dual" itemValue="DUA" />
+                                    <f:selectItem itemLabel="Todos" itemValue="TOD" />
+                                </p:selectOneMenu>
                                 <p:commandButton value="Duplicar" action="#{duplicarBean.duplicar}" ajax="false"
                                                  icon="ui-icon ui-icon-disk" id="withIcon"
                                                  async="true" process="@form" onclick="PF('dlg2').show();" global="false"
