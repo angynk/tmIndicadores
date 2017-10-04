@@ -89,6 +89,7 @@ public class BusesProgramadosBean {
         visiblePuntosBuses =false;
         lineBuses = new LineChartModel();
         puntosBuses = new BubbleChartModel();
+        tipologia = "ART";
         modo = "TRO";
         cargarListaModos();
         cargarListaTipologiaTroncal();

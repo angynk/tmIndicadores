@@ -31,11 +31,11 @@
                     <p:outputLabel value="Modo:"  />
                     <p:selectOneMenu  value="#{RIBean.modo}" style="width:90%">
                         <f:selectItems value="#{RIBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
-                        <p:ajax update="@form" listener="#{RIBean.updateTipologias}"/>
+                        <p:ajax update="@form" listener="#{bPBean.updateTipologias}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Tipología:" for="tipologia" />
-                    <p:selectOneMenu id="tipologia" value="#{RIBean.tipologia}" style="width:90%">
-                        <f:selectItems value="#{RIBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+                    <p:selectOneMenu id="tipologia" value="#{bPBean.tipologia}" style="width:90%">
+                        <f:selectItems value="#{bPBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
                     </p:selectOneMenu>
                     <p:outputLabel for="periocidad" value="Tipo Día:" />
                     <p:selectOneMenu id="periocidad" value="#{bPBean.periocidad}" style="width:90%">

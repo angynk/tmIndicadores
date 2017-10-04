@@ -31,16 +31,16 @@
                         <p:panel  style="border:none">
                             <p:panelGrid columns="4">
                                 <p:outputLabel value="Modo:"  />
-                                <p:selectOneMenu  value="#{cargarBean.modo}" style="margin-left:2px; width:90%;">
+                                <p:selectOneMenu  value="#{cargarBean.modo}" style="width:90%">
                                     <f:selectItems value="#{cargarBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
                                     <p:ajax update="@form" listener="#{cargarBean.updateTipologias}"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Tipología:" for="tipologia" />
-                                <p:selectOneMenu id="tipologia" value="#{cargarBean.tipologia}" style="width:125px">
+                                <p:selectOneMenu id="tipologia" value="#{cargarBean.tipologia}" style="width:90%">
                                     <f:selectItems value="#{cargarBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Periocidad:" for="periocidad" />
-                                <p:selectOneMenu id="periocidad" value="#{cargarBean.periocidad}" style="width:125px">
+                                <p:selectOneMenu id="periocidad" value="#{cargarBean.periocidad}" style="width:90%">
                                     <f:selectItem itemLabel="Hábil" itemValue="HABIL" />
                                     <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
                                     <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
@@ -81,7 +81,7 @@
                 <p:panel visible="#{cargarBean.listaProg}" header="Calcular Indicador" style="height:500px;position:relative;">
                     <p:panelGrid columns="6" styleClass="centered">
                         <p:outputLabel value="Tipo Definitivo:"/>
-                        <p:selectOneMenu  value="#{cargarBean.tipoDEF}" style="width:140px">
+                        <p:selectOneMenu  value="#{cargarBean.tipoDEF}" style="width:90%">
                             <f:selectItem itemLabel="Definitivo Troncal" itemValue="DEF" />
                             <f:selectItem itemLabel="Definitivo Dual" itemValue="DU-DEF" />
                         </p:selectOneMenu>
