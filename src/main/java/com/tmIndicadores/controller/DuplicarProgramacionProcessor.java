@@ -94,6 +94,10 @@ public class DuplicarProgramacionProcessor {
         nuevo.setTipoProgramacion("D");
         nuevo.setFechaDuplicada(prog.getFecha());
         nuevo.setModo(prog.getModo());
+        nuevo.setTiempoVacio(prog.getTiempoVacio());
+        nuevo.setHorasPorBuses(prog.getHorasPorBuses());
+        nuevo.setVelocidadComercial(prog.getVelocidadComercial());
+        nuevo.setNumCambioLinea(prog.getNumCambioLinea());
         return nuevo;
     }
 

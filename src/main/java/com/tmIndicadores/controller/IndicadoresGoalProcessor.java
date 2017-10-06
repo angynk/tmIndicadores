@@ -99,6 +99,10 @@ public class IndicadoresGoalProcessor {
             programacion.setPeriodicidad(periocidad);
             programacion.setTipoProgramacion("N");
             programacion.setModo(modo);
+            programacion.setTiempoVacio(valores[TraceLogIndex.HORAS_VACIO-diffFiles]);
+            programacion.setNumCambioLinea(Integer.parseInt(valores[TraceLogIndex.NUM_CAMBIOS_LINEA-diffFiles]));
+            programacion.setVelocidadComercial(calcularVelocidadComercial(programacion.getKmComercialFin(),programacion.getTiempoExpedicion()));
+            programacion.setHorasPorBuses(calcularHorasPorBuses(programacion.getTiempoExpedicion(),programacion.getBuses(),valores[TraceLogIndex.HORAS_VACIO-diffFiles]));
 
             programacionServicios.addProgramacion(programacion);
 
@@ -117,6 +121,20 @@ public class IndicadoresGoalProcessor {
         }
 
     }
+
+    private Double calcularHorasPorBuses(String tiempoExpedicion, Integer buses, String valores) {
+        Double totalHoras = ProcessorUtils.convertirFormatoHoraADouble(tiempoExpedicion);
+        Double horasVacio = ProcessorUtils.convertirFormatoHoraADouble(valores);
+        Double horasBus = totalHoras+horasVacio;
+        return ProcessorUtils.round(horasBus/buses,2);
+    }
+
+    private Double calcularVelocidadComercial(Double kmComercialFin, String tiempoExpedicion) {
+        Double horasTotales =  ProcessorUtils.convertirFormatoHoraADouble(tiempoExpedicion);
+        return ProcessorUtils.round(kmComercialFin/horasTotales,2);
+    }
+
+
 
     private int diferenciaIndexArchivos(String cvsSplitBy) {
         if(cvsSplitBy.equals(";")){

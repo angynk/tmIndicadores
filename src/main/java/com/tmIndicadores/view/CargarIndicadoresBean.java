@@ -192,6 +192,10 @@ public class CargarIndicadoresBean {
         double kmVacioInicio = 0;
         int lineasCargas = 0;
         int expComercial = 0;
+        int numCambios = 0;
+        double busesPorHora = 0.0;
+        double tiempoExp = 0.0;
+        double tiempoVacio = 0.0;
         for(int z=0;z<programaciones.size();z++){
             Programacion prog = progMap.get(programaciones.get(z));
             numBuses = numBuses + prog.getBuses();
@@ -201,8 +205,14 @@ public class CargarIndicadoresBean {
             kmVacioInicio = kmVacioInicio + validarDoubleNulo(prog.getKmVacioInicio());
             expComercial = expComercial + validarIntNulo(prog.getExpedicionComercial());
             lineasCargas = lineasCargas + prog.getLineasCargadas();
+            numCambios = numCambios + prog.getNumCambioLinea();
+            busesPorHora = busesPorHora + prog.getHorasPorBuses();
+            tiempoExp = tiempoExp + ProcessorUtils.convertirFormatoHoraADouble(prog.getTiempoExpedicion());
+            tiempoVacio = tiempoVacio + ProcessorUtils.convertirFormatoHoraADouble(prog.getTiempoVacio());
         }
 
+        nueva.setTiempoExpedicion(ProcessorUtils.convertirDoubleaFormatoHora(tiempoExp));
+        nueva.setTiempoVacio(ProcessorUtils.convertirDoubleaFormatoHora(tiempoVacio));
         nueva.setBuses(numBuses);
         nueva.setKmComercialFin(kmComercialesFin);
         nueva.setKmVacioFin(kmVacioFin);
@@ -211,10 +221,25 @@ public class CargarIndicadoresBean {
         nueva.setLineasCargadas(lineasCargas);
         nueva.setExpedicionComercial(expComercial);
         nueva.setPorcentajeVacioFinal(nueva.getKmVacioFin()/nueva.getKmComercialFin());
+        nueva.setNumCambioLinea(numCambios);
+        nueva.setVelocidadComercial(calcularVelocidadComercial(nueva.getKmComercialFin(),nueva.getTiempoExpedicion()));
+        nueva.setHorasPorBuses(calcularHorasPorBuses(nueva.getTiempoExpedicion(),nueva.getBuses(),nueva.getTiempoVacio()));
         if(kmComerialesInicio!= 0){
             nueva.setPorcentajeVacioInicio(kmVacioInicio/kmComerialesInicio);
         }
         return nueva;
+    }
+
+    private Double calcularHorasPorBuses(String tiempoExpedicion, Integer buses, String valores) {
+        Double totalHoras = ProcessorUtils.convertirFormatoHoraADouble(tiempoExpedicion);
+        Double horasVacio = ProcessorUtils.convertirFormatoHoraADouble(valores);
+        Double horasBus = totalHoras+horasVacio;
+        return horasBus/buses;
+    }
+
+    private Double calcularVelocidadComercial(Double kmComercialFin, String tiempoExpedicion) {
+        Double horasTotales =  ProcessorUtils.convertirFormatoHoraADouble(tiempoExpedicion);
+        return ProcessorUtils.round(kmComercialFin/horasTotales,2);
     }
 
     public Double validarDoubleNulo(Double valor){

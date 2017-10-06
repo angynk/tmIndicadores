@@ -26,6 +26,15 @@ public class Programacion {
     @Column(name = "buses")
     private Integer buses;
 
+    @Column(name = "num_cambios_linea")
+    private Integer numCambioLinea;
+
+    @Column(name = "vel_comercial")
+    private Double velocidadComercial;
+
+    @Column(name = "hor_buses")
+    private Double horasPorBuses;
+
     @Column(name = "km_comerciales_inicio")
     private Double kmComercialIncio;
 
@@ -40,6 +49,9 @@ public class Programacion {
 
     @Column(name = "tiempo_exp")
     private String tiempoExpedicion;
+
+    @Column(name = "tiempo_vacio")
+    private String tiempoVacio;
 
     @Column(name = "tiempo_pro")
     private String tiempoProcesamiento;
@@ -267,5 +279,37 @@ public class Programacion {
 
     public void setModo(String modo) {
         this.modo = modo;
+    }
+
+    public Integer getNumCambioLinea() {
+        return numCambioLinea;
+    }
+
+    public void setNumCambioLinea(Integer numCambioLinea) {
+        this.numCambioLinea = numCambioLinea;
+    }
+
+    public Double getVelocidadComercial() {
+        return velocidadComercial;
+    }
+
+    public void setVelocidadComercial(Double velocidadComercial) {
+        this.velocidadComercial = velocidadComercial;
+    }
+
+    public Double getHorasPorBuses() {
+        return horasPorBuses;
+    }
+
+    public void setHorasPorBuses(Double horasPorBuses) {
+        this.horasPorBuses = horasPorBuses;
+    }
+
+    public String getTiempoVacio() {
+        return tiempoVacio;
+    }
+
+    public void setTiempoVacio(String tiempoVacio) {
+        this.tiempoVacio = tiempoVacio;
     }
 }

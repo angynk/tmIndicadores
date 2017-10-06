@@ -128,13 +128,28 @@
                             </p:column>
 
                             <p:column filterBy="#{prog.porcentajeVacioInicio}" headerText="% Vacio Inicio"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioInicio}"
-                                      style="width:135px">
-                                <h:outputText value="#{prog.porcentajeVacioInicio}" style="width: 50px"/>
+                                      style="width:145px">
+                                <h:outputText value="#{prog.porcentajeVacioInicio}" style="width: 70px"/>
                             </p:column>
 
                             <p:column filterBy="#{prog.porcentajeVacioFinal}" headerText="% Vacio Fin"  filterMatchMode="contains" sortBy="#{prog.porcentajeVacioFinal}"
                                       style="width:140px">
                                 <h:outputText value="#{prog.porcentajeVacioFinal}" style="width: 50px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{prog.velocidadComercial}" headerText="Vel Comercial"  filterMatchMode="contains" sortBy="#{prog.velocidadComercial}"
+                                      style="width:140px">
+                                <h:outputText value="#{prog.velocidadComercial}" style="width: 50px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{prog.horasPorBuses}" headerText="HH/Buses"  filterMatchMode="contains" sortBy="#{prog.horasPorBuses}"
+                                      style="width:140px">
+                                <h:outputText value="#{prog.horasPorBuses}" style="width: 50px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{prog.numCambioLinea}" headerText="Cambio Línea"  filterMatchMode="contains" sortBy="#{prog.numCambioLinea}"
+                                      style="width:140px">
+                                <h:outputText value="#{prog.numCambioLinea}" style="width: 50px"/>
                             </p:column>
 
                             <p:column filterBy="#{prog.lineasCargadas}" headerText="Líneas"  filterMatchMode="contains" sortBy="#{prog.lineasCargadas}"

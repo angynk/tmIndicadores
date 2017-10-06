@@ -399,6 +399,10 @@ public class BusesProgramadosBean {
             titulo = titulo +IndicadorEnum.POR_VACIOS.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
             titulo = titulo +IndicadorEnum.LINEA_CARGADA.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.VELOCIDAD_COMERCIAL.toString()) ){
+            titulo = titulo +IndicadorEnum.VELOCIDAD_COMERCIAL.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
+            titulo = titulo +IndicadorEnum.HORAS_BUSES.getNombre();
         }
         return titulo;
     }
@@ -417,6 +421,10 @@ public class BusesProgramadosBean {
             titulo = titulo +IndicadorEnum.POR_VACIOS.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
             titulo = titulo +IndicadorEnum.LINEA_CARGADA.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.VELOCIDAD_COMERCIAL.toString()) ){
+            titulo = titulo +IndicadorEnum.VELOCIDAD_COMERCIAL.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
+            titulo = titulo +IndicadorEnum.HORAS_BUSES.getNombre();
         }
         return titulo;
     }
@@ -438,6 +446,10 @@ public class BusesProgramadosBean {
                valor = prog.getPorcentajeVacioFinal();
            }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
                valor = prog.getLineasCargadas();
+           }else if ( tipoIndicador.equals(IndicadorEnum.VELOCIDAD_COMERCIAL.toString()) ){
+               valor = prog.getVelocidadComercial();
+           }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
+               valor = prog.getHorasPorBuses();
            }
            dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
        }
@@ -472,6 +484,10 @@ public class BusesProgramadosBean {
                 valor = prog.getPorcentajeVacioFinal();
             }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
                 valor = prog.getLineasCargadas();
+            }else if ( tipoIndicador.equals(IndicadorEnum.VELOCIDAD_COMERCIAL.toString()) ){
+                valor = prog.getVelocidadComercial();
+            }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
+                valor = prog.getHorasPorBuses();
             }
             dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
         }

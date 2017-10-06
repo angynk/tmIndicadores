@@ -5,6 +5,8 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,5 +90,35 @@ public class ProcessorUtils {
 
             }
         }
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public static Double convertirFormatoHoraADouble(String tiempo){
+        Double hora = 1.0;
+        if(tiempo != null){
+            String[] tiempoTotal = tiempo.split(":");
+            try{
+                hora = Double.parseDouble(tiempoTotal[0]+"."+tiempoTotal[1]);
+            }catch (Exception e){
+
+            }
+        }
+
+
+        return hora;
+    }
+
+    public static String convertirDoubleaFormatoHora(Double valor){
+        valor = ProcessorUtils.round(valor,2);
+        String hora = valor.toString();
+        hora = hora.replace(".",":");
+        return hora+":00";
     }
 }
