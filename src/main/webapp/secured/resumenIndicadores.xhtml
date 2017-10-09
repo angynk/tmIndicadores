@@ -78,6 +78,11 @@
                                     <h:outputText value="#{prog.fechaFormatted}" style="width: 50px" />
                                 </p:column>
 
+                                <p:column filterBy="#{prog.periodicidad}" headerText="TipoDía"  filterMatchMode="contains" sortBy="#{prog.periodicidad}"
+                                          style="width: 115px" visible="false">
+                                    <h:outputText value="#{prog.periodicidad}" style="width: 50px" />
+                                </p:column>
+
                                 <p:column filterBy="#{prog.cuadro}" headerText="Cuadro"  filterMatchMode="contains" sortBy="#{prog.cuadro}"
                                                      style="width: 115px">
                                 <h:outputText value="#{prog.cuadro}" style="width: 50px" />
@@ -103,6 +108,11 @@
                                 <p:column filterBy="#{prog.tiempoExpedicion}" headerText="Tiempo Exp"  filterMatchMode="contains" sortBy="#{prog.tiempoExpedicion}"
                                           style="width: 130px">
                                     <h:outputText value="#{prog.tiempoExpedicion}" />
+                                </p:column>
+
+                                <p:column filterBy="#{prog.expedicionComercial}" headerText="Exp Come"  filterMatchMode="contains" sortBy="#{prog.expedicionComercial}"
+                                          style="width: 115px" visible="false">
+                                    <h:outputText value="#{prog.expedicionComercial}" style="width: 50px" />
                                 </p:column>
 
                                 <p:column filterBy="#{prog.kmVacioFin}" headerText="KM Vacio"  filterMatchMode="contains" sortBy="#{prog.kmVacioFin}"

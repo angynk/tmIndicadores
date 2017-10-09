@@ -81,6 +81,11 @@
                                 <h:outputText value="#{prog.fechaFormatted}" style="width: 50px" />
                             </p:column>
 
+                            <p:column filterBy="#{prog.periodicidad}" headerText="TipoDía"  filterMatchMode="contains" sortBy="#{prog.periodicidad}"
+                                      style="width: 115px" visible="false">
+                                <h:outputText value="#{prog.periodicidad}" style="width: 50px" />
+                            </p:column>
+
                             <p:column filterBy="#{prog.cuadro}" headerText="Cuadro"  filterMatchMode="contains" sortBy="#{prog.cuadro}"
                                       style="width: 120px">
                                 <h:outputText value="#{prog.cuadro}" style="width: 50px" />
