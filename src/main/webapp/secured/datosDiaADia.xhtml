@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form enctype="multipart/form-data">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:panel id="basic" header="Exportar Datos de Programación día a día"  style="margin-bottom:20px">
+                    <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5" cellspacing="15">
+
+                        <p:outputLabel value="Modo:"  />
+                        <p:selectOneMenu  value="#{DDiaDiaBean.modo}" style="width:90%">
+                            <f:selectItems value="#{DDiaDiaBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                            <p:ajax update="@form" listener="#{DDiaDiaBean.updateTipologias}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Tipología:" for="tipologia" />
+                        <p:selectOneMenu id="tipologia" value="#{DDiaDiaBean.tipologia}" style="width:90%">
+                            <f:selectItems value="#{DDiaDiaBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel for="button" value="Fecha Inicio (DD/MM/AAAA):" />
+                        <p:calendar id="button" value="#{DDiaDiaBean.fechaInicio}" showOn="button" />
+                        <p:outputLabel for="buttonV" value="Fecha Fin (DD/MM/AAAA):" />
+                        <p:calendar id="buttonV" value="#{DDiaDiaBean.fechaFin}" showOn="button" />
+                    </h:panelGrid>
+                    <p:commandButton value="Exportar" action="#{DDiaDiaBean.exportarDatos()}" ajax="false"
+                                     icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
+                                     async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                     oncomplete="PF('dlg2').hide()"/>
+
+                </p:panel>
+                <p:panel visible="#{DDiaDiaBean.visibleDescarga}">
+                    <h:commandButton  value="Descargar"  action="#{DDiaDiaBean.download()}"   >
+
+                    </h:commandButton>
+                </p:panel>
+
+                <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
+                           minHeight="40" style="height: 40px">
+                    <h:outputText value="En Proceso.." />
+                    <p:graphicImage name="images/ajaxloadingbar.gif" />
+                </p:dialog>
+
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

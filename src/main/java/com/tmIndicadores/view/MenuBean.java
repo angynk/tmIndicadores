@@ -49,6 +49,16 @@ public class MenuBean {
         }
     }
 
+    public void refreshExportarDatosDiaaDia(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/datosDiaADia.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshCargaIndicadores(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {

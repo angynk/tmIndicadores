@@ -37,6 +37,10 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
     }
 
+    public List<Programacion> getProgramacionBaseForReport(Date fechaInicio, Date fechaFin, String modo,String tipologia){
+        return programacionDao.getProgramacionBaseForReport(fechaInicio,fechaFin,modo,tipologia);
+    }
+
     public List<Programacion> getAll(){
         return programacionDao.getAll();
     }

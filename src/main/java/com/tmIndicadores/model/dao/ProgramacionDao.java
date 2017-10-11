@@ -117,6 +117,15 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
+    public List<Programacion> getProgramacionBaseForReport(Date fechaInicio, Date fechaFin, String modo,String tipologia){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
+        criteria.add(Restrictions.eq("tipologia", tipologia));
+        criteria.add(Restrictions.eq("modo", modo));
+        criteria.addOrder(Order.desc("fecha"));
+        return criteria.list();
+    }
+
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipoDatos){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
