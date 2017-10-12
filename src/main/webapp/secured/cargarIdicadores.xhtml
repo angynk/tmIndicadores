@@ -52,7 +52,9 @@
                                 <p:outputLabel value="Cuadro Programación:"/>
                                 <p:inputText value="#{cargarBean.cuadro}" />
                                 <p:outputLabel for="buttonV" value="Fecha de Programación (DD/MM/AAAA):" />
-                                <p:calendar id="buttonV" value="#{cargarBean.fechaProgramacion}" showOn="button" />
+                                <p:calendar id="buttonV" value="#{cargarBean.fechaProgramacion}"  />
+                                <p:outputLabel  value="Fechas Asociadas:" />
+                                <input id="mdp-demo" name="fechas"/>
                                 <p:outputLabel value="TraceLog GOAL Bus:" />
                                 <p:fileUpload value="#{cargarBean.traceLog}" label="Seleccionar"
                                               mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|csv)$/"/>

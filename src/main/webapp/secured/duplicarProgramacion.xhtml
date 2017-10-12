@@ -15,21 +15,43 @@
         <ui:define name="content">
             <h:form enctype="multipart/form-data">
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:panel visible="#{!duplicarBean.visibleDuplicacion}">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Modo Programación:" />
+                        <p:selectOneMenu  value="#{duplicarBean.modo}" style="width:140px" >
+                            <f:selectItems value="#{duplicarBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                        </p:selectOneMenu>
+                        <p:commandButton value="Cargar" action="#{duplicarBean.updateProgList}" ajax="false" />
+                    </p:panelGrid>
+                </p:panel>
 
-                <p:panel id="basic" header="Duplicar Indicadores Goal Bus"  style="margin-bottom:20px">
+                <p:panel id="basic" header="#{duplicarBean.tituloPanel}"  style="margin-bottom:20px" visible="#{duplicarBean.visibleDuplicacion}">
                     <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:panel  style="border:none">
-                            <p:panelGrid columns="7">
-                                <p:outputLabel value="Fecha de Programación :"  />
-                                <p:calendar  value="#{duplicarBean.fechaADuplicar}" />
-                                <p:outputLabel  value="Fechas a Duplicar:" />
-                                <input id="mdp-demo" name="fechas"/>
-                                <p:outputLabel value="Modo:"/>
-                                <p:selectOneMenu  value="#{duplicarBean.modo}" style="width:140px">
-                                    <f:selectItem itemLabel="Troncal" itemValue="TRO" />
-                                    <f:selectItem itemLabel="Dual" itemValue="DUA" />
-                                    <f:selectItem itemLabel="Todos" itemValue="TOD" />
+                            <p:panelGrid columns="4">
+
+                                <p:outputLabel value="Programación a Duplicar :"  />
+                                <p:selectOneMenu id="advanced" value="#{duplicarBean.fechaSelected}"
+                                                 effect="fade" var="t" style="width:180px" filter="true" filterMatchMode="startsWith">
+
+                                    <f:selectItems value="#{duplicarBean.progDateList}" var="prog" itemLabel="#{prog}" itemValue="#{prog}" />
+                                    <!--<p:column>-->
+                                        <!--<h:outputText value="#{t.cuadro}" />-->
+                                    <!--</p:column>-->
+                                    <p:column>
+                                        <h:outputText value="#{t}" />
+                                    </p:column>
+
+
                                 </p:selectOneMenu>
+
+
+                            </p:panelGrid>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel  value="Seleccione las fechas para las que se extiende esta programación:" />
+                                <input id="mdp-demo" name="fechas"/>
+                                <!--<input type="text" id="altField" name="fechas"  />-->
+
                                 <p:commandButton value="Duplicar" action="#{duplicarBean.duplicar}" ajax="false"
                                                  icon="ui-icon ui-icon-disk" id="withIcon"
                                                  async="true" process="@form" onclick="PF('dlg2').show();" global="false"

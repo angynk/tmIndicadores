@@ -23,6 +23,10 @@ public class ProgramacionServicios {
 
     }
 
+    public Programacion getProgramacionbyID(long id){
+        return programacionDao.getProgramacionbyID(id);
+    }
+
     public void deleteProgramacion(Programacion programacion) {
         programacionDao.deleteProgramacion(programacion);
     }
@@ -32,6 +36,9 @@ public class ProgramacionServicios {
         programacionDao.updateProgramacion(programacion);
     }
 
+    public List<Programacion> getAllProgramacionbyModo(String modo){
+        return programacionDao.getAllProgramacionbyModo(modo);
+    }
 
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad, String tipologia,String tipoDatos){
         return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);

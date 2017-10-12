@@ -3,6 +3,8 @@ package com.tmIndicadores.model.entity;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="programacion_goal")
@@ -83,6 +85,9 @@ public class Programacion {
 
     @Column(name = "modo")
     private String modo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "programacion",cascade = CascadeType.ALL)
+    private Set<FechaAsociada> fechaAsociadas = new HashSet<FechaAsociada>(0);
 
     @Transient
     private String fechaFormatted;
@@ -311,5 +316,33 @@ public class Programacion {
 
     public void setTiempoVacio(String tiempoVacio) {
         this.tiempoVacio = tiempoVacio;
+    }
+
+    public Set<FechaAsociada> getFechaAsociadas() {
+        return fechaAsociadas;
+    }
+
+    public void setFechaAsociadas(Set<FechaAsociada> fechaAsociadas) {
+        this.fechaAsociadas = fechaAsociadas;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        int hash = 0;
+//        hash += (id != null ? id.hashCode() : 0);
+//        return hash;
+//    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Programacion)) {
+            return false;
+        }
+        Programacion other = (Programacion) object;
+        if ( (this.id !=other.id)) {
+            return false;
+        }
+        return true;
     }
 }

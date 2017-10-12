@@ -1,6 +1,8 @@
 package com.tmIndicadores.controller;
 
+import com.tmIndicadores.controller.servicios.FechasAsociadasServicios;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
+import com.tmIndicadores.model.entity.FechaAsociada;
 import com.tmIndicadores.model.entity.Programacion;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +22,24 @@ public class IndicadoresGoalProcessor {
     @Autowired
     private ProgramacionServicios programacionServicios;
 
+    @Autowired
+    private FechasAsociadasServicios fechasAsociadasServicios;
+
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
     private String destination = PathFiles.PATH;
 
-    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia, String periocidad,String lineasC,String cuadro,String modo){
+    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia,
+                                              String periocidad,String lineasC,String cuadro,String modo,String fechas){
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Indicadores Goal Bus con Archivo>>");
         if(!programacionServicios.isCuadroAlready(cuadro)){
             if(noExistenDatosParaLaFecha(fechaProgramacion,tipologia,periocidad)){
+                List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
                 processorUtils.copyFile(fileName,in,destination);
                 destination=destination+fileName;
-                readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro,modo);
+                readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro,modo,fechasRecords);
             }else{
                 logDatos.add(new LogDatos("Ya existe una programación para el dia "+periocidad+" "+fechaProgramacion.toString()+" Tipologia  "+tipologia, TipoLog.ERROR));
             }
@@ -59,7 +66,8 @@ public class IndicadoresGoalProcessor {
         return false;
     }
 
-    private void readExcelAndSaveData(String destination, Date fechaProgramacion, String razon,String tipologia, String periocidad,String lineasC,String filename,String cuadro,String modo) {
+    private void readExcelAndSaveData(String destination, Date fechaProgramacion, String razon,String tipologia, String periocidad,
+                                      String lineasC,String filename,String cuadro,String modo,List<Date> fechasRecords) {
         BufferedReader br = null;
         String line = "";
         String previousLine ="";
@@ -103,8 +111,10 @@ public class IndicadoresGoalProcessor {
             programacion.setNumCambioLinea(Integer.parseInt(valores[TraceLogIndex.NUM_CAMBIOS_LINEA-diffFiles]));
             programacion.setVelocidadComercial(calcularVelocidadComercial(programacion.getKmComercialFin(),programacion.getTiempoExpedicion()));
             programacion.setHorasPorBuses(calcularHorasPorBuses(programacion.getTiempoExpedicion(),programacion.getBuses(),valores[TraceLogIndex.HORAS_VACIO-diffFiles]));
-
             programacionServicios.addProgramacion(programacion);
+
+            //Asociar Programación a fechas
+            asociarProgramacionAFechas(programacion,fechasRecords);
 
         } catch (FileNotFoundException e) {
            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
@@ -120,6 +130,15 @@ public class IndicadoresGoalProcessor {
             }
         }
 
+    }
+
+    private void asociarProgramacionAFechas(Programacion programacion, List<Date> fechasRecords) {
+        for(Date fecha: fechasRecords){
+            FechaAsociada fechaAsociada = new FechaAsociada();
+            fechaAsociada.setFecha(fecha);
+            fechaAsociada.setProgramacion(programacion);
+            fechasAsociadasServicios.addFechaAsociada(fechaAsociada);
+        }
     }
 
     private Double calcularHorasPorBuses(String tiempoExpedicion, Integer buses, String valores) {

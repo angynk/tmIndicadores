@@ -1,11 +1,14 @@
 package com.tmIndicadores.controller;
 
+import com.tmIndicadores.controller.servicios.FechasAsociadasServicios;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
+import com.tmIndicadores.model.entity.FechaAsociada;
 import com.tmIndicadores.model.entity.Programacion;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,18 +18,32 @@ public class DuplicarProgramacionProcessor {
 
     @Autowired
     private ProgramacionServicios programacionServicios;
+    @Autowired
+    private FechasAsociadasServicios fechasAsociadasServicios;
     private boolean duplicacionValida = true;
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
 
-    public List<LogDatos> duplicarProgramacion(Date fechaADuplicar, String fechas,String modo){
+    public List<Programacion> getAll(){
+        return programacionServicios.getAll();
+    }
+
+    public Programacion getProgramacionbyID(long id){
+        return programacionServicios.getProgramacionbyID(id);
+    }
+
+    public List<Programacion> getAllProgramacionbyModo(String modo){
+        return programacionServicios.getAllProgramacionbyModo(modo);
+    }
+
+    public List<LogDatos> duplicarProgramacion(Date fecha, String fechas,String modo){
         logDatos = new ArrayList<>();
         duplicacionValida = true;
         logDatos.add(new LogDatos("<<Inicio Duplicacion programacion>>", TipoLog.INFO));
-        List<Programacion> programaciones = encontrarProgramacionActual(fechaADuplicar,modo);
+        List<Programacion> programaciones = encontrarProgramacionActual(fecha,modo);
         if(programaciones.size()>0){
-            List<Date> fechasRecords = convertirAfechas(fechas);
+            List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
             if(fechasRecords.size()>0){
                 duplicarDatosProgramacion(fechasRecords,programaciones);
             }else{
@@ -42,19 +59,33 @@ public class DuplicarProgramacionProcessor {
     }
 
     private void duplicarDatosProgramacion(List<Date> fechasRecords, List<Programacion> programaciones) {
-        for(Date fecha:fechasRecords){
+        for(int x=0;x<fechasRecords.size();x++){
+            Date fecha =fechasRecords.get(x);
             if(fechaNoTieneProgramacion(fecha)){
                 for(Programacion prog:programaciones){
-                    insertarProgramacion(fecha,prog);
+                   Programacion nueva = insertarProgramacion(fecha,prog);
                     logDatos.add(new LogDatos("Programacion Duplicada ("+fecha.toString()+") del Cuadro: "+prog.getCuadro()+" ,Tipo Dia: "+prog.getPeriodicidad()
                             +" ,Tipologia: "+prog.getTipologia(), TipoLog.INFO));
+                    asociarFechasAProgramacion(fechasRecords,nueva);
                 }
+                break;
             }else{
                 logDatos.add(new LogDatos("Programacion No Duplicada ("+fecha.toString()+"), para esa " +
                         "fecha ya hay una programación asociada ", TipoLog.ERROR));
                 duplicacionValida = false;
             }
 
+        }
+    }
+
+    private void asociarFechasAProgramacion(List<Date> fechasRecords, Programacion nueva) {
+        for(int y=1;y<fechasRecords.size();y++){
+            Date fecha= fechasRecords.get(y);
+            FechaAsociada fechaAsociada = new FechaAsociada();
+            fechaAsociada.setFecha(fecha);
+            fechaAsociada.setProgramacion(nueva);
+            fechasAsociadasServicios.addFechaAsociada(fechaAsociada);
+            logDatos.add(new LogDatos("Programacion  ("+nueva.getCuadro()+") Asociada a fecha: "+fecha.toString(), TipoLog.INFO));
         }
     }
 
@@ -68,10 +99,11 @@ public class DuplicarProgramacionProcessor {
     }
 
 
-    private void insertarProgramacion(Date fecha, Programacion prog) {
+    private Programacion insertarProgramacion(Date fecha, Programacion prog) {
         Programacion nuevaProgramacion = transpasarDatosObjetoProgramacion(prog);
         nuevaProgramacion.setFecha(fecha);
         programacionServicios.addProgramacion(nuevaProgramacion);
+        return nuevaProgramacion;
     }
 
     private Programacion transpasarDatosObjetoProgramacion(Programacion prog) {
@@ -101,20 +133,7 @@ public class DuplicarProgramacionProcessor {
         return nuevo;
     }
 
-    private List<Date> convertirAfechas(String fechas) {
-        List<Date> fechasFormat = new ArrayList<>();
-        String [] fechaRecords = fechas.split(",");
-        for(int x = 0; x < fechaRecords.length; x++){
-            Date date = ProcessorUtils.fromStringToDate(fechaRecords[x]);
-            if(date==null){
-                break;
-            }else{
-                fechasFormat.add(date);
-            }
-        }
-
-        return fechasFormat;
-    }
+  
 
 
     private  List<Programacion> encontrarProgramacionActual(Date fechaProg,String modo) {

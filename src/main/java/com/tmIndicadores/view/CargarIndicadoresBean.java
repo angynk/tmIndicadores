@@ -43,6 +43,7 @@ public class CargarIndicadoresBean {
     private boolean cargaArchivo;
     private boolean generarDEF;
     private boolean listaProg;
+    private String fechas;
 
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
@@ -259,7 +260,10 @@ public class CargarIndicadoresBean {
     public void cargarArchivo(){
         if(valid()){
             try {
-                logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), traceLog.getInputstream(), fechaProgramacion, razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro,modo);
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                fechas = ec.getRequestParameterMap().get("fechas");
+                logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), traceLog.getInputstream(), fechaProgramacion,
+                        razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro,modo,fechas);
                 resultadosVisibles = true;
                 if(logDatos.size()>2){
                     messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
@@ -491,5 +495,13 @@ public class CargarIndicadoresBean {
 
     public void setTipologias(List<ListObject> tipologias) {
         this.tipologias = tipologias;
+    }
+
+    public String getFechas() {
+        return fechas;
+    }
+
+    public void setFechas(String fechas) {
+        this.fechas = fechas;
     }
 }

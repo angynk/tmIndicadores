@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +76,25 @@ public class ReportesGoalBusProcessor {
     }
 
     private void completarProgDesdeHasta(Programacion programacionA, Programacion programacionB,HSSFSheet worksheet,int pos) {
+
+        //Información Base
+        Date diaA = programacionA.getFecha();
+        Date diaAPlus1 = getSiguienteDia(diaA);
+        Date diaB = programacionB.getFecha();
+
+        // Insertar Programación A
         insertarProgramacion(worksheet,programacionA,pos);
+
+        if(diaAPlus1.compareTo(diaB)!=0){ // El siguiente día tiene programación asignada
+
+        }
+    }
+
+    private Date getSiguienteDia(Date diaA) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(diaA);
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTime();
     }
 
     private void insertarProgramacion(HSSFSheet worksheet, Programacion prog,int pos) {

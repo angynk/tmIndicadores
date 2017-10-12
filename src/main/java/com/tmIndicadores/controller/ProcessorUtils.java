@@ -9,7 +9,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ProcessorUtils {
@@ -120,5 +122,20 @@ public class ProcessorUtils {
         String hora = valor.toString();
         hora = hora.replace(".",":");
         return hora+":00";
+    }
+
+    public static List<Date> convertirAfechas(String fechas) {
+        List<Date> fechasFormat = new ArrayList<>();
+        String [] fechaRecords = fechas.split(",");
+        for(int x = 0; x < fechaRecords.length; x++){
+            Date date = ProcessorUtils.fromStringToDate(fechaRecords[x]);
+            if(date==null){
+                break;
+            }else{
+                fechasFormat.add(date);
+            }
+        }
+
+        return fechasFormat;
     }
 }
