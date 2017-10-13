@@ -79,7 +79,7 @@ public class DuplicarProgramacionProcessor {
     }
 
     private void asociarFechasAProgramacion(List<Date> fechasRecords, Programacion nueva) {
-        for(int y=1;y<fechasRecords.size();y++){
+        for(int y=0;y<fechasRecords.size();y++){
             Date fecha= fechasRecords.get(y);
             FechaAsociada fechaAsociada = new FechaAsociada();
             fechaAsociada.setFecha(fecha);

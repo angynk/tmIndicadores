@@ -4,6 +4,7 @@ import com.tmIndicadores.model.entity.FechaAsociada;
 import com.tmIndicadores.model.entity.Programacion;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,5 +49,17 @@ public class FechaAsociadaDao {
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(FechaAsociada.class);
         criteria.add(Restrictions.eq("programacion", programacion));
         return criteria.list();
+    }
+
+    public List<FechaAsociada> getFechasBaseForReport(Date fechaInicio, Date fechaFin,String modo,String tipologia){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(FechaAsociada.class, "FECHAS");
+     //   criteria.add(Restrictions.eq("FECHAS.id","id"));
+        criteria.add(Restrictions.between("FECHAS.fecha", fechaInicio,fechaFin));
+        criteria.createAlias("FECHAS.programacion", "p");
+
+        criteria.add(Restrictions.eq("p.modo", modo));
+        criteria.add(Restrictions.eq("p.tipologia", tipologia));
+        criteria.addOrder(Order.asc("FECHAS.fecha"));
+        return (List<FechaAsociada>) criteria.list();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Service("FechasAsociadasServicios")
@@ -32,5 +33,9 @@ public class FechasAsociadasServicios {
 
     public List<FechaAsociada> getFechasAsociadasProgramacion(Programacion programacion){
         return fechaAsociadaDao.getFechasAsociadasProgramacion(programacion);
+    }
+
+    public List<FechaAsociada> getFechasBaseForReport(Date fechaInicio, Date fechaFin,String modo,String tipologia){
+        return fechaAsociadaDao.getFechasBaseForReport(fechaInicio,fechaFin,modo,tipologia);
     }
 }

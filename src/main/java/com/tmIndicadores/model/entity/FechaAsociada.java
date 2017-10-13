@@ -23,6 +23,11 @@ public class FechaAsociada {
     public FechaAsociada() {
     }
 
+    public FechaAsociada(Date fecha, Programacion programacion) {
+        this.fecha = fecha;
+        this.programacion = programacion;
+    }
+
     public long getId() {
         return id;
     }

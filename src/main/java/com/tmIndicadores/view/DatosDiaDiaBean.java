@@ -96,7 +96,7 @@ public class DatosDiaDiaBean implements Serializable {
         FileInputStream fileIn = new FileInputStream(file);
         ServletOutputStream out = response.getOutputStream();
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=revisionHorario.xls");
+        response.setHeader("Content-Disposition", "attachment; filename=datosDiaADia.xls");
 
 
         byte[] outputByte = new byte[4096];
