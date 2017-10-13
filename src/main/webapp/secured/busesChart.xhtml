@@ -20,10 +20,10 @@
                <p:panel id="basic" header="Indicadores GOAL BUS"  style="margin-bottom:20px">
                 <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="10" cellspacing="15">
 
-                    <p:outputLabel for="button" value="Fecha Inicio (DD/MM/AAAA):" />
-                    <p:calendar id="button" value="#{bPBean.fechaInicio}" showOn="button" />
+                    <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
+                    <p:calendar id="button" value="#{bPBean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy" />
                     <p:outputLabel for="buttonV" value="Fecha Fin (DD/MM/AAAA):" />
-                    <p:calendar id="buttonV" value="#{bPBean.fechaFin}" showOn="button" />
+                    <p:calendar id="buttonV" value="#{bPBean.fechaFin}" showOn="button" pattern="dd-MM-yyyy"/>
                     <p:outputLabel value=""  />
                     <p:outputLabel value=""  />
                     <p:outputLabel value=""  />

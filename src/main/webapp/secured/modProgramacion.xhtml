@@ -20,9 +20,9 @@
                 <p:panel id="basic" header="Modificar Resumen Programación GoalBus"  style="margin-bottom:20px">
                     <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
-                        <p:calendar id="button" value="#{MPBean.fechaInicio}" showOn="button" />
+                        <p:calendar id="button" value="#{MPBean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy"/>
                         <p:outputLabel for="buttonV" value="Fecha Fin (DD-MM-AAAA):" />
-                        <p:calendar id="buttonV" value="#{MPBean.fechaFin}" showOn="button" />
+                        <p:calendar id="buttonV" value="#{MPBean.fechaFin}" showOn="button" pattern="dd-MM-yyyy"/>
                         <p:outputLabel for="periocidad" value="Tipo Día:" />
                         <p:selectOneMenu id="periocidad" value="#{MPBean.periocidad}" style="width:90%">
                             <f:selectItem itemLabel="Hábil" itemValue="HABIL" />
