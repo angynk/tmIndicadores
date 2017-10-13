@@ -133,9 +133,6 @@ public class IndicadoresGoalProcessor {
     }
 
     private void asociarProgramacionAFechas(Programacion programacion, List<Date> fechasRecords) {
-        //Añadir fecha principal de la programación
-        FechaAsociada fechaInicial = new FechaAsociada(programacion.getFecha(),programacion);
-        fechasAsociadasServicios.addFechaAsociada(fechaInicial);
 
         //Añadir las otras fechas seleccionadas
         for(Date fecha: fechasRecords){
