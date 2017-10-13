@@ -44,7 +44,7 @@ public class FechaAsociadaDao {
         getSessionFactory().getCurrentSession().update(fechaAsociada);
     }
 
-    public List<Programacion> getFechasAsociadasProgramacion(Programacion programacion){
+    public List<FechaAsociada> getFechasAsociadasProgramacion(Programacion programacion){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(FechaAsociada.class);
         criteria.add(Restrictions.eq("programacion", programacion));
         return criteria.list();

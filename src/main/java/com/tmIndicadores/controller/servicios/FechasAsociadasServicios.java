@@ -30,7 +30,7 @@ public class FechasAsociadasServicios {
         fechaAsociadaDao.updateFechaAsociada(fechaAsociada);
     }
 
-    public List<Programacion> getFechasAsociadasProgramacion(Programacion programacion){
+    public List<FechaAsociada> getFechasAsociadasProgramacion(Programacion programacion){
         return fechaAsociadaDao.getFechasAsociadasProgramacion(programacion);
     }
 }

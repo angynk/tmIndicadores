@@ -1,10 +1,13 @@
 package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.*;
+import com.tmIndicadores.controller.servicios.FechasAsociadasServicios;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
+import com.tmIndicadores.model.entity.FechaAsociada;
 import com.tmIndicadores.model.entity.Programacion;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.UploadedFile;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -54,6 +57,10 @@ public class CargarIndicadoresBean {
 
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
+
+    @ManagedProperty(value="#{FechasAsociadasServicios}")
+    private FechasAsociadasServicios fechasAsociadasServicios;
+
 
     public CargarIndicadoresBean() {
     }
@@ -161,6 +168,7 @@ public class CargarIndicadoresBean {
                 copiarInformacionBase(programaciones, nueva);
                 nueva = calcularValorProgramacion(programaciones,nueva);
                 programacionServicios.addProgramacion(nueva);
+                agregarAsociacionesFecha(nueva,progMap.get(programaciones.get(0)));
                 logDatos.add(new LogDatos("Nueva Programacion "+tipoDEF, TipoLog.INFO));
                 messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"Nuevo Indicador Definitivo");
                 resultadosVisibles = true;
@@ -174,6 +182,16 @@ public class CargarIndicadoresBean {
         }
 
         logDatos.add(new LogDatos("<<Fin Calculo Indicador Definitivo>>", TipoLog.INFO));
+    }
+
+    private void agregarAsociacionesFecha(Programacion nueva, Programacion programacion) {
+        List<FechaAsociada> fechasAsociadasProgramacion = fechasAsociadasServicios.getFechasAsociadasProgramacion(programacion);
+        for(FechaAsociada fecha: fechasAsociadasProgramacion){
+            FechaAsociada nuevaFecha = new FechaAsociada();
+            nuevaFecha.setProgramacion(nueva);
+            nuevaFecha.setFecha(fecha.getFecha());
+            fechasAsociadasServicios.addFechaAsociada(nuevaFecha);
+        }
     }
 
     private void copiarInformacionBase(List<Programacion> programaciones, Programacion nueva) {
@@ -503,5 +521,13 @@ public class CargarIndicadoresBean {
 
     public void setFechas(String fechas) {
         this.fechas = fechas;
+    }
+
+    public FechasAsociadasServicios getFechasAsociadasServicios() {
+        return fechasAsociadasServicios;
+    }
+
+    public void setFechasAsociadasServicios(FechasAsociadasServicios fechasAsociadasServicios) {
+        this.fechasAsociadasServicios = fechasAsociadasServicios;
     }
 }
