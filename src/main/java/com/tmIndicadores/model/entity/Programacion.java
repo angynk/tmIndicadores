@@ -22,6 +22,9 @@ public class Programacion {
     @Column(name = "fecha_duplicado")
     private Date fechaDuplicada;
 
+    @Column(name = "fecha_padre")
+    private Date fechaPadre;
+
     @Column(name = "cuadro")
     private String cuadro;
 
@@ -91,6 +94,8 @@ public class Programacion {
 
     @Transient
     private String fechaFormatted;
+    @Transient
+    private String fechaPadreFormatted;
     @Transient
     private String tipoProgramacionFormatted;
 
@@ -326,12 +331,15 @@ public class Programacion {
         this.fechaAsociadas = fechaAsociadas;
     }
 
-//    @Override
-//    public int hashCode() {
-//        int hash = 0;
-//        hash += (id != null ? id.hashCode() : 0);
-//        return hash;
-//    }
+    public String getFechaPadreFormatted() {
+        if(fechaPadre== null) return "";
+        SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
+        return dt1.format(fechaPadre);
+    }
+
+    public void setFechaPadreFormatted(String fechaPadreFormatted) {
+        this.fechaPadreFormatted = fechaPadreFormatted;
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -344,5 +352,13 @@ public class Programacion {
             return false;
         }
         return true;
+    }
+
+    public Date getFechaPadre() {
+        return fechaPadre;
+    }
+
+    public void setFechaPadre(Date fechaPadre) {
+        this.fechaPadre = fechaPadre;
     }
 }

@@ -77,6 +77,15 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
+    public Programacion getProgramacionbyFechaModoTipo(Date fecha,String modo,String tipologia){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("fecha", fecha));
+        criteria.add(Restrictions.eq("modo", modo));
+        criteria.add(Restrictions.eq("tipologia", tipologia));
+
+        return (Programacion) criteria.uniqueResult();
+    }
+
     public Programacion getProgramacionbyID(long id){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("id", id));

@@ -200,6 +200,8 @@ public class CargarIndicadoresBean {
             nueva.setPeriodicidad(programacion.getPeriodicidad());
             nueva.setRazonCambio(programacion.getRazonCambio());
             nueva.setTipoProgramacion(programacion.getTipoProgramacion());
+            nueva.setFechaPadre(programacion.getFechaPadre());
+            nueva.setFechaDuplicada(programacion.getFechaDuplicada());
         }
     }
 
@@ -224,8 +226,8 @@ public class CargarIndicadoresBean {
             kmVacioInicio = kmVacioInicio + validarDoubleNulo(prog.getKmVacioInicio());
             expComercial = expComercial + validarIntNulo(prog.getExpedicionComercial());
             lineasCargas = lineasCargas + prog.getLineasCargadas();
-            numCambios = numCambios + prog.getNumCambioLinea();
-            busesPorHora = busesPorHora + prog.getHorasPorBuses();
+            numCambios = numCambios + getCambioLinea(prog.getNumCambioLinea());
+            busesPorHora = busesPorHora + getHorasPorBus(prog.getHorasPorBuses());
             tiempoExp = tiempoExp + ProcessorUtils.convertirFormatoHoraADouble(prog.getTiempoExpedicion());
             tiempoVacio = tiempoVacio + ProcessorUtils.convertirFormatoHoraADouble(prog.getTiempoVacio());
         }
@@ -247,6 +249,16 @@ public class CargarIndicadoresBean {
             nueva.setPorcentajeVacioInicio(kmVacioInicio/kmComerialesInicio);
         }
         return nueva;
+    }
+
+    private double getHorasPorBus(Double horasPorBuses) {
+        if(horasPorBuses==null) return 0.0;
+        return horasPorBuses;
+    }
+
+    private int getCambioLinea(Integer numCambioLinea) {
+        if(numCambioLinea==null) return 0;
+        return numCambioLinea;
     }
 
     private Double calcularHorasPorBuses(String tiempoExpedicion, Integer buses, String valores) {

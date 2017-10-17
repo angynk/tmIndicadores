@@ -76,6 +76,10 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionbyFecha(fecha,modo);
     }
 
+    public Programacion getProgramacionbyFechaModoTipo(Date fecha,String modo,String tipologia){
+        return programacionDao.getProgramacionbyFechaModoTipo(fecha,modo,tipologia);
+    }
+
     public List<Programacion> getProgramacionbyFecha(Date fecha){
         return programacionDao.getProgramacionbyFecha(fecha);
     }

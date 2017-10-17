@@ -172,6 +172,12 @@
                                 <h:outputText value="#{prog.tipoProgramacionFormatted}" />
                             </p:column>
 
+
+                            <p:column filterBy="#{prog.fechaPadreFormatted}" headerText="Padre"  filterMatchMode="contains" sortBy="#{prog.fechaPadreFormatted}"
+                                      style="width:205px" visible="false">
+                                <h:outputText value="#{prog.fechaPadreFormatted}" style="width: 100px"/>
+                            </p:column>
+
                         </p:dataTable>
                     </p:panel>
 

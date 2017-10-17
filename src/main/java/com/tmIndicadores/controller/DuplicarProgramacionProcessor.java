@@ -130,10 +130,28 @@ public class DuplicarProgramacionProcessor {
         nuevo.setHorasPorBuses(prog.getHorasPorBuses());
         nuevo.setVelocidadComercial(prog.getVelocidadComercial());
         nuevo.setNumCambioLinea(prog.getNumCambioLinea());
+        nuevo.setFechaPadre(encontrarFechaPadre(prog));
         return nuevo;
     }
 
-  
+    private Date encontrarFechaPadre(Programacion prog) {
+
+        if(prog.getTipoProgramacion().equals("N")){
+            return prog.getFecha();
+        }else{
+            Programacion nuevaProg = programacionServicios.getProgramacionbyFechaModoTipo(prog.getFechaDuplicada(), prog.getModo(), prog.getTipologia());
+            if(nuevaProg!=null){
+                while(!nuevaProg.getTipoProgramacion().equals("N")){
+                    nuevaProg = programacionServicios.getProgramacionbyFechaModoTipo(nuevaProg.getFechaDuplicada(), nuevaProg.getModo(), nuevaProg.getTipologia());
+                }
+                return nuevaProg.getFecha();
+            }
+
+        }
+
+        return prog.getFecha();
+
+    }
 
 
     private  List<Programacion> encontrarProgramacionActual(Date fechaProg,String modo) {
