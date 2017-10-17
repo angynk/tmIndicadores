@@ -64,7 +64,7 @@ public class DuplicarIndicadoresBean {
         //Obtener fechas
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         fechas = ec.getRequestParameterMap().get("fechas");
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try {
             fechaADuplicar = format.parse(fechaSelected);
         } catch (ParseException e) {
@@ -87,7 +87,7 @@ public class DuplicarIndicadoresBean {
     }
 
     private List<String> convertirFechasLista(List<Programacion> allProgramacionbyModo) {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");
         List<String> fechas = new ArrayList<>();
         for(Programacion programacion:allProgramacionbyModo){
             if(!fechas.contains(sdfDate.format(programacion.getFecha()))){

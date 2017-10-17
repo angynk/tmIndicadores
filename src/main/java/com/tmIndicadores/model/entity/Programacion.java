@@ -190,7 +190,7 @@ public class Programacion {
 
     public String getFechaFormatted() {
         if(fecha!=null){
-            SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
             return dt1.format(fecha);
         }
           return "";
@@ -259,7 +259,7 @@ public class Programacion {
 
     public String getTipoProgramacionFormatted() {
         if(tipoProgramacion.equals("N")) return "Nueva";
-        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
         if(fechaDuplicada!=null) return dt1.format(fechaDuplicada);
         return "";
     }
@@ -274,7 +274,7 @@ public class Programacion {
 
     @Override
     public String toString() {
-        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy");
         return dt1.format(fecha)+"-"+tipologia;
     }
 

@@ -16,7 +16,9 @@
 		<h:outputScript  name="js/jquery-ui.multidatespicker.js" />
 		<script type="text/javascript">
             jQuery(document).ready(function($) {
-                $('#mdp-demo').multiDatesPicker();
+                $('#mdp-demo').multiDatesPicker({
+                    dateFormat: "d-m-y"
+				});
             });
 		</script>
 	</h:head>

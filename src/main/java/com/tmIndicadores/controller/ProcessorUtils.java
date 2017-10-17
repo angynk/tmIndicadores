@@ -46,7 +46,7 @@ public class ProcessorUtils {
     }
 
     public static Date fromStringToDate(String fechaString){
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         try {
             Date date = formatter.parse(fechaString);
             return date;
