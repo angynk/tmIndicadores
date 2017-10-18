@@ -9,6 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,12 +134,12 @@ public class ReportesGoalBusProcessor {
         createCellResultados(row,sdfDate.format(prog.getFecha()),GoalReporteDEF.ID_FECHA);
         createCellResultados(row,prog.getCuadro(),GoalReporteDEF.ID_CUADRO);
         createCellResultados(row,prog.getTipologia(),GoalReporteDEF.ID_TIPOLOGIA);
-        createCellResultados(row,prog.getBuses()+"",GoalReporteDEF.ID_BUSES);
-        createCellResultados(row,prog.getKmComercialFin()+"",GoalReporteDEF.ID_KM_COMERCIAL_FIN);
+        createCellNumberResultados(row,prog.getBuses(),GoalReporteDEF.ID_BUSES);
+        createCellNumberResultados(row,prog.getKmComercialFin(),GoalReporteDEF.ID_KM_COMERCIAL_FIN);
         createCellResultados(row,prog.getTipoProgramacionFormatted(),GoalReporteDEF.ID_TIEMPO_EXP);
-        createCellResultados(row,prog.getKmVacioFin()+"",GoalReporteDEF.ID_KM_VACIO_FIN);
-        createCellResultados(row,prog.getPorcentajeVacioFinal()+"",GoalReporteDEF.ID_POR_VACIO_FIN);
-        createCellResultados(row,prog.getLineasCargadas()+"",GoalReporteDEF.ID_LINEAS);
+        createCellNumberResultados(row,prog.getKmVacioFin(),GoalReporteDEF.ID_KM_VACIO_FIN);
+        createCellNumberResultados(row,prog.getPorcentajeVacioFinal(),GoalReporteDEF.ID_POR_VACIO_FIN);
+        createCellNumberResultados(row,prog.getLineasCargadas(),GoalReporteDEF.ID_LINEAS);
         createCellResultados(row,prog.getTipoProgramacionFormatted(),GoalReporteDEF.ID_TIPO);
         createCellResultados(row,prog.getRazonCambio(),GoalReporteDEF.ID_RAZON);
     }
@@ -169,6 +170,20 @@ public class ReportesGoalBusProcessor {
         Cell resultadoHoraIni= row.createCell(num);
         resultadoHoraIni.setCellValue(valor);
         resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
+        resultadoHoraIni.setCellValue(valor);
+    }
+
+    private void createCellNumberResultados(Row row, double valor,int num) {
+        Cell resultadoHoraIni= row.createCell(num);
+        resultadoHoraIni.setCellValue(ProcessorUtils.round(valor,2));
+        resultadoHoraIni.setCellType(Cell.CELL_TYPE_NUMERIC);
+        resultadoHoraIni.setCellValue(valor);
+    }
+
+    private void createCellNumberResultados(Row row, int valor,int num) {
+        Cell resultadoHoraIni= row.createCell(num);
+        resultadoHoraIni.setCellValue(valor);
+        resultadoHoraIni.setCellType(Cell.CELL_TYPE_NUMERIC);
         resultadoHoraIni.setCellValue(valor);
     }
 }
