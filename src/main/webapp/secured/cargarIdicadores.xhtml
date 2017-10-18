@@ -12,7 +12,7 @@
 
     <ui:composition template="/template/common/commonLayout.xhtml">
         <ui:define name="content">
-            <h:form enctype="multipart/form-data">
+            <h:form enctype="multipart/form-data" id="form">
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
                 <p:panel>
@@ -124,6 +124,36 @@
                     <h:outputText value="En Proceso.." />
                     <p:graphicImage name="images/ajaxloadingbar.gif" />
                 </p:dialog>
+
+                <p:confirmDialog message="Existe una programación para la fecha seleccionada. ¿Desea Reemplazarla? "
+                                 showEffect="fade"
+                                 hideEffect="explode"
+                                 widgetVar="reemplazarDialog">
+                    <p:commandButton title="GDelYesButton"
+                                     value="Si"
+                                     action="#{cargarBean.continuarCarga}"
+                                     oncomplete="PF('reemplazarDialog').hide()" update="@form" ajax="true"
+                    />
+                    <p:commandButton title="GDelNoButton"
+                                     value="No"
+                                     action="#{cargarBean.finalizarCarga}"
+                                     oncomplete="PF('reemplazarDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog message="Existe una programación para la fecha seleccionada. ¿Desea Reemplazarla? "
+                                 showEffect="fade"
+                                 hideEffect="explode"
+                                 widgetVar="reemplazarDEFDialog">
+                    <p:commandButton title="GDelYesButton"
+                                     value="Si"
+                                     action="#{cargarBean.continuarCalculo}"
+                                     oncomplete="PF('reemplazarDEFDialog').hide()" update="@form" ajax="true"
+                    />
+                    <p:commandButton title="GDelNoButton"
+                                     value="No"
+                                     action="#{cargarBean.finalizarCarga}"
+                                     oncomplete="PF('reemplazarDEFDialog').hide()"/>
+                </p:confirmDialog>
 
             </h:form>
 

@@ -80,8 +80,8 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionbyFechaModoTipo(fecha,modo,tipologia);
     }
 
-    public List<Programacion> getProgramacionbyFecha(Date fecha){
-        return programacionDao.getProgramacionbyFecha(fecha);
+    public List<Programacion> getProgramacionbyFechaModo(Date fecha,String modo){
+        return programacionDao.getProgramacionbyFechaModo(fecha,modo);
     }
 
     public List<Programacion> getProgramacionbyFechaTipologiaPeriocidad(Date fecha,String tipologia, String periocidad ){
@@ -90,6 +90,10 @@ public class ProgramacionServicios {
 
     public boolean isDEFAlready(Date fecha,String tipoDEF){
         return  programacionDao.isDEFAlready(fecha,tipoDEF);
+    }
+
+    public Programacion getDEFAlready(Date fecha,String tipoDEF){
+        return programacionDao.getDEFAlready(fecha,tipoDEF);
     }
 
 

@@ -5,6 +5,7 @@ import com.tmIndicadores.controller.servicios.FechasAsociadasServicios;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.FechaAsociada;
 import com.tmIndicadores.model.entity.Programacion;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class CargarIndicadoresBean {
     private String periocidad;
     private String tipologia;
     private String tipoDEF;
+    private String path;
     private String modo;
     private List<ListObject> modos;
     private List<ListObject> tipologias;
@@ -151,34 +153,43 @@ public class CargarIndicadoresBean {
         return progMap;
     }
 
+    public void continuarCalculo(){
+        //Eliminar Programacion Existente
+        Programacion defAlready = programacionServicios.getDEFAlready(fechaProgramacionDef, tipoDEF);
+        programacionServicios.deleteProgramacion(defAlready);
+        //Calcular Nuevo DEF
+        calcularProgramacionDefinitiva();
+        //refresh
+
+    }
+
+    public void calcularProgramacionDefinitiva(){
+        List<Programacion> programaciones = progList.getTarget();
+        Programacion nueva = new Programacion();
+        nueva.setTipologia(tipoDEF);
+        nueva.setModo(ModosUtil.getModoPorDEF(tipoDEF));
+        nueva.setCuadro(cuadroDef);
+        nueva.setFecha(fechaProgramacionDef);
+        copiarInformacionBase(programaciones, nueva);
+        nueva = calcularValorProgramacion(programaciones,nueva);
+        programacionServicios.addProgramacion(nueva);
+        agregarAsociacionesFecha(nueva,progMap.get(programaciones.get(0)));
+        logDatos.add(new LogDatos("Nueva Programacion "+tipoDEF, TipoLog.INFO));
+        messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"Nuevo Indicador Definitivo");
+        resultadosVisibles = true;
+    }
+
     public void calcularDEF(){
         logDatos.add(new LogDatos("<<Inicio Calculo Indicador Definitivo>>", TipoLog.INFO));
+        if(progList.getTarget().size()>0 && cuadroDef!=null && fechaProgramacionDef!=null){
         if(programacionServicios.isDEFAlready(fechaProgramacionDef,tipoDEF)){
-            logDatos.add(new LogDatos("La fecha seleccionada ya tiene una programación definitiva", TipoLog.ERROR));
-            messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"La fecha seleccionada ya tiene una programaciòn definitiva");
-            resultadosVisibles = true;
+            RequestContext.getCurrentInstance().execute("PF('reemplazarDEFDialog').show();");
         }else{
-            if(progList.getTarget().size()>0 && cuadroDef!=null && fechaProgramacionDef!=null){
-                List<Programacion> programaciones = progList.getTarget();
-                Programacion nueva = new Programacion();
-                nueva.setTipologia(tipoDEF);
-                nueva.setModo(ModosUtil.getModoPorDEF(tipoDEF));
-                nueva.setCuadro(cuadroDef);
-                nueva.setFecha(fechaProgramacionDef);
-                copiarInformacionBase(programaciones, nueva);
-                nueva = calcularValorProgramacion(programaciones,nueva);
-                programacionServicios.addProgramacion(nueva);
-                agregarAsociacionesFecha(nueva,progMap.get(programaciones.get(0)));
-                logDatos.add(new LogDatos("Nueva Programacion "+tipoDEF, TipoLog.INFO));
-                messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"Nuevo Indicador Definitivo");
-                resultadosVisibles = true;
-
-            }else{
-                messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"Complete todos los campos");
-                resultadosVisibles = false;
-            }
-
-
+               calcularProgramacionDefinitiva();
+        }
+        }else{
+            messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"Complete todos los campos");
+            resultadosVisibles = false;
         }
 
         logDatos.add(new LogDatos("<<Fin Calculo Indicador Definitivo>>", TipoLog.INFO));
@@ -289,24 +300,49 @@ public class CargarIndicadoresBean {
 
     public void cargarArchivo(){
         if(valid()){
-            try {
+
                 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
                 fechas = ec.getRequestParameterMap().get("fechas");
-                logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), traceLog.getInputstream(), fechaProgramacion,
-                        razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro,modo,fechas);
-                resultadosVisibles = true;
-                if(logDatos.size()>2){
-                    messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
+            try {
+                path = idProcessor.copyFile(traceLog.getFileName(), traceLog.getInputstream());
+                if(sinDatosParaLaFecha(fechaProgramacion,tipologia,periocidad)){
+                    cargarDatos(path);
                 }else{
-                    messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_INDICADORES_ALMACENADOS);
+                    RequestContext.getCurrentInstance().execute("PF('reemplazarDialog').show();");
                 }
-
             } catch (IOException e) {
                 messagesView.error(Messages.MENSAJE_ARCHIVO_NO_EXCEL,Messages.ACCION_ARCHIVO_NO_EXCEL);
             }
+
         }else{
             messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);
         }
+    }
+
+    public void cargarDatos(String path){
+        logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), fechaProgramacion,
+        razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro,modo,fechas,path);
+        resultadosVisibles = true;
+        if(logDatos.size()>2){
+                messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
+        }else{
+                messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_INDICADORES_ALMACENADOS);
+        }
+    }
+
+    public void continuarCarga(){
+        cargarDatos(path);
+    }
+    public void finalizarCarga(){
+        messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
+    }
+
+    private boolean sinDatosParaLaFecha(Date fechaProgramacion, String tipologia, String periocidad) {
+        List<Programacion> programaciones = programacionServicios.getProgramacionbyFechaTipologiaPeriocidad(fechaProgramacion, tipologia, periocidad);
+        if(programaciones.size()> 0) {
+            return false;
+        }
+        return true;
     }
 
     private boolean valid() {

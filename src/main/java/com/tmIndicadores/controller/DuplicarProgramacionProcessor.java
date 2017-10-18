@@ -45,7 +45,7 @@ public class DuplicarProgramacionProcessor {
         if(programaciones.size()>0){
             List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
             if(fechasRecords.size()>0){
-                duplicarDatosProgramacion(fechasRecords,programaciones);
+                duplicarDatosProgramacion(fechasRecords,programaciones,modo);
             }else{
                 duplicacionValida = false;
                 logDatos.add(new LogDatos("El formato de Fechas es Incorrecto",TipoLog.ERROR));
@@ -58,10 +58,21 @@ public class DuplicarProgramacionProcessor {
         return logDatos;
     }
 
-    private void duplicarDatosProgramacion(List<Date> fechasRecords, List<Programacion> programaciones) {
+    public boolean existeProgramacionParaLaFecha(String fechas,String modo){
+        List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
+        if(fechasRecords.size()>0){
+            List<Programacion> programacionbyFecha = programacionServicios.getProgramacionbyFechaModo(fechasRecords.get(0),modo);
+            if(programacionbyFecha.size()>0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void duplicarDatosProgramacion(List<Date> fechasRecords, List<Programacion> programaciones,String modo) {
         for(int x=0;x<fechasRecords.size();x++){
             Date fecha =fechasRecords.get(x);
-            if(fechaNoTieneProgramacion(fecha)){
+            if(fechaNoTieneProgramacion(fecha,modo)){
                 for(Programacion prog:programaciones){
                    Programacion nueva = insertarProgramacion(fecha,prog);
                     logDatos.add(new LogDatos("Programacion Duplicada ("+fecha.toString()+") del Cuadro: "+prog.getCuadro()+" ,Tipo Dia: "+prog.getPeriodicidad()
@@ -89,11 +100,11 @@ public class DuplicarProgramacionProcessor {
         }
     }
 
-    private boolean fechaNoTieneProgramacion(Date fecha) {
-        List<Programacion> programacionbyFecha = programacionServicios.getProgramacionbyFecha(fecha);
-        if(programacionbyFecha.size()>0){
-            return false;
-        }
+    private boolean fechaNoTieneProgramacion(Date fecha,String modo) {
+        List<Programacion> programacionbyFecha = programacionServicios.getProgramacionbyFechaModo(fecha,modo);
+       for(Programacion prog:programacionbyFecha){
+           programacionServicios.deleteProgramacion(prog);
+       }
         return true;
 
     }

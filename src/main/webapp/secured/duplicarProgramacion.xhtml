@@ -82,6 +82,21 @@
                     <p:graphicImage name="images/ajaxloadingbar.gif" />
                 </p:dialog>
 
+                <p:confirmDialog message="Existe una programación para la fecha seleccionada. ¿Desea Reemplazarla? "
+                                 showEffect="fade"
+                                 hideEffect="explode"
+                                 widgetVar="reemplazarDuDialog">
+                    <p:commandButton title="GDelYesButton"
+                                     value="Si"
+                                     action="#{duplicarBean.continuarDuplicacion}"
+                                     oncomplete="PF('reemplazarDuDialog').hide()" update="@form" ajax="true"
+                    />
+                    <p:commandButton title="GDelNoButton"
+                                     value="No"
+                                     action="#{duplicarBean.finalizarDuplicacion}"
+                                     oncomplete="PF('reemplazarDuDialog').hide()"/>
+                </p:confirmDialog>
+
             </h:form>
 
         </ui:define>

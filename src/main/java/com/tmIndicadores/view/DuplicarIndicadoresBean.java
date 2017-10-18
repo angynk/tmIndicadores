@@ -5,6 +5,7 @@ import com.tmIndicadores.controller.ListObject;
 import com.tmIndicadores.controller.LogDatos;
 import com.tmIndicadores.controller.ModosUtil;
 import com.tmIndicadores.model.entity.Programacion;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -70,6 +71,16 @@ public class DuplicarIndicadoresBean {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if(duplicarProgramacionProcessor.existeProgramacionParaLaFecha(fechas,modo)){
+            RequestContext.getCurrentInstance().execute("PF('reemplazarDuDialog').show();");
+        }else{
+            duplicarDatos();
+        }
+
+
+    }
+
+    public void duplicarDatos(){
         logDatos = duplicarProgramacionProcessor.duplicarProgramacion(fechaADuplicar,fechas,modo);
         resultadosVisibles = true;
         if(duplicarProgramacionProcessor.isDuplicacionValida()){
@@ -77,6 +88,14 @@ public class DuplicarIndicadoresBean {
         }else{
             messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.VALIDE_LOG);
         }
+    }
+
+    public void continuarDuplicacion(){
+            duplicarDatos();
+    }
+
+    public void finalizarDuplicacion(){
+        messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"La programación no fue duplicada");
     }
 
     public void updateProgList(){

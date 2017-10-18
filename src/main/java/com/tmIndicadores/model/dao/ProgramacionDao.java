@@ -66,6 +66,17 @@ public class ProgramacionDao {
         return false;
     }
 
+    public Programacion getDEFAlready(Date fecha,String tipoDEF){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("fecha", fecha));
+        criteria.add(Restrictions.eq("tipologia", tipoDEF));
+        List list = criteria.list();
+        if(list.size()>0){
+            return (Programacion) list.get(0);
+        }
+        return null;
+    }
+
     public List<Programacion> getProgramacionbyFecha(Date fecha,String modo){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("fecha", fecha));
@@ -92,9 +103,10 @@ public class ProgramacionDao {
         return (Programacion) criteria.uniqueResult();
     }
 
-    public List<Programacion> getProgramacionbyFecha(Date fecha){
+    public List<Programacion> getProgramacionbyFechaModo(Date fecha,String modo){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("fecha", fecha));
+        criteria.add(Restrictions.eq("modo", modo));
 
         return criteria.list();
     }

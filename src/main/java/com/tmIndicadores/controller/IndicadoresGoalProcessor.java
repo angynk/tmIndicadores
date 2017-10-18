@@ -29,24 +29,30 @@ public class IndicadoresGoalProcessor {
     private static Logger log = Logger.getLogger(IndicadoresGoalProcessor.class);
     private String destination = PathFiles.PATH;
 
-    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String razon,String tipologia,
-                                              String periocidad,String lineasC,String cuadro,String modo,String fechas){
+    public String copyFile(String fileName, InputStream in){
+        processorUtils.copyFile(fileName,in,destination);
+        destination=destination+fileName;
+        return destination;
+    }
+
+    public List<LogDatos> processDataFromFile(String fileName,Date fechaProgramacion,String razon,String tipologia,
+                                              String periocidad,String lineasC,String cuadro,String modo,String fechas,String filePath){
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Indicadores Goal Bus con Archivo>>");
-        if(!programacionServicios.isCuadroAlready(cuadro)){
-            if(noExistenDatosParaLaFecha(fechaProgramacion,tipologia,periocidad)){
+        if(eliminarDatosParaLaFecha(fechaProgramacion,tipologia,periocidad)){
+            if(!programacionServicios.isCuadroAlready(cuadro)){
                 List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
-                processorUtils.copyFile(fileName,in,destination);
-                destination=destination+fileName;
-                readExcelAndSaveData(destination,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro,modo,fechasRecords);
+//                processorUtils.copyFile(fileName,in,destination);
+
+                readExcelAndSaveData(filePath,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro,modo,fechasRecords);
             }else{
-                logDatos.add(new LogDatos("Ya existe una programación para el dia "+periocidad+" "+fechaProgramacion.toString()+" Tipologia  "+tipologia, TipoLog.ERROR));
+                logDatos.add(new LogDatos("El cuadro de programación "+cuadro+" ya existe", TipoLog.ERROR));
             }
 
 
         }else{
-            logDatos.add(new LogDatos("El cuadro de programación "+cuadro+" ya existe", TipoLog.ERROR));
+            logDatos.add(new LogDatos("Ya existe una programación para el dia "+periocidad+" "+fechaProgramacion.toString()+" Tipologia  "+tipologia, TipoLog.ERROR));
         }
 
         logDatos.add(new LogDatos("<<Fin Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
@@ -54,12 +60,18 @@ public class IndicadoresGoalProcessor {
         return logDatos;
     }
 
-    private boolean noExistenDatosParaLaFecha(Date fechaProgramacion, String tipologia, String periocidad) {
+    private boolean eliminarDatosParaLaFecha(Date fechaProgramacion, String tipologia, String periocidad) {
         List<Programacion> programaciones = programacionServicios.getProgramacionbyFechaTipologiaPeriocidad(fechaProgramacion, tipologia, periocidad);
-        if(programaciones.size()> 0) {
+        try{
+            for(Programacion prog:programaciones){
+                programacionServicios.deleteProgramacion(prog);
+            }
+
+        }catch (Exception e){
             return false;
         }
         return true;
+
     }
 
     private boolean elCuadroProgramacionNoExiste(String cuadro) {
@@ -71,12 +83,11 @@ public class IndicadoresGoalProcessor {
         BufferedReader br = null;
         String line = "";
         String previousLine ="";
-        String cvsSplitBy = encontrarTipoArchivo(filename);
-        int diffFiles = diferenciaIndexArchivos(cvsSplitBy);
-        double km_vacio_inicial ;
-        double km_comer_inicial ;
-
         try {
+            String cvsSplitBy = encontrarTipoArchivo(filename);
+            int diffFiles = diferenciaIndexArchivos(cvsSplitBy);
+            double km_vacio_inicial ;
+            double km_comer_inicial ;
 
             br = new BufferedReader(new FileReader(destination));
             br.readLine(); // Leer encabezados
@@ -162,13 +173,15 @@ public class IndicadoresGoalProcessor {
         return 1;
     }
 
-    private String encontrarTipoArchivo(String filename) {
-
+    private String encontrarTipoArchivo(String filename) throws FileNotFoundException {
         String[] fileNameSplit = filename.split("\\.");
-        if(fileNameSplit[1].equals("csv")){
-            return ";";
+        if(fileNameSplit.length>1){
+            if(fileNameSplit[1].equals("csv")){
+                return ";";
+            }
+            return "\t";
         }
-        return "\t";
+       throw new FileNotFoundException("No se adjunto ningun archivo");
     }
 
 }
