@@ -177,7 +177,7 @@ public class ProgramacionDao {
     public List<Programacion> getProgramacionesUltimoMes(String periocidad,Date fechaInicio, Date fechaFin){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
-        criteria.add(Restrictions.eq("tipoProgramacion","N"));
+//        criteria.add(Restrictions.eq("tipoProgramacion","N"));
         criteria.add(Restrictions.eq("periodicidad", periocidad));
         criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
