@@ -56,7 +56,7 @@ public class IndicadoresGoalProcessor {
         }
 
         logDatos.add(new LogDatos("<<Fin Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
-
+        destination = PathFiles.PATH;
         return logDatos;
     }
 

@@ -346,7 +346,14 @@ public class CargarIndicadoresBean {
     }
 
     private boolean valid() {
-        if(fechaProgramacion!= null && razonProgramacion!=null && tipologia!=null && periocidad!=null && lineasCargadas!=null){
+        if(fechaProgramacion!= null && razonProgramacion!=null && tipologia!=null && periocidad!=null ){
+            if(lineasCargadas!=null){
+                try{
+                    Integer.parseInt(lineasCargadas);
+                }catch (Exception e){
+                    return false;
+                }
+            }
             return true;
         }
         return false;

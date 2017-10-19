@@ -114,6 +114,7 @@ public class ProgramacionDao {
     public List<Programacion> getAllProgramacionbyModo(String modo){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("modo", modo));
+        criteria.addOrder(Order.desc("fecha"));
 
         return criteria.list();
     }
