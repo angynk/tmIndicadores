@@ -1,6 +1,8 @@
 package com.tmIndicadores.view;
 
 import com.google.gson.Gson;
+import com.tmIndicadores.controller.ListObject;
+import com.tmIndicadores.controller.ModosUtil;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
 
@@ -8,8 +10,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "dashBean")
@@ -23,6 +30,12 @@ public class DashboardBean {
     private String hiddenChartLine;
     private String hiddenChartPie;
     private String hiddenChartPieSabado;
+    private String tituloGrapKMComerciales;
+    private String srcImagenModo;
+
+    private String modo;
+    private String tipologia;
+    private  List<ListObject> modos;
 
    private List<Programacion>  ultimasProgramaciones;
 
@@ -35,13 +48,20 @@ public class DashboardBean {
 
     @PostConstruct
     public void init(){
-        List<Programacion> habil = programacionServicios.getProgramacionesUltimoMes("HABIL");
-        List<Programacion> festivo = programacionServicios.getProgramacionesUltimoMes("FESTIVO");
-        List<Programacion> sabado = programacionServicios.getProgramacionesUltimoMes("SABADO");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");
+        modos = ModosUtil.cargarListaModos();
+        modo = "TRO";
+        tipologia = "DEF";
+        srcImagenModo = "/resources/images/troncal.png";
+        Date fechaUltimaProg = programacionServicios.getLastProgramacionFecha(modo,tipologia);
+        List<Programacion> habil = programacionServicios.getProgramacionesUltimoMes("HABIL",fechaUltimaProg,tipologia);
+        List<Programacion> festivo = programacionServicios.getProgramacionesUltimoMes("FESTIVO",fechaUltimaProg,tipologia);
+        List<Programacion> sabado = programacionServicios.getProgramacionesUltimoMes("SABADO",fechaUltimaProg,tipologia);
         progHabil = habil.size()+"";
         progFestivo = festivo.size()+"";
         progSabado = sabado.size()+"";
         progTotal = habil.size()+festivo.size()+sabado.size()+"";
+        tituloGrapKMComerciales = "Últimos 30 días desde " + sdfDate.format(fechaUltimaProg);
         List<Series> series = SeriesForLine(habil, festivo, sabado);
         setHiddenChartLine(new Gson().toJson(series));
         ultimasProgramacionesTabla(habil, festivo, sabado);
@@ -51,6 +71,31 @@ public class DashboardBean {
 
         List<SeriesPie> seriesPieSabado = SeriesPies(sabado);
         setHiddenChartPieSabado(new Gson().toJson(seriesPieSabado));
+
+    }
+
+    public void updateDashboard(){
+        if(modo.equals("TRO")){
+            tipologia = "DEF";
+            srcImagenModo = "/resources/images/troncal.png";
+        }else{
+            tipologia = "DU-DEF";
+            srcImagenModo = "/resources/images/dual.png";
+        }
+
+
+//        refreshPage();
+
+    }
+
+    public void refreshPage(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<SeriesPie> SeriesPies(List<Programacion> habil) {
@@ -184,5 +229,37 @@ public class DashboardBean {
 
     public void setHiddenChartPieSabado(String hiddenChartPieSabado) {
         this.hiddenChartPieSabado = hiddenChartPieSabado;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
+    }
+
+    public String getTituloGrapKMComerciales() {
+        return tituloGrapKMComerciales;
+    }
+
+    public void setTituloGrapKMComerciales(String tituloGrapKMComerciales) {
+        this.tituloGrapKMComerciales = tituloGrapKMComerciales;
+    }
+
+    public String getSrcImagenModo() {
+        return srcImagenModo;
+    }
+
+    public void setSrcImagenModo(String srcImagenModo) {
+        this.srcImagenModo = srcImagenModo;
     }
 }

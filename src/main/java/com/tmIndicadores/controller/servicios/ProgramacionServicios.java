@@ -60,12 +60,15 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin);
     }
 
-    public List<Programacion> getProgramacionesUltimoMes(String periocidad){
-        Date hoy = new Date();
+    public List<Programacion> getProgramacionesUltimoMes(String periocidad,Date fechaUltimaProg,String tipologia){
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(hoy);
+        calendar.setTime(fechaUltimaProg);
         calendar.add(Calendar.DAY_OF_YEAR, -30);
-        return programacionDao.getProgramacionesUltimoMes(periocidad,calendar.getTime(),hoy);
+        return programacionDao.getProgramacionesUltimoMes(periocidad,calendar.getTime(),fechaUltimaProg,tipologia);
+    }
+
+    public Date getLastProgramacionFecha(String modo, String tipologia) {
+        return programacionDao.getLastProgramacionFecha(modo,tipologia);
     }
 
     public boolean isCuadroAlready(String cuadro){

@@ -1,5 +1,6 @@
 package com.tmIndicadores.model.dao;
 
+import com.tmIndicadores.controller.ProcessorUtils;
 import com.tmIndicadores.model.entity.Programacion;
 import com.tmIndicadores.model.entity.Usuario;
 import org.hibernate.Criteria;
@@ -174,11 +175,12 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
-    public List<Programacion> getProgramacionesUltimoMes(String periocidad,Date fechaInicio, Date fechaFin){
+    public List<Programacion> getProgramacionesUltimoMes(String periocidad,Date fechaInicio, Date fechaFin,String tipologia){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
 //        criteria.add(Restrictions.eq("tipoProgramacion","N"));
         criteria.add(Restrictions.eq("periodicidad", periocidad));
+        criteria.add(Restrictions.eq("tipologia", tipologia));
         criteria.addOrder(Order.desc("fecha"));
         return criteria.list();
     }
@@ -188,5 +190,18 @@ public class ProgramacionDao {
         criteria.add(Restrictions.between("fecha", fechaInicio,fechaFin));
         criteria.add(Restrictions.not(Restrictions.eq("tipologia","DEF")));
         return criteria.list();
+    }
+
+    public Date getLastProgramacionFecha(String modo, String tipologia) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("modo", modo));
+        criteria.add(Restrictions.eq("tipologia", tipologia));
+        criteria.addOrder(Order.desc("fecha"));
+        criteria.setMaxResults(1);
+        Programacion programacion = (Programacion) criteria.uniqueResult();
+        if(programacion!=null){
+            return programacion.getFecha();
+        }
+        return new Date();
     }
 }

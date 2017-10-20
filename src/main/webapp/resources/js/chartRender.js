@@ -224,7 +224,7 @@ $(".container").each(function() {
 function myfunction() {
     var container = document.getElementById("contain");
     var options = createOptionLine("Kilometros comerciales","KM");
-    var series = $.parseJSON(document.getElementById("hiddenChartLine").value);
+    var series = $.parseJSON(document.getElementById("myForm:hiddenChartLine").value);
     series = convertDateToUTC(series);
     options.series = series;
     var chart = new Highcharts.Chart(container.id,options);
