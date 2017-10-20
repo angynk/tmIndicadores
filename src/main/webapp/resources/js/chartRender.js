@@ -202,6 +202,38 @@ function createOptionLine(titulo,tituloX){
     return options;
 };
 
+function createOptionArea(titulo,tituloX){
+    var options = {
+        chart: {
+            type: 'areaspline'
+        },
+        title: {
+            text: titulo
+        }
+        ,
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Fecha'
+            }
+        },
+
+        yAxis: {
+            title: {
+                text: tituloX
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        series: []};
+
+    return options;
+};
+
 $(".container").each(function() {
     var jThis = $(this),
         chartSelector = jThis.data("chartSelector"),
@@ -227,18 +259,39 @@ function myfunction() {
     var series = $.parseJSON(document.getElementById("myForm:hiddenChartLine").value);
     series = convertDateToUTC(series);
     options.series = series;
+    console.log(JSON.stringify(options));
     var chart = new Highcharts.Chart(container.id,options);
 }
-function myfunctionPie() {
-    var container = document.getElementById("containPie");
-    var options = createOptionPie("Hábil");
-    var series = $.parseJSON(document.getElementById("hiddenChartPie").value);
-
+function myfunctionAreaHabil() {
+    var container = document.getElementById("containArea");
+    var options = createOptionArea("KM Comerciales Vs Vacio","KM");
+    var series = $.parseJSON(document.getElementById("myForm:hiddenChartPie").value);
+    series = convertDateToUTC(series);
     options.series = series;
     console.log(JSON.stringify(options));
     var chart = new Highcharts.Chart(container.id,options);
 
+}
 
+function myfunctionAreaSabado() {
+    var container = document.getElementById("containAreaS");
+    var options = createOptionArea("KM Comerciales Vs Vacio","KM");
+    var series = $.parseJSON(document.getElementById("myForm:hiddenChartPieS").value);
+    series = convertDateToUTC(series);
+    options.series = series;
+    console.log(JSON.stringify(options));
+    var chart = new Highcharts.Chart(container.id,options);
+
+}
+
+function myfunctionAreaFestivo() {
+    var container = document.getElementById("containAreaF");
+    var options = createOptionArea("KM Comerciales Vs Vacio","KM");
+    var series = $.parseJSON(document.getElementById("myForm:hiddenAreaFestivo").value);
+    series = convertDateToUTC(series);
+    options.series = series;
+    console.log(JSON.stringify(options));
+    var chart = new Highcharts.Chart(container.id,options);
 
 }
 

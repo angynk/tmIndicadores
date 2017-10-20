@@ -30,6 +30,7 @@ public class DashboardBean {
     private String hiddenChartLine;
     private String hiddenChartPie;
     private String hiddenChartPieSabado;
+    private String hiddenAreaFestivo;
     private String tituloGrapKMComerciales;
     private String srcImagenModo;
 
@@ -48,11 +49,17 @@ public class DashboardBean {
 
     @PostConstruct
     public void init(){
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");
         modos = ModosUtil.cargarListaModos();
         modo = "TRO";
         tipologia = "DEF";
         srcImagenModo = "/resources/images/troncal.png";
+
+        updateCharts();
+
+    }
+
+    public void updateCharts(){
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");
         Date fechaUltimaProg = programacionServicios.getLastProgramacionFecha(modo,tipologia);
         List<Programacion> habil = programacionServicios.getProgramacionesUltimoMes("HABIL",fechaUltimaProg,tipologia);
         List<Programacion> festivo = programacionServicios.getProgramacionesUltimoMes("FESTIVO",fechaUltimaProg,tipologia);
@@ -66,11 +73,14 @@ public class DashboardBean {
         setHiddenChartLine(new Gson().toJson(series));
         ultimasProgramacionesTabla(habil, festivo, sabado);
 
-        List<SeriesPie> seriesPie = SeriesPies(habil);
+        List<Series> seriesPie = SeriesForLine(habil);
         setHiddenChartPie(new Gson().toJson(seriesPie));
 
-        List<SeriesPie> seriesPieSabado = SeriesPies(sabado);
+        List<Series> seriesPieSabado = SeriesForLine(sabado);
         setHiddenChartPieSabado(new Gson().toJson(seriesPieSabado));
+
+        List<Series> seriesAreaFestivo = SeriesForLine(festivo);
+        setHiddenAreaFestivo(new Gson().toJson(seriesAreaFestivo));
 
     }
 
@@ -83,6 +93,7 @@ public class DashboardBean {
             srcImagenModo = "/resources/images/dual.png";
         }
 
+        updateCharts();
 
 //        refreshPage();
 
@@ -132,6 +143,13 @@ public class DashboardBean {
         series.add(transformarASerieParaLineas(habil,"Habil","KC"));
         series.add(transformarASerieParaLineas(festivo,"Festivo","KC"));
         series.add(transformarASerieParaLineas(sabado,"Sabado","KC"));
+        return series;
+    }
+
+    private List<Series> SeriesForLine(List<Programacion> habil){
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineas(habil,"KM Comerciales",IndicadorEnum.KM_COMERCIALES.toString()));
+        series.add(transformarASerieParaLineas(habil,"KM Vacio",IndicadorEnum.KM_VACIO.toString()));
         return series;
     }
 
@@ -261,5 +279,13 @@ public class DashboardBean {
 
     public void setSrcImagenModo(String srcImagenModo) {
         this.srcImagenModo = srcImagenModo;
+    }
+
+    public String getHiddenAreaFestivo() {
+        return hiddenAreaFestivo;
+    }
+
+    public void setHiddenAreaFestivo(String hiddenAreaFestivo) {
+        this.hiddenAreaFestivo = hiddenAreaFestivo;
     }
 }
