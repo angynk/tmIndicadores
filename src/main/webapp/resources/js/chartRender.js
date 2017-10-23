@@ -217,6 +217,28 @@ function createOptionArea(titulo,tituloX){
                 text: 'Fecha'
             }
         },
+        tooltip: {
+            crosshairs: true,
+            formatter: function () {
+                var s = '<b>' + Highcharts.dateFormat('%e - %b - %Y',
+                        new Date(this.x))  + '</b>';
+                var comer = 0;
+                var vacio = 1;
+
+                $.each(this.points, function () {
+                    s += '<br/>' + this.series.name + ': ' +
+                        Highcharts.numberFormat(this.y, 2)+ ' Km';
+                    if(this.series.name == 'KM Comerciales'){
+                        comer = this.y;
+                    }else{
+                        vacio = this.y;
+                    }
+                });
+                s += '<br/>' +"% Vacío: "+  Highcharts.numberFormat(vacio/comer, 2) +' %';
+                return s;
+            },
+            shared: true
+        },
 
         yAxis: {
             title: {
