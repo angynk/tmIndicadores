@@ -410,21 +410,21 @@ public class BusesProgramadosBean {
     private String definirTituloX(String tipoIndicador) {
         String titulo = "";
         if(tipoIndicador.equals(IndicadorEnum.NUMERO_BUSES.toString())){
-            titulo = titulo +IndicadorEnum.NUMERO_BUSES.getNombre();
+            titulo = titulo +IndicadorEnum.TI_NUMERO_BUSES.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.KM_COMERCIALES.toString()) ){
-            titulo = titulo +IndicadorEnum.KM_COMERCIALES.getNombre();
+            titulo = titulo +IndicadorEnum.TI_KM_COMERCIALES.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.KM_VACIO.toString()) ){
-            titulo = titulo +IndicadorEnum.KM_VACIO.getNombre();
+            titulo = titulo +IndicadorEnum.TI_KM_VACIO.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
-            titulo = titulo +IndicadorEnum.EXP_COMERCIAL.getNombre();
+            titulo = titulo +IndicadorEnum.TI_EXP_COMERCIAL.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
-            titulo = titulo +IndicadorEnum.POR_VACIOS.getNombre();
+            titulo = titulo +IndicadorEnum.TI_POR_VACIOS.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
-            titulo = titulo +IndicadorEnum.LINEA_CARGADA.getNombre();
+            titulo = titulo +IndicadorEnum.TI_LINEA_CARGADA.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.VELOCIDAD_COMERCIAL.toString()) ){
-            titulo = titulo +IndicadorEnum.VELOCIDAD_COMERCIAL.getNombre();
+            titulo = titulo +IndicadorEnum.TI_VELOCIDAD_COMERCIAL.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
-            titulo = titulo +IndicadorEnum.HORAS_BUSES.getNombre();
+            titulo = titulo +IndicadorEnum.TI_HORAS_BUSES.getNombre();
         }
         return titulo;
     }
@@ -443,7 +443,7 @@ public class BusesProgramadosBean {
            }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
                valor = (double) prog.getExpedicionComercial();
            }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
-               valor = prog.getPorcentajeVacioFinal();
+               valor = prog.getPorcentajeVacioFinal()*100;
            }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
                valor = prog.getLineasCargadas();
            }else if ( tipoIndicador.equals(IndicadorEnum.VELOCIDAD_COMERCIAL.toString()) ){
@@ -481,7 +481,7 @@ public class BusesProgramadosBean {
             }else if ( tipoIndicador.equals(IndicadorEnum.EXP_COMERCIAL.toString()) ){
                 valor = (double) prog.getExpedicionComercial();
             }else if ( tipoIndicador.equals(IndicadorEnum.POR_VACIOS.toString()) ){
-                valor = prog.getPorcentajeVacioFinal();
+                valor = prog.getPorcentajeVacioFinal()*100;
             }else if ( tipoIndicador.equals(IndicadorEnum.LINEA_CARGADA.toString()) ){
                 valor = prog.getLineasCargadas();
             }else if ( tipoIndicador.equals(IndicadorEnum.VELOCIDAD_COMERCIAL.toString()) ){

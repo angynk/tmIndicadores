@@ -46,6 +46,10 @@ function createOption(titulo,ejeX){
             startOnTick: true,
             endOnTick: true,
         },
+        tooltip: {
+            headerFormat: '<b>{point.key}</b><br/>',
+            pointFormat: '{point.y}'
+        },
         yAxis: {
             title: {
                 text: ejeX
@@ -64,6 +68,7 @@ function createOption(titulo,ejeX){
         //    [2, 3],
         //    [3, 9]]}]
     };
+
 
     return options;
 };
@@ -91,6 +96,7 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         var series = $.parseJSON(document.getElementById("form:hiddenForLine").value);
         series = convertDateToUTC(series);
         options.series = series;
+        options.tooltip.pointFormat = options.tooltip.pointFormat+" "+tituloX;
         var chart = new Highcharts.Chart(divId,options);
     }else if (tipoGrafica == 'Tendencia'){
         var titulo = document.getElementById("form:hiddenTittle").value ;
@@ -99,6 +105,7 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         var series =  $.parseJSON(document.getElementById("form:hidden").value);
         series = convertDateToUTC(series);
         options.series[0].data =series[0].data;
+        options.tooltip.pointFormat = options.tooltip.pointFormat+" "+ejeX;
         var chart = new Highcharts.Chart(divId,options);
         if(period == 'TODOS'){
             document.getElementById("containerSabado").style.visibility  = 'visible';
@@ -108,12 +115,14 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
             seriesSabado = convertDateToUTC(seriesSabado);
             console.log(seriesSabado);
             optionsSabado.series[0].data =seriesSabado[0].data;
+            optionsSabado.tooltip.pointFormat = options.tooltip.pointFormat+" "+ejeX;
             var chartSabado = new Highcharts.Chart('containerSabado',optionsSabado);
 
             var optionsFestivo = createOption(document.getElementById("form:hiddenTittleFestivo").value,ejeX);
             var seriesFestivo =  $.parseJSON(document.getElementById("form:hiddenFestivo").value);
             seriesFestivo = convertDateToUTC(seriesFestivo);
             optionsFestivo.series[0].data =seriesFestivo[0].data;
+            optionsFestivo.tooltip.pointFormat = options.tooltip.pointFormat+" "+ejeX;
             var chartFestivo = new Highcharts.Chart('containerFestivo',optionsFestivo);
 
         }
@@ -125,6 +134,7 @@ function renderChartLine(divId, chartType, chartTitle, chartData, categories,tip
         var series = $.parseJSON(document.getElementById("form:hiddenSForBar").value);
         series = convertDateToUTC(series);
         options.series = series;
+        options.tooltip.pointFormat = options.tooltip.pointFormat+" "+ejeX;
         var categories = document.getElementById("form:hiddenCForBar").value;
         var chart = new Highcharts.Chart(divId,options);
     }
@@ -154,12 +164,8 @@ function createOptionBar(titulo,ejeX){
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
+            headerFormat: '<b>{point.key}</b><br/>',
+            pointFormat: '{point.y:.1f}'
         },
         plotOptions: {
             column: {
@@ -184,7 +190,12 @@ function createOptionLine(titulo,tituloX){
             title: {
             text: 'Fecha'
         }
-    },
+    }
+        ,
+        tooltip: {
+            headerFormat: '<b>{point.key}</b><br/>',
+            pointFormat:  '{point.y:.1f}',
+        },
 
         yAxis: {
             title: {
