@@ -58,12 +58,20 @@ public class DuplicarProgramacionProcessor {
         return logDatos;
     }
 
+
     public boolean existeProgramacionParaLaFecha(String fechas,String modo){
         List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
         if(fechasRecords.size()>0){
             List<Programacion> programacionbyFecha = programacionServicios.getProgramacionbyFechaModo(fechasRecords.get(0),modo);
             if(programacionbyFecha.size()>0){
                 return true;
+            }else {
+               List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fechasRecords.get(0));
+               for(FechaAsociada fechaAsociada:fechaAsociadas){
+                   if (fechaAsociada.getProgramacion().getModo().equals(modo)){
+                       return true;
+                   }
+               }
             }
         }
         return false;
@@ -92,12 +100,27 @@ public class DuplicarProgramacionProcessor {
     private void asociarFechasAProgramacion(List<Date> fechasRecords, Programacion nueva) {
         for(int y=0;y<fechasRecords.size();y++){
             Date fecha= fechasRecords.get(y);
-            FechaAsociada fechaAsociada = new FechaAsociada();
-            fechaAsociada.setFecha(fecha);
-            fechaAsociada.setProgramacion(nueva);
-            fechasAsociadasServicios.addFechaAsociada(fechaAsociada);
-            logDatos.add(new LogDatos("Programacion  ("+nueva.getCuadro()+") Asociada a fecha: "+fecha.toString(), TipoLog.INFO));
+            if(fechaNoExiste(fecha,nueva)){
+                FechaAsociada fechaAsociada = new FechaAsociada();
+                fechaAsociada.setFecha(fecha);
+                fechaAsociada.setProgramacion(nueva);
+                fechasAsociadasServicios.addFechaAsociada(fechaAsociada);
+                logDatos.add(new LogDatos("Programacion  ("+nueva.getCuadro()+") Asociada a fecha: "+fecha.toString(), TipoLog.INFO));
+
+            }
+          }
+    }
+
+    private boolean fechaNoExiste(Date fecha, Programacion nueva) {
+        List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fecha);
+        for(FechaAsociada fechaAsociada:fechaAsociadas){
+            if (fechaAsociada.getProgramacion().getModo().equals(nueva.getModo())
+                    && fechaAsociada.getProgramacion().getTipologia().equals(nueva.getTipologia())
+                    && fechaAsociada.getProgramacion().getPeriodicidad().equals(nueva.getPeriodicidad())){
+                programacionServicios.deleteFechaAsociada(fechaAsociada);
+            }
         }
+        return true;
     }
 
     private boolean fechaNoTieneProgramacion(Date fecha,String modo) {
@@ -105,6 +128,13 @@ public class DuplicarProgramacionProcessor {
        for(Programacion prog:programacionbyFecha){
            programacionServicios.deleteProgramacion(prog);
        }
+
+        List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fecha);
+        for(FechaAsociada fechaAsociada:fechaAsociadas){
+            if (fechaAsociada.getProgramacion().getModo().equals(modo)){
+                programacionServicios.deleteFechaAsociada(fechaAsociada);
+            }
+        }
         return true;
 
     }

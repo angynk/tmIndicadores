@@ -62,4 +62,10 @@ public class FechaAsociadaDao {
         criteria.addOrder(Order.asc("FECHAS.fecha"));
         return (List<FechaAsociada>) criteria.list();
     }
+
+    public List<FechaAsociada> getFechasAsociadas(Date date) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(FechaAsociada.class);
+        criteria.add(Restrictions.eq("fecha", date));
+        return criteria.list();
+    }
 }

@@ -67,6 +67,14 @@ public class IndicadoresGoalProcessor {
                 programacionServicios.deleteProgramacion(prog);
             }
 
+            List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fechaProgramacion);
+            for(FechaAsociada fechaAsociada:fechaAsociadas){
+                if (fechaAsociada.getProgramacion().getTipologia().equals(tipologia)
+                        && fechaAsociada.getProgramacion().getPeriodicidad().equals(periocidad)){
+                    programacionServicios.deleteFechaAsociada(fechaAsociada);
+                }
+            }
+
         }catch (Exception e){
             return false;
         }
@@ -147,9 +155,24 @@ public class IndicadoresGoalProcessor {
 
         //Añadir las otras fechas seleccionadas
         for(Date fecha: fechasRecords){
-            FechaAsociada fechaAsociada = new FechaAsociada(fecha,programacion);
-            fechasAsociadasServicios.addFechaAsociada(fechaAsociada);
+            if(fechaNoExiste(fecha,programacion)){
+                FechaAsociada fechaAsociada = new FechaAsociada(fecha,programacion);
+                fechasAsociadasServicios.addFechaAsociada(fechaAsociada);
+            }
+
         }
+    }
+
+    private boolean fechaNoExiste(Date fecha, Programacion nueva) {
+        List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fecha);
+        for(FechaAsociada fechaAsociada:fechaAsociadas){
+            if (fechaAsociada.getProgramacion().getModo().equals(nueva.getModo())
+                    && fechaAsociada.getProgramacion().getTipologia().equals(nueva.getTipologia())
+                    && fechaAsociada.getProgramacion().getPeriodicidad().equals(nueva.getPeriodicidad())){
+                programacionServicios.deleteFechaAsociada(fechaAsociada);
+            }
+        }
+        return true;
     }
 
     private Double calcularHorasPorBuses(String tiempoExpedicion, Integer buses, String valores) {

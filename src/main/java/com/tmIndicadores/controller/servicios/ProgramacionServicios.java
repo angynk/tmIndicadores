@@ -1,6 +1,8 @@
 package com.tmIndicadores.controller.servicios;
 
+import com.tmIndicadores.model.dao.FechaAsociadaDao;
 import com.tmIndicadores.model.dao.ProgramacionDao;
+import com.tmIndicadores.model.entity.FechaAsociada;
 import com.tmIndicadores.model.entity.Programacion;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -17,6 +19,9 @@ public class ProgramacionServicios {
 
     @Autowired
     private ProgramacionDao programacionDao;
+
+    @Autowired
+    private FechaAsociadaDao fechaAsociadaDao;
 
     public void addProgramacion(Programacion programacion) {
        programacionDao.addProgramacion(programacion);
@@ -100,4 +105,12 @@ public class ProgramacionServicios {
     }
 
 
+    public List<FechaAsociada> getFechasAsociadas(Date date) {
+
+        return fechaAsociadaDao.getFechasAsociadas(date);
+    }
+
+    public void deleteFechaAsociada(FechaAsociada fechaAsociada) {
+        fechaAsociadaDao.deleteFechaAsociada(fechaAsociada);
+    }
 }
