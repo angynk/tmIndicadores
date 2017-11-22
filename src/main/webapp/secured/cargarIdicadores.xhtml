@@ -15,6 +15,7 @@
             <h:form enctype="multipart/form-data" id="form">
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
+
                 <p:panel>
                     <p:panelGrid columns="4">
                     <p:outputLabel value="Tipo de Carga:"  />
@@ -52,9 +53,9 @@
                                 <p:outputLabel value="Cuadro Programación:"/>
                                 <p:inputText value="#{cargarBean.cuadro}" />
                                 <p:outputLabel for="buttonV" value="Fecha de Programación (DD-MM-AAAA):" />
-                                <p:calendar id="buttonV" value="#{cargarBean.fechaProgramacion}" pattern="dd-MM-yyyy" />
+                                <p:calendar id="buttonV" value="#{cargarBean.fechaProgramacion}" pattern="dd-MM-yyyy"  locale="es"/>
                                 <p:outputLabel  value="Fechas Asociadas:" />
-                                <input id="mdp-demo" name="fechas"/>
+                                <input id="mdp-demo" name="fechas" />
                                 <p:outputLabel value="TraceLog GOAL Bus:" />
                                 <p:fileUpload value="#{cargarBean.traceLog}" label="Seleccionar"
                                               mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|csv)$/"/>
@@ -73,9 +74,9 @@
                 <p:panel  header="Buscar Programaciones"  style="margin-bottom:20px" visible="#{cargarBean.generarDEF}">
                     <p:panelGrid columns="4">
                         <p:outputLabel  value="Fecha Inicio" />
-                        <p:calendar  value="#{cargarBean.fechaIniBusquedaDef}" showOn="button" pattern="dd-MM-yyyy"/>
+                        <p:calendar  value="#{cargarBean.fechaIniBusquedaDef}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
                         <p:outputLabel  value="Fecha Fin" />
-                        <p:calendar  value="#{cargarBean.fechaFinBusquedaDef}" showOn="button"  pattern="dd-MM-yyyy"/>
+                        <p:calendar  value="#{cargarBean.fechaFinBusquedaDef}" showOn="button"  pattern="dd-MM-yyyy" locale="es"/>
                         <p:commandButton value="Buscar" action="#{cargarBean.buscar}" ajax="false" disabled="#{cargarBean.listaProg}"/>
 
                     </p:panelGrid>
@@ -90,7 +91,7 @@
                         <p:outputLabel value="Cuadro Programación:"/>
                         <p:inputText value="#{cargarBean.cuadroDef}" />
                         <p:outputLabel  value="Fecha de Programación DEF" />
-                        <p:calendar  value="#{cargarBean.fechaProgramacionDef}" showOn="button" pattern="dd-MM-yyyy"/>
+                        <p:calendar  value="#{cargarBean.fechaProgramacionDef}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
                     </p:panelGrid>
                     <p:panelGrid columns="1" styleClass="centered">
                         <p:outputLabel  value="Fechas" colspan="4"/>

@@ -9,16 +9,20 @@
 	<h:head>
 		<h:outputScript library="primefaces" name="jquery/jquery.js"  />
 		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" />
+		<h:outputScript library="js" name="es.js" />
 		<h:outputStylesheet name="common-style.css" library="css" />
 		<h:outputStylesheet name="css/bootstrap.min.css" />
 		<h:outputStylesheet name="css/simple-sidebar.css" />
 		<h:outputScript name="js/bootstrap.min.js" />
 		<h:outputScript  name="js/jquery-ui.multidatespicker.js" />
+		<h:outputScript library="js" name="datepicker-es.js" />
 		<script type="text/javascript">
             jQuery(document).ready(function($) {
                 $('#mdp-demo').multiDatesPicker({
                     dateFormat: "dd-mm-yy"
 				});
+
+                $.datepicker.regional['es'];
             });
 		</script>
 	</h:head>

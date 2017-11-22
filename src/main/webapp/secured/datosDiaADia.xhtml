@@ -28,9 +28,9 @@
                             <f:selectItems value="#{DDiaDiaBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
                         </p:selectOneMenu>
                         <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
-                        <p:calendar id="button" value="#{DDiaDiaBean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy"/>
+                        <p:calendar id="button" value="#{DDiaDiaBean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
                         <p:outputLabel for="buttonV" value="Fecha Fin (DD-MM-AAAA):" />
-                        <p:calendar id="buttonV" value="#{DDiaDiaBean.fechaFin}" showOn="button" pattern="dd-MM-yyyy"/>
+                        <p:calendar id="buttonV" value="#{DDiaDiaBean.fechaFin}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
                     </h:panelGrid>
                     <p:commandButton value="Exportar" action="#{DDiaDiaBean.exportarDatos()}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
