@@ -245,7 +245,7 @@ function createOptionArea(titulo,tituloX){
                         vacio = this.y;
                     }
                 });
-                s += '<br/>' +"% Vacío: "+  Highcharts.numberFormat(vacio/comer, 2) +' %';
+                s += '<br/>' +"% Vacío: "+  Highcharts.numberFormat((vacio/comer)*100, 2) +' %';
                 return s;
             },
             shared: true
