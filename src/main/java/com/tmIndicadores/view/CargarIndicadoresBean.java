@@ -341,6 +341,15 @@ public class CargarIndicadoresBean {
         List<Programacion> programaciones = programacionServicios.getProgramacionbyFechaTipologiaPeriocidad(fechaProgramacion, tipologia, periocidad);
         if(programaciones.size()> 0) {
             return false;
+        }else{
+            List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fechaProgramacion);
+            for(FechaAsociada fechaAsociada:fechaAsociadas){
+                if (fechaAsociada.getProgramacion().getModo().equals(modo)&&
+                        fechaAsociada.getProgramacion().getTipologia().equals(tipologia)
+                        && fechaAsociada.getProgramacion().getPeriodicidad().equals(periocidad)){
+                    return false;
+                }
+            }
         }
         return true;
     }

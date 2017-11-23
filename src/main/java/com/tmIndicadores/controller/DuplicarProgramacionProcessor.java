@@ -65,17 +65,18 @@ public class DuplicarProgramacionProcessor {
             List<Programacion> programacionbyFecha = programacionServicios.getProgramacionbyFechaModo(fechasRecords.get(0),modo);
             if(programacionbyFecha.size()>0){
                 return true;
-            }else {
-               List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fechasRecords.get(0));
-               for(FechaAsociada fechaAsociada:fechaAsociadas){
-                   if (fechaAsociada.getProgramacion().getModo().equals(modo)){
-                       return true;
-                   }
-               }
+            }else{
+                List<FechaAsociada>  fechaAsociadas = programacionServicios.getFechasAsociadas(fechasRecords.get(0));
+                for(FechaAsociada fechaAsociada:fechaAsociadas){
+                    if (fechaAsociada.getProgramacion().getModo().equals(modo)){
+                        return true;
+                    }
+                }
             }
         }
         return false;
     }
+
 
     private void duplicarDatosProgramacion(List<Date> fechasRecords, List<Programacion> programaciones,String modo) {
         for(int x=0;x<fechasRecords.size();x++){
