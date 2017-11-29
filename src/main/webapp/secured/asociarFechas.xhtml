@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+        <ui:define name="content">
+            <h:form enctype="multipart/form-data">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:panel visible="#{!asociarBean.visibleAsociacion}">
+                    <p:panelGrid columns="5">
+                        <p:outputLabel value="Modo Programación:" />
+                        <p:selectOneMenu  value="#{asociarBean.modo}" style="width:140px" >
+                            <f:selectItems value="#{asociarBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                        </p:selectOneMenu>
+                        <p:commandButton value="Cargar" action="#{asociarBean.updateProgList}" ajax="false" />
+                    </p:panelGrid>
+                </p:panel>
+
+                <p:panel id="basic" header="Asociar Fechas"  style="margin-bottom:20px" visible="#{asociarBean.visibleAsociacion}">
+                    <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                        <p:panel  style="border:none">
+                            <p:panelGrid columns="4">
+
+                                <p:outputLabel value="Programación a Asociar :"  />
+                                <p:selectOneMenu id="advanced" value="#{asociarBean.fechaSelected}"
+                                                 effect="fade" var="t" style="width:180px" filter="true" filterMatchMode="startsWith">
+
+                                    <f:selectItems value="#{asociarBean.progDateList}" var="prog" itemLabel="#{prog}" itemValue="#{prog}" />
+                                    <!--<p:column>-->
+                                    <!--<h:outputText value="#{t.cuadro}" />-->
+                                    <!--</p:column>-->
+                                    <p:column>
+                                        <h:outputText value="#{t}" />
+                                    </p:column>
+
+
+                                </p:selectOneMenu>
+
+
+                            </p:panelGrid>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel  value="Seleccione las fechas para las que se extiende esta programación:" />
+                                <input id="mdp-demo" name="fechas"/>
+
+                                <p:commandButton value="Asociar" action="#{asociarBean.asociar}" ajax="false"
+                                                 icon="ui-icon ui-icon-disk" id="withIcon"
+                                                 async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                                 oncomplete="PF('dlg2').hide()"
+                                />
+                            </p:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel visible="#{asociarBean.resultadosVisibles}">
+                    <p:accordionPanel style="width: 100%" activeIndex="null">
+                        <p:tab title="Resultados">
+                            <h:panelGrid columns="2" cellpadding="10" style="width: 100%">
+                                <p:dataList value="#{asociarBean.logDatos}" var="log" type="ordered" style="width: 100%">
+                                    <f:facet name="header">
+                                        Log
+                                    </f:facet>
+                                    #{log.tipoLog} : #{log.mensaje}
+                                </p:dataList>
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:panel>
+
+                <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
+                           minHeight="40" style="height: 40px">
+                    <h:outputText value="En Proceso.." />
+                    <p:graphicImage name="images/ajaxloadingbar.gif" />
+                </p:dialog>
+
+                <p:confirmDialog message="Existe una programación asociada a las fechas seleccionadas. ¿Desea Reemplazarlas? "
+                                 showEffect="fade"
+                                 hideEffect="explode"
+                                 widgetVar="reemplazarDuDialog">
+                    <p:commandButton title="GDelYesButton"
+                                     value="Sí"
+                                     action="#{asociarBean.continuarAsociacion}"
+                                     oncomplete="PF('reemplazarDuDialog').hide()" update="@form" ajax="true"
+                    />
+                    <p:commandButton title="GDelNoButton"
+                                     value="No"
+                                     action="#{asociarBean.finalizarAsociacion}"
+                                     oncomplete="PF('reemplazarDuDialog').hide()"/>
+                </p:confirmDialog>
+
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

@@ -45,6 +45,10 @@ public class ProgramacionServicios {
         return programacionDao.getAllProgramacionbyModo(modo);
     }
 
+    public List<Programacion> getAllProgramacionbyModo(String modo,String tipologia){
+        return programacionDao.getAllProgramacionbyModo(modo,tipologia);
+    }
+
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad, String tipologia,String tipoDatos){
         return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
     }
@@ -112,5 +116,9 @@ public class ProgramacionServicios {
 
     public void deleteFechaAsociada(FechaAsociada fechaAsociada) {
         fechaAsociadaDao.deleteFechaAsociada(fechaAsociada);
+    }
+
+    public void addFechaAsociada(FechaAsociada fechaAsociada) {
+        fechaAsociadaDao.addFechaAsociada(fechaAsociada);
     }
 }

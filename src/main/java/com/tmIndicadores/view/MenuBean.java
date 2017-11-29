@@ -79,6 +79,16 @@ public class MenuBean {
         }
     }
 
+    public void refreshAsociarFechas(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/asociarFechas.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshModProgramaciones(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {

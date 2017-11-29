@@ -120,6 +120,15 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
+    public List<Programacion> getAllProgramacionbyModo(String modo,String tipologia){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("tipologia", tipologia));
+        criteria.add(Restrictions.eq("modo", modo));
+        criteria.addOrder(Order.desc("fecha"));
+
+        return criteria.list();
+    }
+
     public List<Programacion> getAll(){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.addOrder(Order.desc("fecha"));
