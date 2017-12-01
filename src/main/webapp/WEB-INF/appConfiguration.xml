@@ -50,11 +50,56 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <!--<bean id="taskExecutor"-->
-          <!--class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">-->
-        <!--<property name="corePoolSize" value="5" />-->
-        <!--<property name="maxPoolSize" value="120" />-->
-        <!--<property name="WaitForTasksToCompleteOnShutdown" value="true" />-->
-    <!--</bean>-->
+
+
+    <bean id="simpleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+
+        <property name="targetObject" ref="myBean" />
+        <property name="targetMethod" value="printMessage" />
+    </bean>
+
+    <!-- Run the job every 2 seconds with initial delay of 1 second -->
+    <bean id="simpleTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="simpleJobDetail" />
+        <property name="cronExpression" value="0/50 * * ? * MON-FRI" />
+        <!--0 15 10 ? * TUE-->
+    </bean>
+
+    <!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+    <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="simpleJobDetail" />
+            </list>
+        </property>
+
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="appsfortm@gmail.com" />
+        <property name="password" value="transmilenio" />
+
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMail" class="com.tmIndicadores.controller.MailMail">
+        <property name="mailSender" ref="mailSender" />
+    </bean>
+
+
+
 
 </beans>
