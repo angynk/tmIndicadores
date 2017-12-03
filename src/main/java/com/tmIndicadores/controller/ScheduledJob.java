@@ -12,7 +12,7 @@ import java.util.Date;
 @Component("myBean")
 public class ScheduledJob {
 
-    public String emailTroncal = "asig.natalycz@gmail.com";
+    public String emailTroncal = "german.ramirez@transmilenio.gov.co";
 
     @Autowired
     private ProgramacionServicios programacionServicios;
@@ -49,7 +49,7 @@ public class ScheduledJob {
                 emailTroncal,
                 "Indicadores BRT",
                 "Hola! \n\n La información de la programaciòn Troncal se encuentra desactualizada" +
-                        " \n\n Para actualizarla ingresa a :  " +
+                        " \n\n Para actualizarla ingresa a :    http://192.168.100.121:8000/BRT/" +
                         "\n\n  Muchas Gracias");
     }
 
