@@ -76,6 +76,10 @@ public class ProgramacionServicios {
         return programacionDao.getProgramacionesUltimoMes(periocidad,calendar.getTime(),fechaUltimaProg,tipologia);
     }
 
+    public Date getLastProgramacionFecha(String modo, String tipologia,String periodicidad) {
+        return programacionDao.getLastProgramacionFecha(modo,tipologia,periodicidad);
+    }
+
     public Date getLastProgramacionFecha(String modo, String tipologia) {
         return programacionDao.getLastProgramacionFecha(modo,tipologia);
     }

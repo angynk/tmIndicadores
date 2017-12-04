@@ -201,6 +201,20 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
+    public Date getLastProgramacionFecha(String modo, String tipologia,String periodicidad) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
+        criteria.add(Restrictions.eq("modo", modo));
+        criteria.add(Restrictions.eq("tipologia", tipologia));
+        criteria.add(Restrictions.eq("periodicidad", periodicidad));
+        criteria.addOrder(Order.desc("fecha"));
+        criteria.setMaxResults(1);
+        Programacion programacion = (Programacion) criteria.uniqueResult();
+        if(programacion!=null){
+            return programacion.getFecha();
+        }
+        return new Date();
+    }
+
     public Date getLastProgramacionFecha(String modo, String tipologia) {
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(Restrictions.eq("modo", modo));

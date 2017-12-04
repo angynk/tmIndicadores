@@ -26,7 +26,7 @@ public class ScheduledJob {
     }
 
     private void validarCargaDatosDual() {
-        Date lastFecha = programacionServicios.getLastProgramacionFecha("DUA", "DU-DEF");
+        Date lastFecha = programacionServicios.getLastProgramacionFecha("DUA", "DU-DEF","HABIL");
         Date hoy = new Date();
         int diferencia = diferenciaEnDias(hoy,lastFecha);
         if(diferencia>15){
@@ -35,16 +35,32 @@ public class ScheduledJob {
     }
 
     private void validarCargaDatosTroncal() {
-        Date lastFecha = programacionServicios.getLastProgramacionFecha("TRO", "DEF");
-        Date hoy = new Date();
-        int diferencia = diferenciaEnDias(hoy,lastFecha);
-        if(diferencia>15){
-            System.out.println("Hace 15 días no actualiza la información");
+        if(datosActualizados("TRO","DEF","HABIL")){
+            if(datosActualizados("TRO","DEF","SABADO")){
+                if(!datosActualizados("TRO","DEF","FESTIVO")){
+                    enviarEmail("TRO");
+                }
+            }else {
+                enviarEmail("TRO");
+            }
+        }else{
             enviarEmail("TRO");
         }
     }
 
+    private boolean datosActualizados(String modo, String tipologia, String dia){
+        Date lastFecha = programacionServicios.getLastProgramacionFecha(modo, tipologia,dia);
+        Date hoy = new Date();
+        int diferencia = diferenciaEnDias(hoy,lastFecha);
+        if(diferencia>15){
+                return false;
+        }
+
+        return true;
+    }
+
     private void enviarEmail(String modo) {
+        System.out.println("Hace 15 días no actualiza la información");
         mailMail.sendMail("appsfortm@gmail.com",
                 emailTroncal,
                 "Indicadores BRT",
