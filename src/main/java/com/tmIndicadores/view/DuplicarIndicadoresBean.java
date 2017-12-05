@@ -29,7 +29,6 @@ import java.util.Locale;
 public class DuplicarIndicadoresBean {
 
     private boolean visibleDuplicacion;
-    private String razonProgramacion;
     private String tituloPanel;
     private String fechas;
     private String fechaSelected;
@@ -38,6 +37,7 @@ public class DuplicarIndicadoresBean {
     private Date fechaADuplicar;
     private List<LogDatos> logDatos;
     private boolean resultadosVisibles;
+    private String razonProgramacion;
 
     private Programacion selectedProg;
     private List<String> progDateList;
@@ -81,7 +81,7 @@ public class DuplicarIndicadoresBean {
     }
 
     public void duplicarDatos(){
-        logDatos = duplicarProgramacionProcessor.duplicarProgramacion(fechaADuplicar,fechas,modo);
+        logDatos = duplicarProgramacionProcessor.duplicarProgramacion(fechaADuplicar,fechas,modo,razonProgramacion);
         resultadosVisibles = true;
         if(duplicarProgramacionProcessor.isDuplicacionValida()){
             messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"");
@@ -236,4 +236,6 @@ public class DuplicarIndicadoresBean {
     public void setTituloPanel(String tituloPanel) {
         this.tituloPanel = tituloPanel;
     }
+
+
 }

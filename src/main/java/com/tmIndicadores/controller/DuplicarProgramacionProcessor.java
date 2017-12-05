@@ -37,7 +37,7 @@ public class DuplicarProgramacionProcessor {
         return programacionServicios.getAllProgramacionbyModo(modo);
     }
 
-    public List<LogDatos> duplicarProgramacion(Date fecha, String fechas,String modo){
+    public List<LogDatos> duplicarProgramacion(Date fecha, String fechas,String modo,String razonDuplicacion){
         logDatos = new ArrayList<>();
         duplicacionValida = true;
         logDatos.add(new LogDatos("<<Inicio Duplicacion programacion>>", TipoLog.INFO));
@@ -45,7 +45,7 @@ public class DuplicarProgramacionProcessor {
         if(programaciones.size()>0){
             List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
             if(fechasRecords.size()>0){
-                duplicarDatosProgramacion(fechasRecords,programaciones,modo);
+                duplicarDatosProgramacion(fechasRecords,programaciones,modo,razonDuplicacion);
             }else{
                 duplicacionValida = false;
                 logDatos.add(new LogDatos("El formato de Fechas es Incorrecto",TipoLog.ERROR));
@@ -78,12 +78,12 @@ public class DuplicarProgramacionProcessor {
     }
 
 
-    private void duplicarDatosProgramacion(List<Date> fechasRecords, List<Programacion> programaciones,String modo) {
+    private void duplicarDatosProgramacion(List<Date> fechasRecords, List<Programacion> programaciones,String modo,String razon) {
         for(int x=0;x<fechasRecords.size();x++){
             Date fecha =fechasRecords.get(x);
             if(fechaNoTieneProgramacion(fecha,modo)){
                 for(Programacion prog:programaciones){
-                   Programacion nueva = insertarProgramacion(fecha,prog);
+                   Programacion nueva = insertarProgramacion(fecha,prog,razon);
                     logDatos.add(new LogDatos("Programacion Duplicada ("+fecha.toString()+") del Cuadro: "+prog.getCuadro()+" ,Tipo Dia: "+prog.getPeriodicidad()
                             +" ,Tipologia: "+prog.getTipologia(), TipoLog.INFO));
                     asociarFechasAProgramacion(fechasRecords,nueva);
@@ -141,9 +141,12 @@ public class DuplicarProgramacionProcessor {
     }
 
 
-    private Programacion insertarProgramacion(Date fecha, Programacion prog) {
+    private Programacion insertarProgramacion(Date fecha, Programacion prog,String razon) {
         Programacion nuevaProgramacion = transpasarDatosObjetoProgramacion(prog);
         nuevaProgramacion.setFecha(fecha);
+        if(razon!=null && !razon.trim().equals("")){
+            nuevaProgramacion.setRazonCambio(razon);
+        }
         programacionServicios.addProgramacion(nuevaProgramacion);
         return nuevaProgramacion;
     }

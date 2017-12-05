@@ -12,7 +12,8 @@ import java.util.Date;
 @Component("myBean")
 public class ScheduledJob {
 
-    public String emailTroncal = "german.ramirez@transmilenio.gov.co";
+//    public String emailTroncal = "german.ramirez@transmilenio.gov.co";
+    public String emailTroncal = "angie.melo@transmilenio.gov.co";
 
     @Autowired
     private ProgramacionServicios programacionServicios;
