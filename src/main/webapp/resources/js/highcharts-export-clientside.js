@@ -252,6 +252,8 @@
             }
         }
 
+        highChartsObject.options.dateFormat = "%Y-%m-%d";
+
         return {
             hasCSVOptions: hasCSVOptions,
             csvOpt: csvOpt,

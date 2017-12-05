@@ -35,7 +35,8 @@
             x,
 
             // Options
-            dateFormat = options.dateFormat || '%Y-%m-%d %H:%M:%S',
+            dateFormat = options.dateFormat || '%Y-%m-%d',
+            // dateFormat = options.dateFormat || '%Y-%m-%d %H:%M:%S',
             columnHeaderFormatter = options.columnHeaderFormatter || function (series, key, keyLength) {
                 return series.name + (keyLength > 1 ? ' ('+ key + ')' : '');
             };
