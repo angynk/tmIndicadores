@@ -12,8 +12,8 @@ import java.util.Date;
 @Component("myBean")
 public class ScheduledJob {
 
-//    public String emailTroncal = "german.ramirez@transmilenio.gov.co";
-    public String emailTroncal = "angie.melo@transmilenio.gov.co";
+    public String emailTroncal = "german.ramirez@transmilenio.gov.co";
+//    public String emailTroncal = "angie.melo@transmilenio.gov.co";
 
     @Autowired
     private ProgramacionServicios programacionServicios;
@@ -53,7 +53,7 @@ public class ScheduledJob {
         Date lastFecha = programacionServicios.getLastProgramacionFecha(modo, tipologia,dia);
         Date hoy = new Date();
         int diferencia = diferenciaEnDias(hoy,lastFecha);
-        if(diferencia>15){
+        if(diferencia>10){
                 return false;
         }
 
@@ -61,12 +61,12 @@ public class ScheduledJob {
     }
 
     private void enviarEmail(String modo) {
-        System.out.println("Hace 15 días no actualiza la información");
+        System.out.println("Hace 10 días no actualiza la información");
         mailMail.sendMail("appsfortm@gmail.com",
                 emailTroncal,
                 "Indicadores BRT",
                 "Hola! \n\n La información de la programaciòn Troncal se encuentra desactualizada" +
-                        " \n\n Para actualizarla ingresa a :    http://192.168.100.121:8000/BRT/" +
+                        " \n\n Para actualizarla ingresa a :    http://192.168.100.121:8000/tmIndicadores-1.0-SNAPSHOT/login.xhtml" +
                         "\n\n  Muchas Gracias");
     }
 
