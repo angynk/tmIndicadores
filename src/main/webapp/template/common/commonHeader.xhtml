@@ -18,7 +18,8 @@
                         <div>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><p:commandLink action="#{loginBean.gotoperfil}"><p:outputLabel class="icon-camera-retro" style="font-style: italic" value="#{loginBean.nombreUsuario}">  </p:outputLabel></p:commandLink></li>
-
+                                <li><p:commandButton action="#{loginBean.gotofaq}" value="FAQ" styleClass="btn btn-info btn-margin-right navbar-btn"
+                                                     icon="ui-icon-flag" >FAQ</p:commandButton></li>
                                 <li><p:commandButton action="#{loginBean.logout}" value="Desconectarse" styleClass="btn btn-danger btn-margin-right navbar-btn"
                                                      icon="ui-icon-circle-arrow-e" >Desconectarse</p:commandButton></li>
                             </ul>
@@ -61,6 +62,9 @@
                     </p:submenu>
 
                 </p:megaMenu>
+
+
+
                 </p:panel>
 
             </h:form>

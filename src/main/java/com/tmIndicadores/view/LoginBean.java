@@ -105,6 +105,10 @@ public class LoginBean implements Serializable {
             return "/secured/miPerfil.xhtml?faces-redirect=true";
         }
 
+    public String gotofaq(){
+        return "/secured/FAQ.xhtml?faces-redirect=true";
+    }
+
     public void cambiar(){
         if(contrasenaViejaEsCorrecta()) {
             if(contrasenasNuevasIguales()){
