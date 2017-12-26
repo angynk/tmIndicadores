@@ -154,44 +154,51 @@ public class CargarIndicadoresBean {
     }
 
     public void continuarCalculo(){
-        //Eliminar Programacion Existente
-        Programacion defAlready = programacionServicios.getDEFAlready(fechaProgramacionDef, tipoDEF);
-        programacionServicios.deleteProgramacion(defAlready);
-        //Calcular Nuevo DEF
+//        //Eliminar Programacion Existente
+//        Programacion defAlready = programacionServicios.getDEFAlready(fechaProgramacionDef, tipoDEF);
+//        programacionServicios.deleteProgramacion(defAlready);
+//        //Calcular Nuevo DEF
         calcularProgramacionDefinitiva();
         //refresh
 
     }
 
     public void calcularProgramacionDefinitiva(){
-        List<Programacion> programaciones = progList.getTarget();
-        Programacion nueva = new Programacion();
-        nueva.setTipologia(tipoDEF);
-        nueva.setModo(ModosUtil.getModoPorDEF(tipoDEF));
-        nueva.setCuadro(cuadroDef);
-        nueva.setFecha(fechaProgramacionDef);
-        copiarInformacionBase(programaciones, nueva);
-        nueva = calcularValorProgramacion(programaciones,nueva);
-        programacionServicios.addProgramacion(nueva);
-        agregarAsociacionesFecha(nueva,progMap.get(programaciones.get(0)));
-        logDatos.add(new LogDatos("Nueva Programacion "+tipoDEF, TipoLog.INFO));
-        messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"Nuevo Indicador Definitivo");
+        if(idProcessor.eliminarDatosParaLaFecha(fechaProgramacionDef,tipoDEF,periocidad)){
+            List<Programacion> programaciones = progList.getTarget();
+            Programacion nueva = new Programacion();
+            nueva.setTipologia(tipoDEF);
+            nueva.setModo(ModosUtil.getModoPorDEF(tipoDEF));
+            nueva.setCuadro(cuadroDef);
+            nueva.setFecha(fechaProgramacionDef);
+            copiarInformacionBase(programaciones, nueva);
+            nueva = calcularValorProgramacion(programaciones,nueva);
+            programacionServicios.addProgramacion(nueva);
+            agregarAsociacionesFecha(nueva,progMap.get(programaciones.get(0)));
+            logDatos.add(new LogDatos("Nueva Programacion "+tipoDEF, TipoLog.INFO));
+            messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,"Nuevo Indicador Definitivo");
+
+        }
         resultadosVisibles = true;
     }
 
     public void calcularDEF(){
-        logDatos.add(new LogDatos("<<Inicio Calculo Indicador Definitivo>>", TipoLog.INFO));
-        if(progList.getTarget().size()>0 && cuadroDef!=null && fechaProgramacionDef!=null){
-        if(programacionServicios.isDEFAlready(fechaProgramacionDef,tipoDEF)){
-            RequestContext.getCurrentInstance().execute("PF('reemplazarDEFDialog').show();");
-        }else{
-               calcularProgramacionDefinitiva();
-        }
-        }else{
-            messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"Complete todos los campos");
-            resultadosVisibles = false;
-        }
+      calcularProgDEF();
+    }
 
+    private void calcularProgDEF(){
+        logDatos.add(new LogDatos("<<Inicio Calculo Indicador Definitivo>>", TipoLog.INFO));
+
+        if(progList.getTarget().size()>0 && cuadroDef!=null && fechaProgramacionDef!=null) {
+            if (sinDatosParaLaFecha(fechaProgramacionDef, tipoDEF, periocidad)) {
+                calcularProgramacionDefinitiva();
+            } else {
+
+                RequestContext.getCurrentInstance().execute("PF('reemplazarDEFDialog').show();");
+            }
+        }else{
+            messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);
+        }
         logDatos.add(new LogDatos("<<Fin Calculo Indicador Definitivo>>", TipoLog.INFO));
     }
 

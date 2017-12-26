@@ -60,7 +60,7 @@ public class IndicadoresGoalProcessor {
         return logDatos;
     }
 
-    private boolean eliminarDatosParaLaFecha(Date fechaProgramacion, String tipologia, String periocidad) {
+    public boolean eliminarDatosParaLaFecha(Date fechaProgramacion, String tipologia, String periocidad) {
         List<Programacion> programaciones = programacionServicios.getProgramacionbyFechaTipologiaPeriocidad(fechaProgramacion, tipologia, periocidad);
         try{
             for(Programacion prog:programaciones){
