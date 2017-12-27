@@ -34,7 +34,7 @@
                                 <p:outputLabel value="Modo:"  />
                                 <p:selectOneMenu  value="#{cargarBean.modo}" style="width:90%">
                                     <f:selectItems value="#{cargarBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
-                                    <p:ajax update="@form" listener="#{cargarBean.updateTipologias}"/>
+                                    <p:ajax update="tipologia" listener="#{cargarBean.updateTipologias}"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Tipología:" for="tipologia" />
                                 <p:selectOneMenu id="tipologia" value="#{cargarBean.tipologia}" style="width:90%">

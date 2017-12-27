@@ -30,6 +30,10 @@
                             <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                             <f:selectItem itemLabel="Todos" itemValue="TODOS" />
                         </p:selectOneMenu>
+                        <p:outputLabel value="Modo:"  />
+                        <p:selectOneMenu  value="#{MPBean.modo}" style="width:90%">
+                            <f:selectItems value="#{MPBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel for="tipoProg" value="Programaciones:" />
                         <p:selectOneMenu id="tipoProg" value="#{MPBean.tipoDatos}" style="width:90%">
                             <f:selectItem itemLabel="Principales" itemValue="N" />

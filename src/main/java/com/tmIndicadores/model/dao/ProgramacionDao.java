@@ -171,12 +171,14 @@ public class ProgramacionDao {
         return criteria.list();
     }
 
-    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipoDatos){
+    public List<Programacion> getProgramacionbyAttributesWithModo(Date fechaInicio, Date fechaFin, String periocidad,String tipoDatos,String modo){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Programacion.class);
         criteria.add(  Restrictions.between( "fecha",fechaInicio, fechaFin)  );
         if(!periocidad.equals("TODOS")){
             criteria.add(Restrictions.eq("periodicidad", periocidad));
+
         }
+        criteria.add(Restrictions.eq("modo", modo));
         if(tipoDatos.equals("N")){
             criteria.add(Restrictions.eq("tipoProgramacion",tipoDatos));
         }

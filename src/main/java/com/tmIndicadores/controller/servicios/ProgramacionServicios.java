@@ -61,8 +61,8 @@ public class ProgramacionServicios {
         return programacionDao.getAll();
     }
 
-    public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin, String periocidad,String tipoDatos){
-        return programacionDao.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipoDatos);
+    public List<Programacion> getProgramacionbyAttributesWithModo(Date fechaInicio, Date fechaFin, String periocidad,String tipoDatos,String modo){
+        return programacionDao.getProgramacionbyAttributesWithModo(fechaInicio,fechaFin,periocidad,tipoDatos,modo);
     }
 
     public List<Programacion> getProgramacionbyAttributes(Date fechaInicio, Date fechaFin){

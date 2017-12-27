@@ -1,6 +1,8 @@
 package com.tmIndicadores.view;
 
 
+import com.tmIndicadores.controller.ListObject;
+import com.tmIndicadores.controller.ModosUtil;
 import com.tmIndicadores.controller.ProcessorUtils;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
 import com.tmIndicadores.model.entity.Programacion;
@@ -35,6 +37,9 @@ public class ModProgramacionBean {
     private List<Programacion> programacionRecordsFiltered ;
     private Programacion selectedProg;
 
+    private String modo;
+    private List<ListObject> modos;
+
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
 
@@ -53,14 +58,16 @@ public class ModProgramacionBean {
         c.add(Calendar.MONTH, -6);
         fechaInicio = c.getTime();
         tipoDatos = "D";
-        programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipoDatos);
+        modo = "TRO";
+        modos = ModosUtil.cargarListaModos();
+        programacionRecords = programacionServicios.getProgramacionbyAttributesWithModo(fechaInicio,fechaFin,periocidad,tipoDatos,modo);
     }
 
 
 
     public void generar(){
         if(genracionValida()){
-            programacionRecords = programacionServicios.getProgramacionbyAttributes(fechaInicio,fechaFin,periocidad,tipoDatos);
+            programacionRecords = programacionServicios.getProgramacionbyAttributesWithModo(fechaInicio,fechaFin,periocidad,tipoDatos,modo);
             visibleResumen = true;
         }else{
             addMessage(FacesMessage.SEVERITY_INFO,"Complete los datos para generar la grafica", "");
@@ -206,5 +213,21 @@ public class ModProgramacionBean {
 
     public void setProgramacionRecordsFiltered(List<Programacion> programacionRecordsFiltered) {
         this.programacionRecordsFiltered = programacionRecordsFiltered;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
     }
 }
