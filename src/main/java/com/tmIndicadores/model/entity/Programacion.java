@@ -31,6 +31,9 @@ public class Programacion {
     @Column(name = "buses")
     private Integer buses;
 
+    @Column(name = "num_servicios")
+    private Integer numeroServicios;
+
     @Column(name = "num_cambios_linea")
     private Integer numCambioLinea;
 
@@ -360,5 +363,13 @@ public class Programacion {
 
     public void setFechaPadre(Date fechaPadre) {
         this.fechaPadre = fechaPadre;
+    }
+
+    public Integer getNumeroServicios() {
+        return numeroServicios;
+    }
+
+    public void setNumeroServicios(Integer numeroServicios) {
+        this.numeroServicios = numeroServicios;
     }
 }

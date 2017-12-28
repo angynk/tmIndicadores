@@ -26,6 +26,7 @@ public class CargarIndicadoresBean {
     private String tipoGeneracion;
     private String razonProgramacion;
     private String lineasCargadas;
+    private Integer numeroServicios;
     private String periocidad;
     private String tipologia;
     private String tipoDEF;
@@ -328,7 +329,7 @@ public class CargarIndicadoresBean {
 
     public void cargarDatos(String path){
         logDatos  = idProcessor.processDataFromFile(traceLog.getFileName(), fechaProgramacion,
-        razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro,modo,fechas,path);
+        razonProgramacion, tipologia, periocidad, lineasCargadas,cuadro,modo,fechas,path,numeroServicios);
         resultadosVisibles = true;
         if(logDatos.size()>2){
                 messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
@@ -600,5 +601,13 @@ public class CargarIndicadoresBean {
 
     public void setFechasAsociadasServicios(FechasAsociadasServicios fechasAsociadasServicios) {
         this.fechasAsociadasServicios = fechasAsociadasServicios;
+    }
+
+    public Integer getNumeroServicios() {
+        return numeroServicios;
+    }
+
+    public void setNumeroServicios(Integer numeroServicios) {
+        this.numeroServicios = numeroServicios;
     }
 }

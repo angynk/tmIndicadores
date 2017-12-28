@@ -93,9 +93,14 @@
                             </p:column>
 
 
-                            <p:column filterBy="#{prog.lineasCargadas}" headerText="Líneas"  filterMatchMode="contains" sortBy="#{prog.lineasCargadas}"
+                            <p:column filterBy="#{prog.lineasCargadas}" headerText="Líneas Goal"  filterMatchMode="contains" sortBy="#{prog.lineasCargadas}"
                                                  style="width:80px">
                             <h:outputText value="#{prog.lineasCargadas}" style="width: 90px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{prog.numeroServicios}" headerText="Num Servicios"  filterMatchMode="contains" sortBy="#{prog.numeroServicios}"
+                                      style="width:80px">
+                                <h:outputText value="#{prog.numeroServicios}" style="width: 90px"/>
                             </p:column>
 
                             <p:column filterBy="#{prog.tipoProgramacionFormatted}" headerText="Tipo"  filterMatchMode="contains" sortBy="#{prog.tipoProgramacion}"
@@ -134,8 +139,11 @@
                                     <h:outputText value="Razón Cambio:" style="color:black"/>
                                     <h:inputText value="#{MPBean.selectedProg.razonCambio}"  />
 
-                                    <h:outputText value="Líneas Cargadas:" style="color:black"/>
+                                    <h:outputText value="Líneas GoalBus:" style="color:black"/>
                                     <h:inputText value="#{MPBean.selectedProg.lineasCargadas}"  />
+
+                                    <h:outputText value="Número de Servicios:" style="color:black"/>
+                                    <h:inputText value="#{MPBean.selectedProg.numeroServicios}"  />
 
                                     <h:outputText value="Km Comerciales:" style="color:black" />
                                     <h:inputText value="#{MPBean.selectedProg.kmComercialFin}" />

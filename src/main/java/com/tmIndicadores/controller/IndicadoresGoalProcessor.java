@@ -36,7 +36,7 @@ public class IndicadoresGoalProcessor {
     }
 
     public List<LogDatos> processDataFromFile(String fileName,Date fechaProgramacion,String razon,String tipologia,
-                                              String periocidad,String lineasC,String cuadro,String modo,String fechas,String filePath){
+                                              String periocidad,String lineasC,String cuadro,String modo,String fechas,String filePath, Integer numServicios){
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Indicadores Goal Bus con Archivo>>");
@@ -45,7 +45,7 @@ public class IndicadoresGoalProcessor {
                 List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechas);
 //                processorUtils.copyFile(fileName,in,destination);
 
-                readExcelAndSaveData(filePath,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro,modo,fechasRecords);
+                readExcelAndSaveData(filePath,fechaProgramacion,razon,tipologia,periocidad,lineasC,fileName,cuadro,modo,fechasRecords,numServicios);
             }else{
                 logDatos.add(new LogDatos("El cuadro de programación "+cuadro+" ya existe", TipoLog.ERROR));
             }
@@ -87,7 +87,7 @@ public class IndicadoresGoalProcessor {
     }
 
     private void readExcelAndSaveData(String destination, Date fechaProgramacion, String razon,String tipologia, String periocidad,
-                                      String lineasC,String filename,String cuadro,String modo,List<Date> fechasRecords) {
+                                      String lineasC,String filename,String cuadro,String modo,List<Date> fechasRecords,Integer numServicios) {
         BufferedReader br = null;
         String line = "";
         String previousLine ="";
@@ -115,6 +115,7 @@ public class IndicadoresGoalProcessor {
             programacion.setKmVacioInicio(km_vacio_inicial);
             programacion.setPorcentajeVacioInicio(km_vacio_inicial/km_comer_inicial);
             programacion.setLineasCargadas(Integer.parseInt(lineasC));
+            programacion.setNumeroServicios(numServicios);
             programacion.setKmComercialFin(Double.parseDouble(valores[TraceLogIndex.KM_LINEA-diffFiles]));
             programacion.setKmVacioFin(Double.parseDouble(valores[TraceLogIndex.KM_VACIO-diffFiles]));
             programacion.setPorcentajeVacioFinal(programacion.getKmVacioFin()/programacion.getKmComercialFin());
