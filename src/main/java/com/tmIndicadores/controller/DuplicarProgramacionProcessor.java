@@ -176,6 +176,7 @@ public class DuplicarProgramacionProcessor {
         nuevo.setVelocidadComercial(prog.getVelocidadComercial());
         nuevo.setNumCambioLinea(prog.getNumCambioLinea());
         nuevo.setFechaPadre(encontrarFechaPadre(prog));
+        nuevo.setNumeroServicios(prog.getNumeroServicios());
         return nuevo;
     }
 

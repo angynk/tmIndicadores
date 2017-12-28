@@ -236,6 +236,7 @@ public class CargarIndicadoresBean {
         double busesPorHora = 0.0;
         double tiempoExp = 0.0;
         double tiempoVacio = 0.0;
+        int numServicios = 0;
         for(int z=0;z<programaciones.size();z++){
             Programacion prog = progMap.get(programaciones.get(z));
             numBuses = numBuses + prog.getBuses();
@@ -249,6 +250,7 @@ public class CargarIndicadoresBean {
             busesPorHora = busesPorHora + getHorasPorBus(prog.getHorasPorBuses());
             tiempoExp = tiempoExp + ProcessorUtils.convertirFormatoHoraADouble(prog.getTiempoExpedicion());
             tiempoVacio = tiempoVacio + ProcessorUtils.convertirFormatoHoraADouble(prog.getTiempoVacio());
+            numServicios = numServicios + prog.getNumeroServicios();
         }
 
         nueva.setTiempoExpedicion(ProcessorUtils.convertirDoubleaFormatoHora(tiempoExp));
@@ -264,6 +266,7 @@ public class CargarIndicadoresBean {
         nueva.setNumCambioLinea(numCambios);
         nueva.setVelocidadComercial(calcularVelocidadComercial(nueva.getKmComercialFin(),nueva.getTiempoExpedicion()));
         nueva.setHorasPorBuses(calcularHorasPorBuses(nueva.getTiempoExpedicion(),nueva.getBuses(),nueva.getTiempoVacio()));
+        nueva.setNumeroServicios(numServicios);
         if(kmComerialesInicio!= 0){
             nueva.setPorcentajeVacioInicio(kmVacioInicio/kmComerialesInicio);
         }

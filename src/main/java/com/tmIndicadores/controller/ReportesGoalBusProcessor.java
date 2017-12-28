@@ -140,6 +140,7 @@ public class ReportesGoalBusProcessor {
         createCellNumberResultados(row,prog.getKmVacioFin(),GoalReporteDEF.ID_KM_VACIO_FIN);
         createCellNumberResultados(row,prog.getPorcentajeVacioFinal(),GoalReporteDEF.ID_POR_VACIO_FIN);
         createCellNumberResultados(row,prog.getLineasCargadas(),GoalReporteDEF.ID_LINEAS);
+        createCellNumberResultados(row,prog.getNumeroServicios(),GoalReporteDEF.ID_SERVICIOS);
         createCellResultados(row,prog.getTipoProgramacionFormatted(),GoalReporteDEF.ID_TIPO);
         createCellResultados(row,prog.getRazonCambio(),GoalReporteDEF.ID_RAZON);
     }
@@ -162,6 +163,7 @@ public class ReportesGoalBusProcessor {
         createCellResultados(row,GoalReporteDEF.TI_KM_VACIO_FIN,GoalReporteDEF.ID_KM_VACIO_FIN);
         createCellResultados(row,GoalReporteDEF.TI_POR_VACIO_FIN,GoalReporteDEF.ID_POR_VACIO_FIN);
         createCellResultados(row,GoalReporteDEF.TI_LINEAS,GoalReporteDEF.ID_LINEAS);
+        createCellResultados(row,GoalReporteDEF.TI_SERVICIOS,GoalReporteDEF.ID_SERVICIOS);
         createCellResultados(row,GoalReporteDEF.TI_TIPO,GoalReporteDEF.ID_TIPO);
         createCellResultados(row,GoalReporteDEF.TI_RAZON,GoalReporteDEF.ID_RAZON);
     }

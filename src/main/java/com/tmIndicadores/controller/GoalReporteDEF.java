@@ -15,8 +15,9 @@ public class GoalReporteDEF {
     public final static int ID_KM_VACIO_FIN = 6;
     public final static int ID_POR_VACIO_FIN = 7;
     public final static int ID_LINEAS = 8;
-    public final static int ID_TIPO = 9;
-    public final static int ID_RAZON = 10;
+    public final static int ID_SERVICIOS = 9;
+    public final static int ID_TIPO = 10;
+    public final static int ID_RAZON = 11;
 
 
  // Titulos
@@ -28,7 +29,8 @@ public class GoalReporteDEF {
     public final static String TI_TIEMPO_EXP = "Tiempo Exp";
     public final static String TI_KM_VACIO_FIN = "KM Vacio";
     public final static String TI_POR_VACIO_FIN = "% Vacio";
-    public final static String TI_LINEAS = "Líneas";
+    public final static String TI_LINEAS = "Líneas GoalBus";
+    public final static String TI_SERVICIOS = "Número Servicios";
     public final static String TI_TIPO = "Tipo";
     public final static String TI_RAZON = "Razón";
 }
