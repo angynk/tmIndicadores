@@ -157,9 +157,14 @@
                                 <h:outputText value="#{prog.numCambioLinea}" style="width: 50px"/>
                             </p:column>
 
-                            <p:column filterBy="#{prog.lineasCargadas}" headerText="Líneas"  filterMatchMode="contains" sortBy="#{prog.lineasCargadas}"
+                            <p:column filterBy="#{prog.lineasCargadas}" headerText="Líneas Goal"  filterMatchMode="contains" sortBy="#{prog.lineasCargadas}"
                                       style="width:115px">
                                 <h:outputText value="#{prog.lineasCargadas}" style="width: 50px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{prog.numeroServicios}" headerText="Número de Servicios"  filterMatchMode="contains" sortBy="#{prog.numeroServicios}"
+                                      style="width:115px" visible="false">
+                                <h:outputText value="#{prog.numeroServicios}" style="width: 50px"/>
                             </p:column>
 
                             <p:column filterBy="#{prog.razonCambio}" headerText="Razón"  filterMatchMode="contains" sortBy="#{prog.razonCambio}"

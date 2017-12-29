@@ -403,6 +403,8 @@ public class BusesProgramadosBean {
             titulo = titulo +IndicadorEnum.VELOCIDAD_COMERCIAL.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
             titulo = titulo +IndicadorEnum.HORAS_BUSES.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.NUMERO_SERVICIOS.toString()) ){
+            titulo = titulo +IndicadorEnum.NUMERO_SERVICIOS.getNombre();
         }
         return titulo;
     }
@@ -425,6 +427,8 @@ public class BusesProgramadosBean {
             titulo = titulo +IndicadorEnum.TI_VELOCIDAD_COMERCIAL.getNombre();
         }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
             titulo = titulo +IndicadorEnum.TI_HORAS_BUSES.getNombre();
+        }else if ( tipoIndicador.equals(IndicadorEnum.NUMERO_SERVICIOS.toString()) ){
+            titulo = titulo +IndicadorEnum.TI_NUMERO_SERVICIOS.getNombre();
         }
         return titulo;
     }
@@ -450,6 +454,8 @@ public class BusesProgramadosBean {
                valor = prog.getVelocidadComercial();
            }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
                valor = prog.getHorasPorBuses();
+           }else if ( tipoIndicador.equals(IndicadorEnum.NUMERO_SERVICIOS.toString()) ){
+               valor = prog.getNumeroServicios();
            }
            dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
        }
@@ -488,6 +494,8 @@ public class BusesProgramadosBean {
                 valor = prog.getVelocidadComercial();
             }else if ( tipoIndicador.equals(IndicadorEnum.HORAS_BUSES.toString()) ){
                 valor = prog.getHorasPorBuses();
+            }else if ( tipoIndicador.equals(IndicadorEnum.NUMERO_SERVICIOS.toString()) ){
+                valor = prog.getNumeroServicios();
             }
             dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getFecha(),valor)));
         }
