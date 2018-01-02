@@ -17,97 +17,77 @@
                     FAQ <small> Indicadores BRT</small>
                 </h1>
                 <p:panel header="Preguntas Generales">
-                    <h3 style="margin-top:0">Indicadores BRT</h3>
                     <p:accordionPanel>
-                        <p:tab title="¿Qué son los Indicadores BRT?" >
-                            <h:panelGrid columns="2" cellpadding="10" >
-                                <h:outputText
-                                            value="Son indicadores enfocados en la programación de buses y rutas troncales, duales y de alimentación." />
+                        <p:tab title="Indicadores BRT">
+                            <h:panelGrid columns="1" cellpadding="10">
+                                <h4 style="margin-top:0; color:#a94442"> ¿Qué son los Indicadores BRT? </h4>
+                                <span> Son indicadores enfocados en la programación de buses y rutas troncales, duales y de alimentación. </span>
+                                <div style="height:10px"></div>
+                                <h4 style="margin-top:0; color:#a94442"> ¿Comó funciona el módulo Indicadores BRT? </h4>
+                                <p:commandButton value="Descargar video" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                    <p:fileDownload value="#{FAQBean.fileIndicadores}" />
+                                </p:commandButton>
                             </h:panelGrid>
                         </p:tab>
-                        <p:tab title="¿Comó funciona el módulo Indicadores BRT?" >
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <h:outputText value="Francis Ford Coppola's legendary..." />
+                        <p:tab title="Resumen Indicadores">
+                            <h:panelGrid columns="1" cellpadding="10">
+                                <h4 style="margin-top:0; color:#a94442"> ¿Qué tipos de resumen puedo obtener? </h4>
+                                <span> Se pueden obtener dos tipos de resumenes, uno gerencial enfocado en los datos minimos y uno de programación con todos los datos de la programación </span>
+                                <div style="height:10px"></div>
+                                <h4 style="margin-top:0; color:#a94442"> ¿Comó obtengo un resumen de indicadores? </h4>
+                                <p:commandButton value="Descargar video" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                    <p:fileDownload value="#{FAQBean.fileResumen}" />
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Visualizar Indicadores">
+                            <h:panelGrid columns="1" cellpadding="10">
+                                <h4 style="margin-top:0; color:#a94442"> ¿Como puedo visualizar los indicadores BRT? </h4>
+                                <p:commandButton value="Descargar video" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                    <p:fileDownload value="#{FAQBean.visualizarIndicadores}" />
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Reporte Indicadores">
+                            <h:panelGrid columns="1" cellpadding="10">
+                                <h4 style="margin-top:0; color:#a94442"> ¿Qué es el reporte de datos Día a Día? </h4>
+                                <span>Es un reporte de las programaciones generadas para un rango de días seleccionado. En efecto, incluye día a día los datos mínimos de cada programación.</span>
+                                <div style="height:10px"></div>
+                                <h4 style="margin-top:0; color:#a94442"> ¿Comó obtengo el reporte de datos Día a Día? </h4>
+                                <p:commandButton value="Descargar video" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                    <p:fileDownload value="#{FAQBean.reporteDatos}" />
+                                </p:commandButton>
                             </h:panelGrid>
                         </p:tab>
                     </p:accordionPanel>
-                    <h3 style="margin-top:5px">Resumen Indicadores</h3>
-                    <p:accordionPanel>
-                    <p:tab title="¿Qué tipos de resumen puedo obtener?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Se pueden obtener dos tipos de resumenes, uno gerencial enfocado en los datos minimos y uno de programación con todos los datos de la programación" />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="¿Comó obtengo un resumen de indicadores?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    </p:accordionPanel>
-                    <h3 style="margin-top:5px">Visualizar Indicadores</h3>
-                    <p:accordionPanel>
-                    <p:tab title="¿Como puedo visualizar los indicadores BRT?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    </p:accordionPanel>
-                    <h3 style="margin-top:5px">Reporte Indicadores</h3>
-                    <p:accordionPanel>
-                    <p:tab title="¿Qué es el reporte de datos Día a Día?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Es un reporte de las programaciones generadas para un rango de días seleccionado. En efecto, incluye día a día los datos mínimos de cada programación." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="¿Comó obtengo el reporte de datos Día a Día?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    </p:accordionPanel>
-                </p:panel>
-
-                <p:panel header="Preguntas Especificas">
-                    <h3 style="margin-top:5px">Cargar Indicadores</h3>
-                    <p:accordionPanel>
-                    <p:tab title="¿Cuales son los tipos de programaciones?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="¿Como agregar una nueva programación?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="¿Comó duplicar una programación?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    </p:accordionPanel>
-                    <h3 style="margin-top:5px">Modificar Indicadores</h3>
-                    <p:accordionPanel>
-                    <p:tab title="¿Como Asociar fechas a una programación existente?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="¿Comó modificar una programación?">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    </p:accordionPanel>
-
                 </p:panel>
 
 
 
-
-
-
-
+                <p:panel header="Preguntas Especificas" rendered="#{loginBean.puedeEditar()}">
+                    <p:accordionPanel>
+                        <p:tab title="Cargar Indicadores">
+                            <h4 style="margin-top:0; color:#a94442"> ¿Cuales son los tipos de programaciones? </h4>
+                            <span>Una programación puede ser nueva o duplicada a partir de una programación previamente registrada en el sistema</span>
+                            <div style="height:10px"></div>
+                            <h4 style="margin-top:0; color:#a94442"> ¿Como agregar una nueva programación? </h4>
+                            <p:commandButton value="Descargar video" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{FAQBean.agregarProg}" />
+                            </p:commandButton>
+                            <div style="height:10px"></div>
+                            <h4 style="margin-top:0; color:#a94442"> ¿Comó duplicar una programación? </h4>
+                            <p:commandButton value="Descargar video" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{FAQBean.duplicarProg}" />
+                            </p:commandButton>
+                        </p:tab>
+                        <p:tab title="Modificar Indicadores">
+                            <h4 style="margin-top:0; color:#a94442"> ¿Comó modificar una programación? </h4>
+                            <p:commandButton value="Descargar video" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{FAQBean.modificarProg}" />
+                            </p:commandButton>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:panel>
             </h:form>
 
         </ui:define>
