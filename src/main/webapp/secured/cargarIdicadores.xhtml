@@ -20,7 +20,8 @@
                     <p:panelGrid columns="4">
                     <p:outputLabel value="Tipo de Carga:"  />
                     <p:selectOneMenu  value="#{cargarBean.tipoCarga}" style="width:125px">
-                        <f:selectItem itemLabel="Nueva Carga" itemValue="NC" />
+                        <f:selectItem itemLabel="Nueva Carga Archivo" itemValue="NC" />
+                        <f:selectItem itemLabel="Nueva Carga Manual" itemValue="NM" />
                         <f:selectItem itemLabel="Calcular Definitivo" itemValue="CD" />
                     </p:selectOneMenu>
                     <p:commandButton value="Cargar" action="#{cargarBean.habilitarTipoCarga}" ajax="false" />
@@ -64,6 +65,54 @@
 
                                 <p:commandButton value="Cargar Indicador" action="#{cargarBean.cargarArchivo}" ajax="false"
                                                  icon="ui-icon ui-icon-disk" id="withIcon"
+                                                 async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                                 oncomplete="PF('dlg2').hide()"
+                                />
+                            </p:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+
+                </p:panel>
+
+                <p:panel  header="Cargar Indicadores Manual"  style="margin-bottom:20px" visible="#{cargarBean.cargaArchivoManual}">
+                    <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5" >
+                        <p:panel  style="border:none">
+                            <p:panelGrid columns="4">
+                                <p:outputLabel value="Modo:"  />
+                                <p:selectOneMenu  value="#{cargarBean.modoManual}" style="width:90%">
+                                    <f:selectItems value="#{cargarBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                                    <p:ajax update="tipologiaManual" listener="#{cargarBean.updateTipologiasManual}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Tipología:"  />
+                                <p:selectOneMenu id="tipologiaManual" value="#{cargarBean.tipologiaManual}" style="width:90%">
+                                    <f:selectItems value="#{cargarBean.tipologiasManual}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Periocidad:" for="periocidad" />
+                                <p:selectOneMenu  value="#{cargarBean.periocidadManual}" style="width:90%">
+                                    <f:selectItem itemLabel="Hábil" itemValue="HABIL" />
+                                    <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
+                                    <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Razón Programación:"  />
+                                <p:inputText value="#{cargarBean.razonProgramacionManual}" />
+                                <p:outputLabel value="Líneas GoalBus:" />
+                                <p:inputText value="#{cargarBean.lineasCargadasManual}" />
+                                <p:outputLabel value="Cantidad de servicios:" />
+                                <p:inputText value="#{cargarBean.numeroServiciosManual}" />
+                                <p:outputLabel value="Cuadro Programación:"/>
+                                <p:inputText value="#{cargarBean.cuadroManual}" />
+                                <p:outputLabel value="Número de buses:"/>
+                                <p:inputText value="#{cargarBean.numBuses}" />
+                                <p:outputLabel value="Kilometros en Línea:"/>
+                                <p:inputText value="#{cargarBean.kmLinea}" />
+                                <p:outputLabel value="Kilometros en Vacio:"/>
+                                <p:inputText value="#{cargarBean.kmVacio}" />
+                                <p:outputLabel value="Fecha de Programación (DD-MM-AAAA):" />
+                                <p:calendar value="#{cargarBean.fechaProgramacionManual}" pattern="dd-MM-yyyy"  locale="es"/>
+                                <p:outputLabel  value="Fechas Asociadas:" />
+                                <input id="mdp-demo-manual" name="fechasManual" />
+                                <p:commandButton value="Cargar Indicador" action="#{cargarBean.cargarDatosManual}" ajax="false"
+                                                 icon="ui-icon ui-icon-disk"
                                                  async="true" process="@form" onclick="PF('dlg2').show();" global="false"
                                                  oncomplete="PF('dlg2').hide()"
                                 />
@@ -141,6 +190,21 @@
                                      value="No"
                                      action="#{cargarBean.finalizarCarga}"
                                      oncomplete="PF('reemplazarDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog message="Existe una programación para la fecha seleccionada. ¿Desea Reemplazarla? "
+                                 showEffect="fade"
+                                 hideEffect="explode"
+                                 widgetVar="reemplazarDialogManual">
+                    <p:commandButton title="GDelYesButton"
+                                     value="Si"
+                                     action="#{cargarBean.continuarCargaManual}"
+                                     oncomplete="PF('reemplazarDialogManual').hide()" update="@form" ajax="true"
+                    />
+                    <p:commandButton title="GDelNoButton"
+                                     value="No"
+                                     action="#{cargarBean.finalizarCarga}"
+                                     oncomplete="PF('reemplazarDialogManual').hide()"/>
                 </p:confirmDialog>
 
                 <p:confirmDialog message="Existe una programación para la fecha seleccionada. ¿Desea Reemplazarla? "

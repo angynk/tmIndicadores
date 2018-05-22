@@ -35,7 +35,7 @@ public class IndicadoresGoalProcessor {
         return destination;
     }
 
-    public List<LogDatos> processDataFromFile(String fileName,Date fechaProgramacion,String razon,String tipologia,
+    public List<LogDatos>processDataFromFile(String fileName,Date fechaProgramacion,String razon,String tipologia,
                                               String periocidad,String lineasC,String cuadro,String modo,String fechas,String filePath, Integer numServicios){
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Indicadores Goal Bus con Archivo>>", TipoLog.INFO));
@@ -106,7 +106,10 @@ public class IndicadoresGoalProcessor {
             while ((line = br.readLine()) != null){
                 previousLine =line;
             }
-            valores = previousLine.split(cvsSplitBy);
+            if(previousLine.length()>1){
+                valores = previousLine.split(cvsSplitBy);
+            }
+
             Programacion programacion = new Programacion();
             programacion.setCuadro(cuadro);
             programacion.setFecha(fechaProgramacion);
@@ -208,4 +211,20 @@ public class IndicadoresGoalProcessor {
        throw new FileNotFoundException("No se adjunto ningun archivo");
     }
 
+    public boolean guardarDatosManual(Programacion programacion, String fechasManual) {
+        if(eliminarDatosParaLaFecha(programacion.getFecha(),programacion.getTipologia(),programacion.getPeriodicidad())){
+            if(!programacionServicios.isCuadroAlready(programacion.getCuadro())){
+                List<Date> fechasRecords = ProcessorUtils.convertirAfechas(fechasManual);
+                programacion.setPorcentajeVacioFinal(programacion.getKmVacioFin()/programacion.getKmComercialFin());
+                programacion.setTipoProgramacion("N");
+                programacionServicios.addProgramacion(programacion);
+
+                //Asociar Programación a fechas
+                asociarProgramacionAFechas(programacion,fechasRecords);
+            }
+            return true;
+        }
+
+        return false;
+    }
 }

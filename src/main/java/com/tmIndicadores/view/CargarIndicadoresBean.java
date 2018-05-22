@@ -25,18 +25,30 @@ public class CargarIndicadoresBean {
 
     private String tipoGeneracion;
     private String razonProgramacion;
+    private String razonProgramacionManual;
     private String lineasCargadas;
+    private String lineasCargadasManual;
     private Integer numeroServicios;
+    private Integer numeroServiciosManual;
+    private Double kmLinea;
+    private Double kmVacio;
+    private Integer numBuses;
     private String periocidad;
+    private String periocidadManual;
     private String tipologia;
+    private String tipologiaManual;
     private String tipoDEF;
     private String path;
     private String modo;
+    private String modoManual;
     private List<ListObject> modos;
     private List<ListObject> tipologias;
+    private List<ListObject> tipologiasManual;
     private String cuadro;
+    private String cuadroManual;
     private String cuadroDef;
     private Date fechaProgramacion;
+    private Date fechaProgramacionManual;
     private Date fechaProgramacionDef;
     private Date fechaIniBusquedaDef;
     private Date fechaFinBusquedaDef;
@@ -47,9 +59,12 @@ public class CargarIndicadoresBean {
     private boolean resultadosVisibles;
     private String tipoCarga;
     private boolean cargaArchivo;
+    private boolean cargaArchivoManual;
     private boolean generarDEF;
     private boolean listaProg;
     private String fechas;
+    private String fechasManual;
+    private Programacion programacionManual;
 
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
@@ -78,12 +93,14 @@ public class CargarIndicadoresBean {
         tipoCarga = "NC";
         tipoDEF = "DEF";
         cargaArchivo = false;
+        numeroServicios = 0;
         generarDEF = false;
         progList = new DualListModel<Programacion>();
         logDatos = new ArrayList<LogDatos>();
         modo = "TRO";
         cargarListaModos();
         cargarListaTipologiaTroncal();
+        tipologiasManual = ModosUtil.cargarListaTipologiaTroncal();
 
     }
 
@@ -108,13 +125,27 @@ public class CargarIndicadoresBean {
         }
     }
 
+    public void updateTipologiasManual(){
+        if(modoManual.equals("TRO")){
+            tipologiasManual = ModosUtil.cargarListaTipologiaTroncal();
+        }else{
+            tipologiasManual = ModosUtil.cargarListaTipologiaDual();
+        }
+    }
+
     public void habilitarTipoCarga(){
         if(tipoCarga.equals("NC")){
             cargaArchivo = true;
             generarDEF =false;
+            cargaArchivoManual = false;
+        }else if(tipoCarga.equals("NM")){
+            cargaArchivo = false;
+            generarDEF =false;
+            cargaArchivoManual = true;
         }else{
             cargaArchivo =false;
             generarDEF = true;
+            cargaArchivoManual = false;
         }
 
     }
@@ -144,6 +175,74 @@ public class CargarIndicadoresBean {
         }
 
 
+    }
+
+    public void cargarDatosManual(){
+            programacionManual = generarProgramacion();
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            fechasManual = ec.getRequestParameterMap().get("fechasManual");
+
+
+            if(programacionManual!=null){
+                    if(sinDatosParaLaFecha(fechaProgramacionManual,tipologiaManual,periocidadManual)){
+                       if( idProcessor.guardarDatosManual(programacionManual,fechasManual)){
+                           messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_INDICADORES_ALMACENADOS);
+                       }else{
+                           messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"Datos Incompletos");
+                       }
+                    }else{
+                        RequestContext.getCurrentInstance().execute("PF('reemplazarDialogManual').show();");
+                    }
+            }else{
+                messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,"Datos Incompletos");
+            }
+    }
+
+    private Programacion generarProgramacion() {
+        Programacion prog= new Programacion();
+
+        if(razonProgramacionManual!=null && numeroServiciosManual!=null && lineasCargadasManual!=null
+                && fechaProgramacionManual!=null && modoManual!=null && tipologiaManual!=null
+                && periocidadManual!=null && cuadroManual!=null && numBuses!=null
+                && kmLinea!=null && kmVacio!=null){
+            prog.setNumeroServicios(numeroServiciosManual);
+            prog.setRazonCambio(razonProgramacionManual);
+            prog.setLineasCargadas(convertirANumero(lineasCargadasManual));
+            prog.setFecha(fechaProgramacionManual);
+            prog.setModo(modoManual);
+            prog.setTipologia(tipologiaManual);
+            prog.setPeriodicidad(periocidadManual);
+            prog.setCuadro(cuadroManual);
+            prog.setBuses(numBuses);
+            prog.setKmComercialFin(kmLinea);
+            prog.setKmVacioFin(kmVacio);
+
+            return prog;
+
+        }
+
+        return null;
+    }
+
+    private Double convertirADouble(Integer kmLinea) {
+        try {
+            return Double.parseDouble(lineasCargadasManual);
+        }catch (Exception e){
+
+        }
+
+        return 0.0;
+    }
+
+    private Integer convertirANumero(String lineasCargadasManual) {
+
+        try {
+            return Integer.parseInt(lineasCargadasManual);
+        }catch (Exception e){
+
+        }
+
+        return 0;
     }
 
     private Map<String, Programacion> crearMapaProg(List<Programacion> listaSource) {
@@ -344,6 +443,14 @@ public class CargarIndicadoresBean {
     public void continuarCarga(){
         cargarDatos(path);
     }
+
+    public void continuarCargaManual(){
+        if(idProcessor.guardarDatosManual(programacionManual,fechasManual)){
+            messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_INDICADORES_ALMACENADOS);
+        }else{
+            messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
+        }
+    }
     public void finalizarCarga(){
         messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_INDICADORES_REVISAR);
     }
@@ -366,7 +473,7 @@ public class CargarIndicadoresBean {
     }
 
     private boolean valid() {
-        if(fechaProgramacion!= null && razonProgramacion!=null && tipologia!=null && periocidad!=null ){
+        if(fechaProgramacion!= null && razonProgramacion!=null && tipologia!=null && periocidad!=null &&numeroServicios!=null){
             if(lineasCargadas!=null){
                 try{
                     Integer.parseInt(lineasCargadas);
@@ -612,5 +719,143 @@ public class CargarIndicadoresBean {
 
     public void setNumeroServicios(Integer numeroServicios) {
         this.numeroServicios = numeroServicios;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Map<String, Programacion> getProgMap() {
+        return progMap;
+    }
+
+    public void setProgMap(Map<String, Programacion> progMap) {
+        this.progMap = progMap;
+    }
+
+    public boolean isCargaArchivoManual() {
+        return cargaArchivoManual;
+    }
+
+    public void setCargaArchivoManual(boolean cargaArchivoManual) {
+        this.cargaArchivoManual = cargaArchivoManual;
+    }
+
+    public String getRazonProgramacionManual() {
+        return razonProgramacionManual;
+    }
+
+    public void setRazonProgramacionManual(String razonProgramacionManual) {
+        this.razonProgramacionManual = razonProgramacionManual;
+    }
+
+    public String getLineasCargadasManual() {
+        return lineasCargadasManual;
+    }
+
+    public void setLineasCargadasManual(String lineasCargadasManual) {
+        this.lineasCargadasManual = lineasCargadasManual;
+    }
+
+    public Integer getNumeroServiciosManual() {
+        return numeroServiciosManual;
+    }
+
+    public void setNumeroServiciosManual(Integer numeroServiciosManual) {
+        this.numeroServiciosManual = numeroServiciosManual;
+    }
+
+
+
+    public Integer getNumBuses() {
+        return numBuses;
+    }
+
+    public void setNumBuses(Integer numBuses) {
+        this.numBuses = numBuses;
+    }
+
+    public String getPeriocidadManual() {
+        return periocidadManual;
+    }
+
+    public void setPeriocidadManual(String periocidadManual) {
+        this.periocidadManual = periocidadManual;
+    }
+
+    public String getTipologiaManual() {
+        return tipologiaManual;
+    }
+
+    public void setTipologiaManual(String tipologiaManual) {
+        this.tipologiaManual = tipologiaManual;
+    }
+
+    public String getModoManual() {
+        return modoManual;
+    }
+
+    public void setModoManual(String modoManual) {
+        this.modoManual = modoManual;
+    }
+
+    public String getCuadroManual() {
+        return cuadroManual;
+    }
+
+    public void setCuadroManual(String cuadroManual) {
+        this.cuadroManual = cuadroManual;
+    }
+
+    public Date getFechaProgramacionManual() {
+        return fechaProgramacionManual;
+    }
+
+    public void setFechaProgramacionManual(Date fechaProgramacionManual) {
+        this.fechaProgramacionManual = fechaProgramacionManual;
+    }
+
+    public List<ListObject> getTipologiasManual() {
+        return tipologiasManual;
+    }
+
+    public void setTipologiasManual(List<ListObject> tipologiasManual) {
+        this.tipologiasManual = tipologiasManual;
+    }
+
+    public String getFechasManual() {
+        return fechasManual;
+    }
+
+    public void setFechasManual(String fechasManual) {
+        this.fechasManual = fechasManual;
+    }
+
+    public Programacion getProgramacionManual() {
+        return programacionManual;
+    }
+
+    public void setProgramacionManual(Programacion programacionManual) {
+        this.programacionManual = programacionManual;
+    }
+
+    public Double getKmLinea() {
+        return kmLinea;
+    }
+
+    public void setKmLinea(Double kmLinea) {
+        this.kmLinea = kmLinea;
+    }
+
+    public Double getKmVacio() {
+        return kmVacio;
+    }
+
+    public void setKmVacio(Double kmVacio) {
+        this.kmVacio = kmVacio;
     }
 }
