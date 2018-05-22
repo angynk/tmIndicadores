@@ -43,6 +43,16 @@
                             </p:submenu>
                         </p:column>
                     </p:submenu>
+                    <p:submenu label="Indicadores Expediciones" icon="ui-icon-script">
+                        <p:column>
+                            <p:submenu label="Visualizar Indicadores">
+                                <p:menuitem value="Visualizar Indicadores" action="#{menu.refreshBusesProgramados}" />
+                            </p:submenu>
+                            <p:submenu label="Resumen Indicadores" >
+                                <p:menuitem value="Resumen Indicadores" action="#{menu.refreshResumen}" />
+                            </p:submenu>
+                        </p:column>
+                    </p:submenu>
                     <p:submenu label="Carga de Indicadores" icon="ui-icon-script" rendered="#{loginBean.puedeEditar()}">
                         <p:column>
                             <p:submenu label="Cargar Indicadores">
