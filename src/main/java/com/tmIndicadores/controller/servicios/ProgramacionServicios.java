@@ -4,12 +4,9 @@ import com.tmIndicadores.model.dao.FechaAsociadaDao;
 import com.tmIndicadores.model.dao.ProgramacionDao;
 import com.tmIndicadores.model.entity.FechaAsociada;
 import com.tmIndicadores.model.entity.Programacion;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

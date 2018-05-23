@@ -6,7 +6,9 @@ import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -43,6 +45,20 @@ public class Util {
         tipoGrafica.add("Con Saltos");
         tipoGrafica.add("Con Repeticiones");
         return tipoGrafica;
+    }
+
+    public static String convertirAString(Date fecha) {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        return sdfDate.format(fecha);
+    }
+
+    public static String convertirModo(String modo) {
+        if (Modos.TRONCAL.equals(modo)){
+            return "T";
+        }else if (Modos.ALIMENTADOR.equals(modo)){
+            return "A";
+        }
+        return "D";
     }
 
     public static String md5(String data) {

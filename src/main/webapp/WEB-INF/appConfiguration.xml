@@ -39,6 +39,13 @@
                 <value>com.tmIndicadores.model.entity.Role</value>
                 <value>com.tmIndicadores.model.entity.FechaAsociada</value>
                 <value>com.tmIndicadores.model.entity.Tarea</value>
+                <value>com.tmIndicadores.model.entity.DhProgramacion</value>
+                <value>com.tmIndicadores.model.entity.Cuadro</value>
+                <value>com.tmIndicadores.model.entity.Indicadores</value>
+                <value>com.tmIndicadores.model.entity.Archivos</value>
+                <value>com.tmIndicadores.model.entity.Bus</value>
+                <value>com.tmIndicadores.model.entity.BusRegistro</value>
+                <value>com.tmIndicadores.model.entity.Operador</value>
 
             </list>
         </property>

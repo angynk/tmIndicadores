@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+        <ui:define name="content">
+
+            <h:form  id="form">
+                <p:growl id="message" showDetail="true" />
+                <p:panel id="basic" header="Resumen de Indicadores Expediciones"  style="margin-bottom:20px">
+                    <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5" cellspacing="15">
+                        <p:outputLabel for="button" value="Fecha Inicio (DD-MM-AAAA):" />
+                        <p:calendar id="button" value="#{RIEBean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
+                        <p:outputLabel for="buttonV" value="Fecha Fin (DD-MM-AAAA):" />
+                        <p:calendar id="buttonV" value="#{RIEBean.fechaFin}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value=""  />
+                        <p:outputLabel value="Modo:"  />
+                        <p:selectOneMenu  value="#{RIEBean.modo}" style="width:90%">
+                            <f:selectItems value="#{RIEBean.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                            <p:ajax update="@form" listener="#{RIEBean.updateTipologias}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Tipología:" for="tipologia" />
+                        <p:selectOneMenu id="tipologia" value="#{RIEBean.tipologia}" style="width:90%">
+                            <f:selectItems value="#{RIEBean.tipologias}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel for="periocidad" value="Tipo Día:" />
+                        <p:selectOneMenu id="periocidad" value="#{RIEBean.periocidad}" style="width:90%">
+                            <f:selectItem itemLabel="Hábil" itemValue="HABIL" />
+                            <f:selectItem itemLabel="Sábado" itemValue="SABADO" />
+                            <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
+                            <f:selectItem itemLabel="Todos" itemValue="TODOS" />
+                        </p:selectOneMenu>
+                        <p:outputLabel for="tipoProg" value="Programaciones:" />
+                        <p:selectOneMenu id="tipoProg" value="#{RIEBean.tipoDatos}" style="width:90%">
+                            <f:selectItem itemLabel="Principales" itemValue="N" />
+                            <f:selectItem itemLabel="Todas" itemValue="D" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:commandButton value="Generar" action="#{RIEBean.generar}" ajax="false"
+                                     icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
+                    />
+                    <p:commandButton value="Visualizar Todo" action="#{RIEBean.cargarTodo}" ajax="false"
+                                     icon="ui-icon ui-icon-caret-1-s"  styleClass="boton"
+                    />
+
+                    <div style="height: 10px"></div>
+                    <p:panel visible="#{RIEBean.visibleResumen}">
+                        <div style="margin-top:10px"/>
+                        <p:panelGrid columns="4">
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="prog" fileName="Resumen Indicadores"  />
+                            </h:commandLink>
+                        </p:panelGrid>
+                        <div style="margin-top:10px"/>
+
+                        <p:dataTable id="prog" var="ind" value="#{RIEBean.programacionRecords}" widgetVar="ProgTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     scrollable="true" scrollWidth="98%" scrollHeight="410"
+                                     filteredValue="#{RIEBean.filteredProgramacionRecords}"
+                                     editable="true">
+
+                            <p:column filterBy="#{ind.cuadro.fechaFormatted}" headerText="Fecha"  filterMatchMode="contains" sortBy="#{ind.cuadro.fechaFormatted}"
+                                      style="width: 115px">
+                                <h:outputText value="#{ind.cuadro.fechaFormatted}" style="width: 50px" />
+                            </p:column>
+
+                            <p:column filterBy="#{ind.cuadro.tipologia}" headerText="Tipología"  filterMatchMode="contains" sortBy="#{ind.cuadro.tipologia}"
+                                      style="width: 115px" visible="false">
+                                <h:outputText value="#{ind.cuadro.tipologia}" style="width: 50px" />
+                            </p:column>
+
+                            <p:column filterBy="#{ind.cuadro.numero}" headerText="Cuadro"  filterMatchMode="contains" sortBy="#{ind.cuadro.numero}"
+                                      style="width: 115px">
+                                <h:outputText value="#{ind.cuadro.numero}" style="width: 50px" />
+                            </p:column>
+
+                            <p:column filterBy="#{ind.numBuses}" headerText="Buses"  filterMatchMode="contains" sortBy="#{ind.numBuses}"
+                                      style="width: 115px">
+                                <h:outputText value="#{ind.numBuses}" style="width: 50px" />
+                            </p:column>
+
+                            <p:column filterBy="#{ind.kmComerciales}" headerText="KM Comercial"  filterMatchMode="contains" sortBy="#{ind.kmComerciales}"
+                                      style="width: 115px">
+                                <h:outputText value="#{ind.kmComerciales}"  style="width: 50px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{ind.kmVacioVPA}" headerText="KM VPA"  filterMatchMode="contains" sortBy="#{ind.kmVacioVPA}"
+                                      style="width: 145px">
+                                <h:outputText value="#{ind.kmVacioVPA}" >
+                                </h:outputText>
+
+                            </p:column>
+
+                            <p:column filterBy="#{ind.kmVacioVEX}" headerText="KM VEX"  filterMatchMode="contains" sortBy="#{ind.kmVacioVEX}"
+                                      style="width: 130px">
+                                <h:outputText value="#{ind.kmVacioVEX}" />
+                            </p:column>
+
+                            <p:column filterBy="#{ind.kmVacioVH}" headerText="KM VH"  filterMatchMode="contains" sortBy="#{ind.kmVacioVH}"
+                                      style="width: 115px" visible="false">
+                                <h:outputText value="#{ind.kmVacioVH}" style="width: 50px" />
+                            </p:column>
+
+                            <p:column filterBy="#{ind.kmVacioTotal}" headerText="KM Vacio"  filterMatchMode="contains" sortBy="#{ind.kmVacioTotal}"
+                                      style="width: 120px">
+                                <h:outputText value="#{ind.kmVacioTotal}" >
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{ind.porcentajeVacio}" headerText="% Vacio"  filterMatchMode="contains" sortBy="#{ind.porcentajeVacio}"
+                                      style="width:125px">
+                                <h:outputText value="#{ind.porcentajeVacio}" style="width: 50px"/>
+                            </p:column>
+
+
+                        </p:dataTable>
+                    </p:panel>
+
+
+
+
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>
