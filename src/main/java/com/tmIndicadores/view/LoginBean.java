@@ -112,7 +112,7 @@ public class LoginBean implements Serializable {
     public void cambiar(){
         if(contrasenaViejaEsCorrecta()) {
             if(contrasenasNuevasIguales()){
-                usuario.setContrasena(contrasenaNueva);
+                usuario.setContrasena(Util.md5(contrasenaNueva));
                 usuarioServicios.updateUsuario(usuario);
                 messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_CAMBIO_PASSWORD);
             }else{
@@ -129,6 +129,7 @@ public class LoginBean implements Serializable {
     }
 
     private boolean contrasenaViejaEsCorrecta() {
+        contrasenaAntigua = Util.md5(contrasenaAntigua);
         if(contrasenaAntigua.equals(usuario.getContrasena())) return true;
 
         return false;
