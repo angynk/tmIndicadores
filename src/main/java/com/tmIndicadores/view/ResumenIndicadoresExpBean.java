@@ -2,6 +2,7 @@ package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.ListObject;
 import com.tmIndicadores.controller.ModosUtil;
+import com.tmIndicadores.controller.ProcessorUtils;
 import com.tmIndicadores.controller.Util;
 import com.tmIndicadores.controller.servicios.IndicadoresExpServicio;
 import com.tmIndicadores.model.entity.Indicadores;
@@ -92,8 +93,8 @@ public class ResumenIndicadoresExpBean {
     }
 
     public void cargarTodo(){
-//        programacionRecords = programacionServicios.getAll();
-//        visibleResumen = true;
+        programacionRecords = indicadoresExpServicio.obtenerTodo();
+        visibleResumen = true;
     }
 
     private boolean genracionValida() {
@@ -106,6 +107,10 @@ public class ResumenIndicadoresExpBean {
     public void addMessage(FacesMessage.Severity severity , String summary, String detail) {
         FacesMessage message = new FacesMessage(severity, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void postProcessXLS(Object document){
+        ProcessorUtils.postProcessXLS(document);
     }
 
 

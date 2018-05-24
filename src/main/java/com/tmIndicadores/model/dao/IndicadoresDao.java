@@ -48,4 +48,9 @@ public class IndicadoresDao {
         criteria.add(Restrictions.in("cuadro",cuadros));
         return criteria.list();
     }
+
+    public List<Indicadores> getAllIndicadores() {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Indicadores.class);
+        return criteria.list();
+    }
 }

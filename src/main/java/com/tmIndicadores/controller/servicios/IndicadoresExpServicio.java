@@ -46,4 +46,8 @@ public class IndicadoresExpServicio {
 
         return indicadores;
     }
+
+    public List<Indicadores> obtenerTodo() {
+        return indicadoresDao.getAllIndicadores();
+    }
 }

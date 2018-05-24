@@ -62,7 +62,7 @@
                             <h:commandLink>
                                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
                                 <p:dataExporter type="xls"
-                                                target="prog" fileName="Resumen Indicadores"  />
+                                                target="prog" fileName="Resumen Indicadores"  postProcessor="#{RIEBean.postProcessXLS}"/>
                             </h:commandLink>
                         </p:panelGrid>
                         <div style="margin-top:10px"/>
@@ -73,32 +73,32 @@
                                      filteredValue="#{RIEBean.filteredProgramacionRecords}"
                                      editable="true">
 
-                            <p:column filterBy="#{ind.cuadro.fechaFormatted}" headerText="Fecha"  filterMatchMode="contains" sortBy="#{ind.cuadro.fechaFormatted}"
+                            <p:column  headerText="Fecha"  filterMatchMode="contains" sortBy="#{ind.cuadro.fechaFormatted}"
                                       style="width: 115px">
                                 <h:outputText value="#{ind.cuadro.fechaFormatted}" style="width: 50px" />
                             </p:column>
 
-                            <p:column filterBy="#{ind.cuadro.tipologia}" headerText="Tipología"  filterMatchMode="contains" sortBy="#{ind.cuadro.tipologia}"
-                                      style="width: 115px" visible="false">
+                            <p:column  headerText="Tipología"  filterMatchMode="contains" sortBy="#{ind.cuadro.tipologia}"
+                                      style="width: 115px" >
                                 <h:outputText value="#{ind.cuadro.tipologia}" style="width: 50px" />
                             </p:column>
 
-                            <p:column filterBy="#{ind.cuadro.numero}" headerText="Cuadro"  filterMatchMode="contains" sortBy="#{ind.cuadro.numero}"
+                            <p:column  headerText="Cuadro"  filterMatchMode="contains" sortBy="#{ind.cuadro.numero}"
                                       style="width: 115px">
                                 <h:outputText value="#{ind.cuadro.numero}" style="width: 50px" />
                             </p:column>
 
-                            <p:column filterBy="#{ind.numBuses}" headerText="Buses"  filterMatchMode="contains" sortBy="#{ind.numBuses}"
+                            <p:column  headerText="Buses"  filterMatchMode="contains" sortBy="#{ind.numBuses}"
                                       style="width: 115px">
                                 <h:outputText value="#{ind.numBuses}" style="width: 50px" />
                             </p:column>
 
-                            <p:column filterBy="#{ind.kmComerciales}" headerText="KM Comercial"  filterMatchMode="contains" sortBy="#{ind.kmComerciales}"
+                            <p:column  headerText="KM Comercial"  filterMatchMode="contains" sortBy="#{ind.kmComerciales}"
                                       style="width: 115px">
                                 <h:outputText value="#{ind.kmComerciales}"  style="width: 50px"/>
                             </p:column>
 
-                            <p:column filterBy="#{ind.kmVacioVPA}" headerText="KM VPA"  filterMatchMode="contains" sortBy="#{ind.kmVacioVPA}"
+                            <p:column  headerText="KM VPA"  filterMatchMode="contains" sortBy="#{ind.kmVacioVPA}"
                                       style="width: 145px">
                                 <h:outputText value="#{ind.kmVacioVPA}" >
                                 </h:outputText>
