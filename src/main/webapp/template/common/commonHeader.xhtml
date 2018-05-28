@@ -31,25 +31,23 @@
 
 
                 <p:megaMenu orientation="horizontal" style="margin-top:40px;">
-                    <p:submenu label="Indicadores GoalBus" icon="ui-icon-script">
+                    <p:submenu label="Resumen Indicadores" icon="ui-icon-script">
+                        <p:column>
+                            <p:submenu label="Indicadores GoalBus">
+
+                                <p:menuitem value="Resumen Indicadores Gerenciales" action="#{menu.refreshResumen}" />
+                                <p:menuitem value="Resumen Indicadores Programación" action="#{menu.refreshIdiProgResumen}" />
+                            </p:submenu>
+                            <p:submenu label="Indicadores Expediciones" >
+                                <p:menuitem value="Resumen Indicadores" action="#{menu.refreshResumenExpediciones}" />
+                            </p:submenu>
+                        </p:column>
+                    </p:submenu>
+                    <p:submenu label="Visualizar Indicadores" icon="ui-icon-script">
                         <p:column>
                             <p:submenu label="Visualizar Indicadores">
                                 <p:menuitem value="Dashboard Resumen" action="#{menu.refreshDashboard}" />
                                 <p:menuitem value="Visualizar Indicadores" action="#{menu.refreshBusesProgramados}" />
-                            </p:submenu>
-                            <p:submenu label="Resumen Indicadores" >
-                                <p:menuitem value="Resumen Indicadores Gerenciales" action="#{menu.refreshResumen}" />
-                                <p:menuitem value="Resumen Indicadores Programación" action="#{menu.refreshIdiProgResumen}" />
-                            </p:submenu>
-                        </p:column>
-                    </p:submenu>
-                    <p:submenu label="Indicadores Expediciones" icon="ui-icon-script">
-                        <p:column>
-                            <p:submenu label="Visualizar Indicadores">
-                                <p:menuitem value="Visualizar Indicadores" action="#{menu.refreshBusesProgramados}" />
-                            </p:submenu>
-                            <p:submenu label="Resumen Indicadores" >
-                                <p:menuitem value="Resumen Indicadores" action="#{menu.refreshResumenExpediciones}" />
                             </p:submenu>
                         </p:column>
                     </p:submenu>

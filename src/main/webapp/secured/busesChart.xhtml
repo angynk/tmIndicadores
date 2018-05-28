@@ -44,6 +44,13 @@
                         <f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
                         <f:selectItem itemLabel="Todos" itemValue="TODOS" />
                     </p:selectOneMenu>
+
+                    <p:outputLabel for="tipoProg" value="Programaciones:" />
+                    <p:selectOneMenu id="tipoProg" value="#{bPBean.tipoDatos}" style="width:90%">
+                        <f:selectItem itemLabel="Todas" itemValue="D" />
+                        <f:selectItem itemLabel="Nuevas" itemValue="N" />
+                    </p:selectOneMenu>
+                    <p:outputLabel  value="Fuente Indicador:" />
                     <p:outputLabel for="indicador" value="Indicador:" />
                     <p:selectOneMenu id="indicador" value="#{bPBean.indicador}" style="width:90%">
                         <f:selectItem itemLabel="Numero de Buses" itemValue="NB" />
@@ -55,11 +62,6 @@
                         <f:selectItem itemLabel="Número de Servicios" itemValue="NS" />
                         <f:selectItem itemLabel="Velocidad Comercial" itemValue="VC" />
                         <f:selectItem itemLabel="Horas Por Buses" itemValue="HB" />
-                    </p:selectOneMenu>
-                    <p:outputLabel for="tipoProg" value="Programaciones:" />
-                    <p:selectOneMenu id="tipoProg" value="#{bPBean.tipoDatos}" style="width:90%">
-                        <f:selectItem itemLabel="Todas" itemValue="D" />
-                        <f:selectItem itemLabel="Nuevas" itemValue="N" />
                     </p:selectOneMenu>
 
                 </h:panelGrid>
