@@ -50,4 +50,8 @@ public class IndicadoresExpServicio {
     public List<Indicadores> obtenerTodo() {
         return indicadoresDao.getAllIndicadores();
     }
+
+    public List<Indicadores> getIndicadoresbyAttributes(Date fechaInicio, Date fechaFin, String habil, String tipologia, String tipoDatos) {
+        return null;
+    }
 }

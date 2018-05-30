@@ -3,8 +3,11 @@ package com.tmIndicadores.view;
 import com.google.gson.Gson;
 import com.tmIndicadores.controller.ListObject;
 import com.tmIndicadores.controller.ModosUtil;
+import com.tmIndicadores.controller.TipoIndicador;
 import com.tmIndicadores.controller.Util;
+import com.tmIndicadores.controller.servicios.IndicadoresExpServicio;
 import com.tmIndicadores.controller.servicios.ProgramacionServicios;
+import com.tmIndicadores.model.entity.Indicadores;
 import com.tmIndicadores.model.entity.Programacion;
 import org.primefaces.model.chart.*;
 
@@ -46,6 +49,10 @@ public class BusesProgramadosBean {
     private List<ListObject> modos;
     private List<ListObject> tipologias;
 
+    private String tipoIndicador;
+    private List<String> tipoIndicadores;
+    private List<ListObject> indicadores;
+
     private String cambioDeGrafica;
 
     private List<String> listaPeriocidad;
@@ -75,6 +82,9 @@ public class BusesProgramadosBean {
     @ManagedProperty(value="#{ProgramacionServicios}")
     private ProgramacionServicios programacionServicios;
 
+    @ManagedProperty(value="#{IndicadoresExpServicio}")
+    private IndicadoresExpServicio indicadoresExpServicio;
+
     public BusesProgramadosBean() {
     }
 
@@ -83,6 +93,8 @@ public class BusesProgramadosBean {
         listaPeriocidad = Util.listaDePeriocidad();
         listaTipologia = Util.listaDeTipologia();
         listaTipoGrafica = Util.listaDeTipoGrafica();
+        tipoIndicadores = Util.listaTipoIndicadores();
+        indicadores = Util.listaIndicadoresGoalBus();
         barBuses = new BarChartModel();
         visibleBarBuses = false;
         visibleGrafica = false;
@@ -117,18 +129,150 @@ public class BusesProgramadosBean {
         }
     }
 
+    public void updateIndicadores(){
+        if(tipoIndicador.equals(TipoIndicador.GOAL_BUS)){
+            indicadores = Util.listaIndicadoresGoalBus();
+        }else{
+            indicadores = Util.listaIndicadoresExpediciones();
+        }
+    }
+
 
     public void generar(){
         if(genracionValida()){
-            generarChartSeries();
-            visibleGrafica = true;
-            grafica = "Seleccione la grafica";
+            if(tipoIndicador.equals(TipoIndicador.GOAL_BUS)){
+                generarChartSeries();
+                visibleGrafica = true;
+                grafica = "Seleccione la grafica";
+            }else if(tipoIndicador.equals(TipoIndicador.EXPEDICIONES)){
+                generarChartSeriesExpediciones();
+                visibleGrafica = true;
+                grafica = "Seleccione la grafica";
+            }
         }else{
             addMessage(FacesMessage.SEVERITY_INFO,"Complete los datos para generar la grafica", "");
         }
 
 
     }
+
+    private void generarChartSeriesExpediciones() {
+        if(!periocidad.equals("TODOS")){
+            List<Indicadores> programacion = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
+            List<Series> series = generarRegressionChartExp(programacion,periocidad);
+            setChartSeries(new Gson().toJson(series));
+            generarLineasChartExp(programacion);
+            generarBarrasChartExp(programacion,indicador);
+        }else{
+            List<Indicadores> programacionHabil = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,"HABIL",tipologia,tipoDatos);
+            List<Indicadores> programacionSabado = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,"SABADO",tipologia,tipoDatos);
+            List<Indicadores> programacionFestivo = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,"FESTIVO",tipologia,tipoDatos);
+            generarLineasChartParaExp(programacionHabil,programacionSabado,programacionFestivo);
+            generarBarrasChartParaExp(programacionHabil,programacionSabado,programacionFestivo);
+            List<Series> series = generarRegressionChartExp(programacionHabil,"HABIL");
+            setChartSeries(new Gson().toJson(series));
+            List<Series> seriesS = generarRegressionChartExp(programacionSabado,"SABADO");
+            tituloSabado = definirTituloGrafica(indicador)+" - Sabado";
+            setChartSeriesSabado(new Gson().toJson(seriesS));
+            List<Series> seriesF = generarRegressionChartExp(programacionFestivo,"FESTIVO");
+            tituloFestivo = definirTituloGrafica(indicador)+" - Festivo";
+            titulo = definirTituloGrafica(indicador);
+            setChartSeriesFestivo(new Gson().toJson(seriesF));
+        }
+
+    }
+
+    private void generarBarrasChartExp(List<Indicadores> programacion, String indicador) {
+        titulo = definirTituloGrafica(indicador);
+        tituloEjeX = definirTituloX(indicador);
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineasExp(programacion,"Habil",indicador));
+        setChartSeriesForBar(new Gson().toJson(series));
+    }
+
+    private void generarLineasChartExp(List<Indicadores> programacion) {
+        titulo = definirTituloGrafica(indicador);
+        tituloEjeX = definirTituloX(indicador);
+        List<Series> series = new ArrayList<Series>();
+        Series serie = transformarASerieParaLineasExp(programacion,periocidad,indicador);
+        series.add(serie);
+        setChartSeriesForLine(new Gson().toJson(series));
+    }
+
+    private List<Series> generarRegressionChartExp(List<Indicadores> indicadores, String period) {
+        titulo = definirTituloGrafica(indicador);
+        titulo = titulo +" - "+period;
+
+
+        tituloEjeX = definirTituloX(indicador);
+        List<Series> series = new ArrayList<Series>();
+
+        List<List<Double>> dataPoints = new ArrayList<>();
+        List<Double> point1= new ArrayList<>();
+        List<Double> point2= new ArrayList<>();
+
+        point1.add( 0.0);
+        point1.add(1.11);
+
+        point2.add( 5.0);
+        point2.add( 4.51);
+
+        dataPoints.add(point1);
+        dataPoints.add(point2);
+
+        Series serie = transformarASerieParaLineasExp(indicadores,period,indicador);
+        serie.setType("scatter");
+        series.add(serie);
+
+        return series;
+    }
+
+    private void generarBarrasChartParaExp(List<Indicadores> programacionHabil, List<Indicadores> programacionSabado, List<Indicadores> programacionFestivo) {
+        titulo = definirTituloGrafica(indicador);
+        tituloEjeX = definirTituloX(indicador);
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineasExp(programacionHabil,"Habil",indicador));
+        series.add(transformarASerieParaLineasExp(programacionSabado,"Sabado",indicador));
+        series.add(transformarASerieParaLineasExp(programacionFestivo,"Festivo",indicador));
+        setChartSeriesForBar(new Gson().toJson(series));
+    }
+
+    private void generarLineasChartParaExp(List<Indicadores> programacionHabil, List<Indicadores> programacionSabado, List<Indicadores> programacionFestivo) {
+        titulo = definirTituloGrafica(indicador);
+        tituloEjeX = definirTituloX(indicador);
+        List<Series> series = new ArrayList<Series>();
+        series.add(transformarASerieParaLineasExp(programacionHabil,"Habil",indicador));
+        series.add(transformarASerieParaLineasExp(programacionSabado,"Sabado",indicador));
+        series.add(transformarASerieParaLineasExp(programacionFestivo,"Festivo",indicador));
+        setChartSeriesForLine(new Gson().toJson(series));
+    }
+
+    private Series transformarASerieParaLineasExp(List<Indicadores> indicador, String habil, String nombre) {
+        List<List<Object>> dataPoints = new ArrayList<>();
+        Series serie = null;
+        for(Indicadores prog: indicador){
+            Object valor = null;
+            if(tipoIndicador.equals(IndicadorExpEnum.NUMERO_BUSES.toString())){
+                valor = prog.getNumBuses();
+            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_COMERCIALES.toString()) ){
+                valor = prog.getKmComerciales();
+            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO.toString()) ){
+                valor =  prog.getKmVacioTotal();
+            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO_VPA.toString()) ){
+                valor = (double) prog.getKmVacioVPA();
+            }else if ( tipoIndicador.equals(IndicadorExpEnum.POR_VACIOS.toString()) ){
+                valor = prog.getPorcentajeVacio()*100;
+            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO_VEX.toString()) ){
+                valor = prog.getKmVacioVEX();
+            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO_VH.toString()) ){
+                valor = prog.getKmVacioVH();
+            }
+            dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getCuadro().getFecha(),valor)));
+        }
+        serie = new Series(nombre, dataPoints);
+        return serie;
+    }
+
     public void addMessage(FacesMessage.Severity severity , String summary, String detail) {
         FacesMessage message = new FacesMessage(severity, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -665,5 +809,41 @@ public class BusesProgramadosBean {
 
     public void setTipologias(List<ListObject> tipologias) {
         this.tipologias = tipologias;
+    }
+
+    public String getTipoIndicador() {
+        return tipoIndicador;
+    }
+
+    public void setTipoIndicador(String tipoIndicador) {
+        this.tipoIndicador = tipoIndicador;
+    }
+
+    public List<String> getTipoIndicadores() {
+        return tipoIndicadores;
+    }
+
+    public void setTipoIndicadores(List<String> tipoIndicadores) {
+        this.tipoIndicadores = tipoIndicadores;
+    }
+
+    public List<ListObject> getIndicadores() {
+        return indicadores;
+    }
+
+    public void setIndicadores(List<ListObject> indicadores) {
+        this.indicadores = indicadores;
+    }
+
+    public String getCambioDeGrafica() {
+        return cambioDeGrafica;
+    }
+
+    public IndicadoresExpServicio getIndicadoresExpServicio() {
+        return indicadoresExpServicio;
+    }
+
+    public void setIndicadoresExpServicio(IndicadoresExpServicio indicadoresExpServicio) {
+        this.indicadoresExpServicio = indicadoresExpServicio;
     }
 }

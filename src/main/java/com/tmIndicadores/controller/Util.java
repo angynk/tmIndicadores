@@ -74,4 +74,40 @@ public class Util {
         // Convert to 32-char long String:
         return DatatypeConverter.printHexBinary(digest);
     }
+
+    public static List<String> listaTipoIndicadores() {
+        List<String> tipoGrafica = new ArrayList<>();
+        tipoGrafica.add(TipoIndicador.GOAL_BUS);
+        tipoGrafica.add(TipoIndicador.EXPEDICIONES);
+        return tipoGrafica;
+
+    }
+
+    public static List<ListObject> listaIndicadoresGoalBus() {
+        List<ListObject> lista = new ArrayList<>();
+        lista.add(new ListObject("Numero de Buses","NB"));
+        lista.add(new ListObject("KM Comerciales","KC"));
+        lista.add(new ListObject("KM Vacios","KV"));
+        lista.add(new ListObject("EXP Comercial","EC"));
+        lista.add(new ListObject("% Vacios","PB"));
+        lista.add(new ListObject("Líneas GoalBus","LC"));
+        lista.add(new ListObject("Número de Servicios","NS"));
+        lista.add(new ListObject("Velocidad Comercial","VC"));
+        lista.add(new ListObject("Horas Por Buses","HB"));
+        return lista;
+    }
+
+
+    public static List<ListObject> listaIndicadoresExpediciones() {
+        List<ListObject> lista = new ArrayList<>();
+        lista.add(new ListObject("Numero de Buses","NB"));
+        lista.add(new ListObject("KM Comerciales","KC"));
+        lista.add(new ListObject("KM Vacios","KV"));
+        lista.add(new ListObject("KM Vacios VPA","KP"));
+        lista.add(new ListObject("KM Vacios VEX","KE"));
+        lista.add(new ListObject("KM Vacios VH","KH"));
+        lista.add(new ListObject("% Vacios","PB"));
+        return lista;
+
+    }
 }

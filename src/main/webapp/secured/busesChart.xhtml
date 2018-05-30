@@ -51,17 +51,13 @@
                         <f:selectItem itemLabel="Nuevas" itemValue="N" />
                     </p:selectOneMenu>
                     <p:outputLabel  value="Fuente Indicador:" />
+                    <p:selectOneMenu  value="#{bPBean.tipoIndicador}" style="width:90%">
+                        <f:selectItems value="#{bPBean.tipoIndicadores}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}"/>
+                        <p:ajax update="@form" listener="#{bPBean.updateIndicadores}"/>
+                    </p:selectOneMenu>
                     <p:outputLabel for="indicador" value="Indicador:" />
                     <p:selectOneMenu id="indicador" value="#{bPBean.indicador}" style="width:90%">
-                        <f:selectItem itemLabel="Numero de Buses" itemValue="NB" />
-                        <f:selectItem itemLabel="KM Comerciales" itemValue="KC" />
-                        <f:selectItem itemLabel="KM Vacios" itemValue="KV" />
-                        <f:selectItem itemLabel="EXP Comercial" itemValue="EC" />
-                        <f:selectItem itemLabel="% Vacios" itemValue="PV" />
-                        <f:selectItem itemLabel="Líneas GoalBus" itemValue="LC" />
-                        <f:selectItem itemLabel="Número de Servicios" itemValue="NS" />
-                        <f:selectItem itemLabel="Velocidad Comercial" itemValue="VC" />
-                        <f:selectItem itemLabel="Horas Por Buses" itemValue="HB" />
+                        <f:selectItems value="#{bPBean.indicadores}" var="ind" itemLabel="#{ind.label}" itemValue="#{ind.value}"/>
                     </p:selectOneMenu>
 
                 </h:panelGrid>
