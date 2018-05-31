@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -53,4 +54,5 @@ public class IndicadoresDao {
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Indicadores.class);
         return criteria.list();
     }
+
 }

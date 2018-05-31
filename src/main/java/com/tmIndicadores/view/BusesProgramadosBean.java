@@ -158,15 +158,15 @@ public class BusesProgramadosBean {
 
     private void generarChartSeriesExpediciones() {
         if(!periocidad.equals("TODOS")){
-            List<Indicadores> programacion = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos);
+            List<Indicadores> programacion = indicadoresExpServicio.getIndicadoresByFecha(fechaInicio,fechaFin,periocidad,tipologia,tipoDatos, Util.convertirModo(modo));
             List<Series> series = generarRegressionChartExp(programacion,periocidad);
             setChartSeries(new Gson().toJson(series));
             generarLineasChartExp(programacion);
             generarBarrasChartExp(programacion,indicador);
         }else{
-            List<Indicadores> programacionHabil = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,"HABIL",tipologia,tipoDatos);
-            List<Indicadores> programacionSabado = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,"SABADO",tipologia,tipoDatos);
-            List<Indicadores> programacionFestivo = indicadoresExpServicio.getIndicadoresbyAttributes(fechaInicio,fechaFin,"FESTIVO",tipologia,tipoDatos);
+            List<Indicadores> programacionHabil = indicadoresExpServicio.getIndicadoresByFecha(fechaInicio,fechaFin,"HABIL",tipologia,tipoDatos, Util.convertirModo(modo));
+            List<Indicadores> programacionSabado = indicadoresExpServicio.getIndicadoresByFecha(fechaInicio,fechaFin,"SABADO",tipologia,tipoDatos, Util.convertirModo(modo));
+            List<Indicadores> programacionFestivo = indicadoresExpServicio.getIndicadoresByFecha(fechaInicio,fechaFin,"FESTIVO",tipologia,tipoDatos, Util.convertirModo(modo));
             generarLineasChartParaExp(programacionHabil,programacionSabado,programacionFestivo);
             generarBarrasChartParaExp(programacionHabil,programacionSabado,programacionFestivo);
             List<Series> series = generarRegressionChartExp(programacionHabil,"HABIL");
@@ -247,29 +247,29 @@ public class BusesProgramadosBean {
         setChartSeriesForLine(new Gson().toJson(series));
     }
 
-    private Series transformarASerieParaLineasExp(List<Indicadores> indicador, String habil, String nombre) {
+    private Series transformarASerieParaLineasExp(List<Indicadores> indicador, String nombre, String indicadorV) {
         List<List<Object>> dataPoints = new ArrayList<>();
         Series serie = null;
         for(Indicadores prog: indicador){
             Object valor = null;
-            if(tipoIndicador.equals(IndicadorExpEnum.NUMERO_BUSES.toString())){
+            if(indicadorV.equals(IndicadorExpEnum.NUMERO_BUSES.toString())){
                 valor = prog.getNumBuses();
-            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_COMERCIALES.toString()) ){
+            }else if ( indicadorV.equals(IndicadorExpEnum.KM_COMERCIALES.toString()) ){
                 valor = prog.getKmComerciales();
-            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO.toString()) ){
+            }else if ( indicadorV.equals(IndicadorExpEnum.KM_VACIO.toString()) ){
                 valor =  prog.getKmVacioTotal();
-            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO_VPA.toString()) ){
+            }else if ( indicadorV.equals(IndicadorExpEnum.KM_VACIO_VPA.toString()) ){
                 valor = (double) prog.getKmVacioVPA();
-            }else if ( tipoIndicador.equals(IndicadorExpEnum.POR_VACIOS.toString()) ){
+            }else if ( indicadorV.equals(IndicadorExpEnum.POR_VACIOS.toString()) ){
                 valor = prog.getPorcentajeVacio()*100;
-            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO_VEX.toString()) ){
+            }else if ( indicadorV.equals(IndicadorExpEnum.KM_VACIO_VEX.toString()) ){
                 valor = prog.getKmVacioVEX();
-            }else if ( tipoIndicador.equals(IndicadorExpEnum.KM_VACIO_VH.toString()) ){
+            }else if ( indicadorV.equals(IndicadorExpEnum.KM_VACIO_VH.toString()) ){
                 valor = prog.getKmVacioVH();
             }
             dataPoints.add(new ArrayList<Object>(Arrays.asList(prog.getCuadro().getFecha(),valor)));
         }
-        serie = new Series(nombre, dataPoints);
+        serie = new Series(indicadorV, dataPoints);
         return serie;
     }
 
