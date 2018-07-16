@@ -70,7 +70,7 @@
     <!-- Run the job every 2 seconds with initial delay of 1 second -->
     <bean id="simpleTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="simpleJobDetail" />
-        <property name="cronExpression" value="0 15 10 ? * MON-FRI" />
+        <property name="cronExpression" value="0 15 15 ? * MON-FRI" />
         <!--<property name="cronExpression" value="0 15 10 ? * TUE" />-->
         <!--<property name="cronExpression" value="0/50 * * ? * MON-SUN" />-->
         <!--0 15 10 ? * TUE-->

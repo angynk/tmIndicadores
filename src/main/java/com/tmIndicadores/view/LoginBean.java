@@ -2,6 +2,8 @@ package com.tmIndicadores.view;
 
 import com.tmIndicadores.controller.Util;
 import com.tmIndicadores.controller.servicios.UsuarioServicios;
+import com.tmIndicadores.model.entity.Aplicacion;
+import com.tmIndicadores.model.entity.RolAplicacion;
 import com.tmIndicadores.model.entity.Role;
 import com.tmIndicadores.model.entity.Usuario;
 
@@ -31,6 +33,8 @@ public class LoginBean implements Serializable {
     public String contrasenaAntigua;
     public String contrasenaNueva;
     public String contrasenaNuevaRep;
+
+    private static  int ID_APLICACION = 2;
 
 
     @ManagedProperty(value="#{navigationBean}")
@@ -71,11 +75,19 @@ public class LoginBean implements Serializable {
                 HttpSession session = Util.getSession();
                 session.setAttribute("user", uname);
                 session.setAttribute("role", usuario.getRole());
-                this.role =usuario.getRole();
-                this.nombreUsuario = usuario.getNombre();
-                this.area = usuario.getArea();
-                this.usuario = usuario;
-                return navigationBean.redirectToWelcome();
+                this.role =obtenerRol(usuario);
+                if(role!=null){
+                    this.nombreUsuario = usuario.getNombre();
+                    this.area = usuario.getArea();
+                    this.usuario = usuario;
+                    return navigationBean.redirectToWelcome();
+                }else{
+                    FacesContext.getCurrentInstance().addMessage(
+                            null,
+                            new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                    "Inicio de sesion invalido",
+                                    "Usted no tiene permisos sobre esta aplicación, contacte al administrador"));
+                }
             } else {
                 FacesContext.getCurrentInstance().addMessage(
                         null,
@@ -126,6 +138,17 @@ public class LoginBean implements Serializable {
     private boolean contrasenasNuevasIguales() {
         if(contrasenaNueva.equals(contrasenaNuevaRep)) return true;
         return false;
+    }
+
+    private Role obtenerRol(Usuario usuario) {
+
+        // Obtener aplicacion
+        Aplicacion aplicacion = usuarioServicios.getAplicacion(ID_APLICACION);
+        RolAplicacion rolAplicacion = usuarioServicios.getRolUsuarioAplicacion(aplicacion,usuario);
+        if(rolAplicacion!=null){
+            return rolAplicacion.getRole();
+        }
+        return null;
     }
 
     private boolean contrasenaViejaEsCorrecta() {

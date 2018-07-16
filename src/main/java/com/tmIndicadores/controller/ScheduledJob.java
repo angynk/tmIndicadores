@@ -64,7 +64,7 @@ public class ScheduledJob {
         Date lastFecha = programacionServicios.getLastProgramacionFecha(modo, tipologia,dia);
         Date hoy = new Date();
         int diferencia = diferenciaEnDias(hoy,lastFecha);
-        if(diferencia>10){
+        if(diferencia>15){
                 return false;
         }
 
@@ -78,7 +78,7 @@ public class ScheduledJob {
                 emailTroncal,
                 "Indicadores BRT",
                 "Hola! \n\n La información de la programaciòn Troncal se encuentra desactualizada" +
-                        " \n\n Para actualizarla ingresa a :    http://192.168.100.121:8000/tmIndicadores-1.0-SNAPSHOT/login.xhtml" +
+                        " \n\n Para actualizarla ingresa a :    http://35.226.255.51:8080/tmIndicadores-1.0-SNAPSHOT/login.xhtml" +
                         "\n\n  Muchas Gracias");
     }
 

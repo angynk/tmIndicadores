@@ -1,7 +1,11 @@
 package com.tmIndicadores.controller.servicios;
 
+import com.tmIndicadores.model.dao.AplicacionDao;
+import com.tmIndicadores.model.dao.RolAplicacionDao;
 import com.tmIndicadores.model.dao.TareaDao;
 import com.tmIndicadores.model.dao.UsuarioDao;
+import com.tmIndicadores.model.entity.Aplicacion;
+import com.tmIndicadores.model.entity.RolAplicacion;
 import com.tmIndicadores.model.entity.Tarea;
 import com.tmIndicadores.model.entity.Usuario;
 import org.hibernate.Criteria;
@@ -21,6 +25,12 @@ public class UsuarioServicios {
     @Autowired
     public TareaDao tareaDao;
 
+    @Autowired
+    public AplicacionDao aplicacionDao;
+
+    @Autowired
+    public RolAplicacionDao rolAplicacionDao;
+
     public void addUsuario(Usuario usuario) {
         usuarioDao.addUsuario(usuario);
     }
@@ -34,7 +44,13 @@ public class UsuarioServicios {
         usuarioDao.updateUsuario(usuario);
     }
 
+    public Aplicacion getAplicacion(int idAplicacion) {
+        return aplicacionDao.obtenerAplicacionById(idAplicacion);
+    }
 
+    public RolAplicacion getRolUsuarioAplicacion(Aplicacion aplicacion, Usuario usuario) {
+        return rolAplicacionDao.getRolAplicacion(aplicacion,usuario);
+    }
 
 
     public List<Usuario> getUsuarioAll() {
